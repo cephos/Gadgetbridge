@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:defaultValue="false"
+        android:icon="@drawable/ic_language"
+        android:key="device_mqtt"
+        android:summary="@string/pref_summary_device_mqtt"
+        android:title="@string/pref_title_device_mqtt" />
+    <EditTextPreference
+        android:inputType="text"
+        android:key="device_mqtt_server"
+        android:summary="@string/pref_summary_device_mqtt_server"
+        android:title="@string/pref_title_device_mqtt_server" />
+    <EditTextPreference
+        android:inputType="text"
+        android:key="device_mqtt_port"
+        android:summary="@string/pref_summary_device_mqtt_port"
+        android:title="@string/pref_title_device_mqtt_port" />
+    <EditTextPreference
+        android:inputType="text"
+        android:key="device_mqtt_user"
+        android:summary="@string/pref_summary_device_mqtt_user"
+        android:title="@string/pref_title_device_mqtt_user" />
+      <EditTextPreference
+        android:inputType="text"
+        android:key="device_mqtt_pwd"
+        android:summary="@string/pref_summary_device_mqtt_pwd"
+        android:title="@string/pref_title_device_mqtt_pwd" />
+</androidx.preference.PreferenceScreen>
