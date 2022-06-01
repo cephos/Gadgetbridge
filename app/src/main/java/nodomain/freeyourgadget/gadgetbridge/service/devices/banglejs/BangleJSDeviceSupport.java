@@ -97,6 +97,11 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_ALLOW_HIGH_MTU;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DEVICE_INTERNET_ACCESS;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DEVICE_INTENTS;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DEVICE_MQTT;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DEVICE_MQTT_SERVER;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DEVICE_MQTT_PORT;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DEVICE_MQTT_USER;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DEVICE_MQTT_PWD;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BANGLEJS_TEXT_BITMAP;
 import static nodomain.freeyourgadget.gadgetbridge.database.DBHelper.*;
 
@@ -523,6 +528,42 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
                     this.getContext().getApplicationContext().sendBroadcast(in);
                 } else {
                     uartTxJSONError("intent", "Android Intents not enabled, check Gadgetbridge Device Settings");
+                }
+            } break;
+                case "mqtt": {
+                Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()));
+                if (devicePrefs.getBoolean(PREF_DEVICE_MQTT, false)) {
+                    String topicName = json.getString("topic");
+                    String data = json.getString("data");
+                    int qos = 0;
+                    if(json.getString("qos")!=null){qos=json.getString("qos");}
+                    if (data != null) {
+                        String broker = "tcp://"+devicePrefs.getString(PREF_DEVICE_MQTT_SERVER,"test.mosquitto.org")+":"+devicePrefs.getString(PREF_DEVICE_MQTT_PORT,"1883");
+                        String user = devicePrefs.getString(PREF_DEVICE_MQTT_USER,"");
+                        String password = devicePrefs.getString(PREF_DEVICE_MQTT_PWD,"");
+                        
+                        MqttClient mqttClient = new MqttClient(broker,String.valueOf(System.nanoTime()));
+                        MqttMessage message = new MqttMessage(data.getBytes());
+                        message.setQos(qos);
+                        message.setRetained(true);
+                        MqttTopic topic = mqttClient.getTopic(topicName);
+                        
+                        MqttConnectOptions connOpts = new MqttConnectOptions();
+                        connOpts.setUserName(user);
+                        connOpts.setPassword(password);
+                        connOpts.setCleanSession(true); //no persistent session 
+                        connOpts.setKeepAliveInterval(1000);
+                        
+                        try{
+                        mqttClient.connect(connOpts);
+                        topic.publish(data); 
+                        }catch(MqttException e){
+                            LOG.info("Could not connect MQTT client: "+ e.getMessage());
+                        }
+                    }
+                    LOG.info("Published to Topic  " + topic);
+                } else {
+                    uartTxJSONError("mqtt", "Android MQTT not enabled, check Gadgetbridge Device Settings");
                 }
             }
             default : {
