@@ -43,6 +43,10 @@ public class DeviceSettingsPreferenceConst {
 
     public static final String PREF_DEVICE_INTERNET_ACCESS = "device_internet_access";
     public static final String PREF_DEVICE_INTENTS = "device_intents";
+    public static final String PREF_DEVICE_MQTT_SERVER = "device_mqtt_server";
+    public static final String PREF_DEVICE_MQTT_USER = "device_mqtt_user";
+    public static final String PREF_DEVICE_MQTT_PWD = "device_mqtt_pwd";
+    public static final String PREF_DEVICE_MQTT_PORT = "device_mqtt_port";
 
     public static final String PREF_BANGLEJS_TEXT_BITMAP = "banglejs_text_bitmap";
     public static final String PREF_BANGLEJS_WEBVIEW_URL = "banglejs_webview_url";
