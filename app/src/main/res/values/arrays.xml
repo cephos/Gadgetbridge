@@ -405,6 +405,7 @@
         <item>@string/menuitem_status</item>
         <item>@string/menuitem_pai</item>
         <item>@string/menuitem_hr</item>
+        <item>@string/menuitem_breathing</item>
         <item>@string/menuitem_stress</item>
         <item>@string/menuitem_eventreminder</item>
         <item>@string/menuitem_dnd</item>
@@ -427,6 +428,7 @@
         <item>@string/p_menuitem_status</item>
         <item>@string/p_menuitem_pai</item>
         <item>@string/p_menuitem_hr</item>
+        <item>@string/p_menuitem_breathing</item>
         <item>@string/p_menuitem_stress</item>
         <item>@string/p_menuitem_eventreminder</item>
         <item>@string/p_menuitem_dnd</item>
@@ -462,6 +464,7 @@
         <item>@string/menuitem_activity</item>
         <item>@string/menuitem_eventreminder</item>
         <item>@string/menuitem_pai</item>
+        <item>@string/menuitem_sleep</item>
         <item>@string/menuitem_worldclock</item>
         <item>@string/menuitem_stress</item>
         <item>@string/menuitem_cycles</item>
@@ -489,6 +492,7 @@
         <item>@string/p_menuitem_activity</item>
         <item>@string/p_menuitem_eventreminder</item>
         <item>@string/p_menuitem_pai</item>
+        <item>@string/p_menuitem_sleep</item>
         <item>@string/p_menuitem_worldclock</item>
         <item>@string/p_menuitem_stress</item>
         <item>@string/p_menuitem_cycles</item>
@@ -516,6 +520,7 @@
         <item>@string/p_menuitem_activity</item>
         <item>@string/p_menuitem_eventreminder</item>
         <item>@string/p_menuitem_pai</item>
+        <item>@string/p_menuitem_sleep</item>
         <item>@string/p_menuitem_worldclock</item>
         <item>@string/p_menuitem_stress</item>
         <item>@string/p_menuitem_cycles</item>
@@ -540,6 +545,7 @@
         <item>@string/menuitem_mutephone</item>
         <item>@string/menuitem_eventreminder</item>
         <item>@string/menuitem_pai</item>
+        <item>@string/menuitem_sleep</item>
         <item>@string/menuitem_worldclock</item>
         <item>@string/menuitem_stress</item>
         <item>@string/menuitem_cycles</item>
@@ -565,6 +571,7 @@
         <item>@string/p_menuitem_mutephone</item>
         <item>@string/p_menuitem_eventreminder</item>
         <item>@string/p_menuitem_pai</item>
+        <item>@string/p_menuitem_sleep</item>
         <item>@string/p_menuitem_worldclock</item>
         <item>@string/p_menuitem_stress</item>
         <item>@string/p_menuitem_cycles</item>
@@ -721,6 +728,7 @@
         <item>@string/menuitem_pai</item>
         <item>@string/menuitem_hr</item>
         <item>@string/menuitem_spo2</item>
+        <item>@string/menuitem_breathing</item>
         <item>@string/menuitem_stress</item>
         <item>@string/menuitem_eventreminder</item>
         <item>@string/menuitem_dnd</item>
@@ -744,6 +752,7 @@
         <item>@string/p_menuitem_pai</item>
         <item>@string/p_menuitem_hr</item>
         <item>@string/p_menuitem_spo2</item>
+        <item>@string/p_menuitem_breathing</item>
         <item>@string/p_menuitem_stress</item>
         <item>@string/p_menuitem_eventreminder</item>
         <item>@string/p_menuitem_dnd</item>
@@ -1426,7 +1435,8 @@
         <item name="de_DE">@string/german</item>
         <item name="it_IT">@string/italian</item>
         <item name="fr_FR">@string/french</item>
-        <item name="pt_BR">@string/portuguese</item>
+        <item name="pt_BR">@string/portuguese_br</item>
+        <item name="pt_PT">@string/portuguese_pt</item>
         <item name="nl_NL">@string/dutch</item>
         <item name="pl_PL">@string/polish</item>
         <item name="cs_CZ">@string/czesh</item>
@@ -1453,6 +1463,7 @@
         <item>it_IT</item>
         <item>fr_FR</item>
         <item>pt_BR</item>
+        <item>pt_PT</item>
         <item>nl_NL</item>
         <item>pl_PL</item>
         <item>cs_CZ</item>

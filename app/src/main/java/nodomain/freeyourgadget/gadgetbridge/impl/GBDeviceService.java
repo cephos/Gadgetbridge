@@ -23,6 +23,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
@@ -114,6 +115,13 @@ public class GBDeviceService implements DeviceService {
         Intent intent = createIntent().setAction(ACTION_CONNECT)
                 .putExtra(GBDevice.EXTRA_DEVICE, device)
                 .putExtra(EXTRA_CONNECT_FIRST_TIME, firstTime);
+        invokeService(intent);
+    }
+
+    @Override
+    public void disconnect(@Nullable GBDevice device) {
+        Intent intent = createIntent().setAction(ACTION_DISCONNECT)
+                .putExtra(GBDevice.EXTRA_DEVICE, device);
         invokeService(intent);
     }
 
@@ -469,6 +477,13 @@ public class GBDeviceService implements DeviceService {
     @Override
     public void onPowerOff() {
         Intent intent = createIntent().setAction(ACTION_POWER_OFF);
+        invokeService(intent);
+    }
+
+    @Override
+    public void onSetGpsLocation(Location location) {
+        Intent intent = createIntent().setAction(ACTION_SET_GPS_LOCATION);
+        intent.putExtra(EXTRA_GPS_LOCATION, location);
         invokeService(intent);
     }
 }

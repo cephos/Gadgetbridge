@@ -382,6 +382,10 @@
     <string name="prefs_hr_alarm_activity">Heart rate alarm during sports activity</string>
     <string name="prefs_hr_alarm_low">Low limit</string>
     <string name="prefs_hr_alarm_high">High limit</string>
+    <string name="pref_workout_start_on_phone_title">Fitness app tracking</string>
+    <string name="pref_workout_start_on_phone_summary">Start/stop fitness app tracking on phone when a GPS workout is started on the band</string>
+    <string name="pref_workout_send_gps_title">Send GPS during workout</string>
+    <string name="pref_workout_send_gps_summary">Send the current GPS location to the band during a workout</string>
     <!-- Auto export preferences -->
     <string name="pref_header_auto_export">Auto export</string>
     <string name="pref_title_auto_export_enabled">Auto export enabled</string>
@@ -395,6 +399,8 @@
     <string name="pref_auto_fetch_limit_fetches">Minimum time between fetches</string>
     <string name="pref_auto_fetch_limit_fetches_summary">Fetches every %d minutes</string>
     <!-- developer/debug preferences-->
+    <string name="discovery_scanning_intensity">Scanning intensity</string>
+    <string name="discovery_scanning_intensity_warning">If you experience freezing or unresponsiveness, try to set Scanning intensity to lower level. If your device is not being discovered, try to set Scanning intensity to higher level.</string>
     <string name="pref_disable_new_ble_scanning">Disable new BLE scanning</string>
     <string name="pref_summary_disable_new_ble_scanning">Check this option if your device cannot be found during discovery</string>
     <string name="not_connected">Not connected</string>
@@ -763,6 +769,8 @@
     <string name="thai">Thai</string>
     <string name="vietnamese">Vietnamese</string>
     <string name="portuguese">Portuguese</string>
+    <string name="portuguese_br">Portuguese (Brazil)</string>
+    <string name="portuguese_pt">Portuguese (Portugal)</string>
     <string name="romanian">Romanian</string>
     <string name="hungarian">Hungarian</string>
     <string name="greek">Greek</string>
@@ -1041,6 +1049,9 @@
     <string name="notification_channel_high_priority_name">High-priority</string>
     <string name="notification_channel_transfer_name">Data transfer</string>
     <string name="notification_channel_low_battery_name">Low battery</string>
+    <string name="notification_channel_gps">GPS tracking</string>
+    <string name="notification_gps_title">Gadgetbridge GPS</string>
+    <string name="notification_gps_text">Sending GPS location to %1$d devices</string>
     <string name="devicetype_amazfit_gts">Amazfit GTS</string>
     <string name="devicetype_amazfit_vergel">Amazfit Verge Lite</string>
     <string name="devicetype_sg2">Lemfo SG2</string>
@@ -1136,6 +1147,8 @@
     <string name="widget_10_minutes">10 minutes</string>
     <string name="widget_20_minutes">20 minutes</string>
     <string name="widget_1_hour">1 hour</string>
+    <string name="quick_alarm">Quick alarm</string>
+    <string name="quick_alarm_description">Alarm from widget</string>
     <string name="icon_placeholder" translatable="false">Icon</string>
     <string name="watch_not_connected">Watch not connected</string>
     <string name="qhybrid_vibration_strength">vibration strength:</string>
@@ -1637,6 +1650,7 @@
     <string name="pref_device_action_fitness_app_control_start">Fitness App Tracking Start</string>
     <string name="pref_device_action_fitness_app_control_stop">Fitness App Tracking Stop</string>
     <string name="pref_device_action_fitness_app_control_toggle">Toggle Fitness App Tracking</string>
+    <string name="pref_device_action_phone_gps_location_listener_stop">GPS Location Listener Stop</string>
     <!-- Translators: the ### indicate number of digits, keep intact -->
     <string name="distance_format_meters">###m</string>
     <!-- Translators: the ### indicate number of digits, keep intact -->
@@ -1662,4 +1676,7 @@
     <string name="pref_summary_opentracks_packagename">Used for starting/stopping GPS track recording in external fitness app.</string>
     <string name="watchface_dialog_pre_setting_position">pre-setting position to %s</string>
     <string name="watchface_setting_light_up_on_notification">Light up on new notification</string>
+
+    <string name="info_no_devices_connected">no devices connected</string>
+    <string name="info_connected_count">%d devices connected</string>
 </resources>

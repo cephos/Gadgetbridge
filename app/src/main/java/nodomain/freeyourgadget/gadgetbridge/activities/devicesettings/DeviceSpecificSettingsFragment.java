@@ -429,6 +429,7 @@ public class DeviceSpecificSettingsFragment extends PreferenceFragmentCompat imp
         addPreferenceHandlerFor(PREF_INACTIVITY_START);
         addPreferenceHandlerFor(PREF_INACTIVITY_END);
         addPreferenceHandlerFor(PREF_INACTIVITY_THRESHOLD);
+        addPreferenceHandlerFor(PREF_INACTIVITY_THRESHOLD_EXTENDED);
         addPreferenceHandlerFor(PREF_INACTIVITY_MO);
         addPreferenceHandlerFor(PREF_INACTIVITY_TU);
         addPreferenceHandlerFor(PREF_INACTIVITY_WE);
@@ -809,6 +810,8 @@ public class DeviceSpecificSettingsFragment extends PreferenceFragmentCompat imp
         final DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(device);
         int[] supportedSettings = coordinator.getSupportedDeviceSpecificSettings(device);
         String[] supportedLanguages = coordinator.getSupportedLanguageSettings(device);
+
+        supportedSettings = ArrayUtils.insert(0, supportedSettings, coordinator.getSupportedDeviceSpecificConnectionSettings());
 
         if (supportedLanguages != null) {
             supportedSettings = ArrayUtils.insert(0, supportedSettings, R.xml.devicesettings_language_generic);
