@@ -100,6 +100,8 @@ public class MiBand4Coordinator extends HuamiCoordinator {
                 R.xml.devicesettings_nightmode,
                 R.xml.devicesettings_liftwrist_display,
                 R.xml.devicesettings_inactivity_dnd,
+                R.xml.devicesettings_workout_start_on_phone,
+                R.xml.devicesettings_workout_send_gps_to_band,
                 R.xml.devicesettings_swipeunlock,
                 R.xml.devicesettings_password,
                 R.xml.devicesettings_sync_calendar,
@@ -109,12 +111,6 @@ public class MiBand4Coordinator extends HuamiCoordinator {
                 R.xml.devicesettings_device_actions,
                 R.xml.devicesettings_high_mtu,
                 R.xml.devicesettings_transliteration
-        };
-    }
-    @Override
-    public int[] getSupportedDeviceSpecificAuthenticationSettings() {
-        return new int[]{
-                R.xml.devicesettings_pairingkey
         };
     }
 

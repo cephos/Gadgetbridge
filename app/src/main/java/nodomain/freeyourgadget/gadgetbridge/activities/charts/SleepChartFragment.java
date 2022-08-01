@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -199,6 +200,7 @@ public class SleepChartFragment extends AbstractChartFragment {
         mActivityChart.getXAxis().setValueFormatter(mcd.getChartsData().getXValueFormatter());
         mActivityChart.setData(mcd.getChartsData().getData());
         mSleepchartInfo.setText(buildYouSleptText(pieData));
+        mSleepchartInfo.setMovementMethod(new ScrollingMovementMethod());
         heartRateMin = mcd.getHeartRateAxisMin();
         heartRateMax = mcd.getHeartRateAxisMax();
         intensityTotal = mcd.getIntensityTotal();
@@ -294,11 +296,13 @@ public class SleepChartFragment extends AbstractChartFragment {
             result.append(getContext().getString(R.string.you_did_not_sleep));
         } else {
             for (SleepSession sleepSession : pieData.getSleepSessions()) {
+                if (result.length() > 0) {
+                    result.append('\n');
+                }
                 result.append(getContext().getString(
                         R.string.you_slept,
                         DateTimeUtils.timeToString(sleepSession.getSleepStart()),
                         DateTimeUtils.timeToString(sleepSession.getSleepEnd())));
-                result.append('\n');
             }
         }
         return result.toString();

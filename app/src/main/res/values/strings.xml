@@ -1133,7 +1133,9 @@
     <string name="preferences_rtl_settings">Right To Left Support</string>
     <string name="share_log">Share log</string>
     <string name="share_log_warning">Please keep in mind Gadgetbridge logs files that may contain lots of personal info, including but not limited to health data, unique identifiers (such as a device\'s MAC address), music preferences, etc. Consider editing the file and removing this info before sending the file to a public issue report.</string>
+    <string name="share_log_not_enabled_message">You must first enable logging in the Settings - Write log files</string>
     <string name="warning">Warning!</string>
+    <string name="note">Note</string>
     <string name="no_data">No data</string>
     <!-- LED Color -->
     <string name="preferences_led_color">LED Color</string>
@@ -1470,6 +1472,8 @@
     <string name="watchface_setting_wrist_flick_hour">Hour hand (-360 to 360)</string>
     <string name="watchface_setting_wrist_flick_minute">Minute hand (-360 to 360)</string>
     <string name="watchface_setting_wrist_flick_duration">Duration (in ms)</string>
+    <string name="watchface_setting_title_button_toggle_widgets">Toggle widgets</string>
+    <string name="watchface_setting_button_toggle_widgets">Button action</string>
     <string name="watchface_cache_confirm_overwrite">A watchface with this name already exists in the cache. Do you want to overwrite it?</string>
     <string name="watchface_upload_failed">Upload of the watchface failed. Please try again.</string>
     <string name="watchface_widget_type_battery">Battery</string>
@@ -1728,4 +1732,22 @@
     <string name="connection_over_bt_classic">Connection over Bluetooth classic</string>
     <string name="autoconnect_from_device_title">Connect on connection from device</string>
     <string name="autoconnect_from_device_summary">Establish a connection when connection is initiated by device, like headphones</string>
+    <!-- related to steps streak view -->
+    <string name="steps_streaks">Steps streaks</string>
+    <string name="steps_streaks_hint">Series of consecutive days without interruption with steps goal being reached</string>
+    <string name="step_streak_ongoing">Ongoing</string>
+    <string name="step_streak_longest">Longest</string>
+    <string name="step_streak_total">Total</string>
+    <string name="steps_streaks_total_steps">Total\nsteps</string>
+    <string name="steps_streaks_streak_days">Streak\nDays</string>
+    <string name="steps_streaks_average_steps">Average\nsteps</string>
+    <string name="steps_streaks_achievement_rate">Achievement\nrate</string>
+    <string name="steps_streaks_since_date">Since %s</string>
+    <string name="step_streak_average_steps_hint">Average steps per day of the streak</string>
+    <string name="steps_streaks_total_steps_hint_totals">Total number of steps ever recorded</string>
+    <string name="steps_streaks_total_days_hint_totals">Percentage of days with achieved goal in relation to all days with steps</string>
+    <string name="step_streak_days_hint">Number of consecutive days with steps goal being reached</string>
+    <string name="steps_streaks_total_steps_hint">Total number of steps in the whole streak</string>
+    <string name="steps_streaks_total_steps_average_hint">Total average %d steps per day</string>
+
 </resources>
