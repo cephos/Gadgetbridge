@@ -329,7 +329,10 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
             LOG.warn("Could not get external dir while trying to access app cache.", e);
             return;
         }
-        File backgroundFile = new File(appCacheDir, appUUID + ".png");
+        File backgroundFile = new File(appCacheDir, appUUID + "_bg.png");
+        if (!backgroundFile.exists()) {
+            backgroundFile = new File(appCacheDir, appUUID + ".png");
+        }
         try {
             Bitmap cachedBackground = BitmapFactory.decodeStream(new FileInputStream(backgroundFile));
             selectedBackgroundImage = BitmapUtil.convertToGrayscale(BitmapUtil.getCircularBitmap(cachedBackground));
@@ -395,6 +398,9 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
                     }
                     if (watchfaceConfig.has("toggle_widgets_event")) {
                         watchfaceSettings.setToggleWidgetsEvent(watchfaceConfig.getString("toggle_widgets_event"));
+                    }
+                    if (watchfaceConfig.has("toggle_backlight_event")) {
+                        watchfaceSettings.setToggleBacklightEvent(watchfaceConfig.getString("toggle_backlight_event"));
                     }
                     if (watchfaceConfig.has("powersave_display")) {
                         watchfaceSettings.setPowersaveDisplay(watchfaceConfig.getBoolean("powersave_display"));
@@ -561,14 +567,15 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
     }
 
     private void sendToWatch(boolean preview) {
-        HybridHRWatchfaceFactory wfFactory;
+        final Context mContext = this;
+        final HybridHRWatchfaceFactory wfFactory;
         if (preview) {
             wfFactory = new HybridHRWatchfaceFactory("previewWatchface");
         } else {
             wfFactory = new HybridHRWatchfaceFactory(watchfaceName);
         }
         wfFactory.setSettings(watchfaceSettings);
-        wfFactory.setBackground(processedBackgroundImage);
+        wfFactory.setBackground(selectedBackgroundImage);
         wfFactory.addWidgets(widgets);
         try {
             File tempFile = File.createTempFile("tmpWatchfaceFile", null);
@@ -581,11 +588,11 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
             final Uri tempAppFileUri = Uri.fromFile(tempFile);
             if (preview) {
                 findViewById(R.id.watchface_upload_progress_bar).setVisibility(View.VISIBLE);
-                GBApplication.deviceService().onInstallApp(tempAppFileUri);
+                GBApplication.deviceService(mGBDevice).onInstallApp(tempAppFileUri);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        GBApplication.deviceService().onAppDelete(UUID.nameUUIDFromBytes("previewWatchface".getBytes(StandardCharsets.UTF_8)));
+                        GBApplication.deviceService(mGBDevice).onAppDelete(UUID.nameUUIDFromBytes("previewWatchface".getBytes(StandardCharsets.UTF_8)));
                     }
                 }, 15000);
             } else {
@@ -602,21 +609,16 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     findViewById(R.id.watchface_upload_progress_bar).setVisibility(View.VISIBLE);
-                                    GBApplication.deviceService().onInstallApp(tempAppFileUri);
-                                    FossilHRInstallHandler.saveAppInCache(fossilFile, processedBackgroundImage, mCoordinator, HybridHRWatchfaceDesignerActivity.this);
+                                    GBApplication.deviceService(mGBDevice).onInstallApp(tempAppFileUri);
+                                    FossilHRInstallHandler.saveAppInCache(fossilFile, selectedBackgroundImage, wfFactory.getPreviewImage(mContext), mCoordinator, HybridHRWatchfaceDesignerActivity.this);
                                 }
                             })
                             .show();
                 } else {
                     findViewById(R.id.watchface_upload_progress_bar).setVisibility(View.VISIBLE);
-                    GBApplication.deviceService().onInstallApp(tempAppFileUri);
-                    FossilHRInstallHandler.saveAppInCache(fossilFile, processedBackgroundImage, mCoordinator, HybridHRWatchfaceDesignerActivity.this);
+                    GBApplication.deviceService(mGBDevice).onInstallApp(tempAppFileUri);
+                    FossilHRInstallHandler.saveAppInCache(fossilFile, selectedBackgroundImage, wfFactory.getPreviewImage(mContext), mCoordinator, HybridHRWatchfaceDesignerActivity.this);
                 }
-                Bitmap previewImage = wfFactory.getPreviewImage(this);
-                File previewFile = new File(cacheDir, app.getUUID().toString() + "_preview.png");
-                FileOutputStream previewFOS = new FileOutputStream(previewFile);
-                previewImage.compress(Bitmap.CompressFormat.PNG, 9, previewFOS);
-                previewFOS.close();
             }
         } catch (IOException e) {
             LOG.warn("Error while creating and uploading watchface", e);

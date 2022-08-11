@@ -12,11 +12,11 @@
     <string name="about_description_banglejs_main">Android companion app for Bangle.js built on top of the Gadgetbridge project, with added Internet Access.\n\nDue to Google Play Store policies, we are not allowed a donation link in the app itself, but if you like this app please consider donating via the Gadgetbridge homepage below.</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js running</string>
 
-    <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
-    <string name="about_activity_title_banglejs_nopebble">About Bangle.js Gadgetbridge</string>
-    <string name="about_description_banglejs_nopebble">Android companion app for Bangle.js built on top of the Gadgetbridge project, with added Internet Access.\n\nDue to Google Play Store policies, we are not allowed a donation link in the app itself, but if you like this app please consider donating via the Gadgetbridge homepage below.</string>
-    <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js running</string>
+    <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
+    <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
+    <string name="about_activity_title_banglejs_nightly">About Bangle.js Gadgetbridge (Nightly)</string>
+    <string name="about_description_banglejs_nightly">Android companion app for Bangle.js built on top of the Gadgetbridge project, with added Internet Access.\n\nDue to Google Play Store policies, we are not allowed a donation link in the app itself, but if you like this app please consider donating via the Gadgetbridge homepage below.</string>
+    <string name="gadgetbridge_running_banglejs_nightly">Nightly Bangle.js running</string>
 
     <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
     <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Nightly</string>
@@ -56,6 +56,8 @@
     <string name="controlcenter_snackbar_connecting">Connecting…</string>
     <string name="controlcenter_snackbar_requested_screenshot">Taking a screenshot of the device</string>
     <string name="controlcenter_calibrate_device">Calibrate Device</string>
+    <string name="controlcenter_get_heartrate_measurement">Get heart rate measurement</string>
+
     <string name="device_card_activity_card_title">Activity info on device card</string>
     <string name="device_card_activity_card_title_summary">Choose what activity details are displayed on device card</string>
     <string name="prefs_activity_in_device_card_title">Show Activity info on device card</string>
@@ -478,6 +480,7 @@
     <string name="watch9_pairing_tap_hint">When your watch vibrates, shake the device or press its button.</string>
     <string name="title_activity_sleepmonitor">Sleep monitor</string>
     <string name="pref_write_logfiles">Write log files</string>
+    <string name="pref_write_logfiles_not_available">File logging initialization failed, writing log files is currently not available. Restart the application to attempt to initialize the log files again.</string>
     <string name="initializing">Initializing</string>
     <string name="busy_task_fetch_activity_data">Fetching activity data</string>
     <string name="sleep_activity_date_range">From %1$s to %2$s</string>
@@ -592,7 +595,7 @@
     <string name="prefs_activity_monitoring_title">Activity monitoring</string>
     <string name="prefs_activity_monitoring_description">Automatically increase the heart rate detection frequency when the band detects physical exercise, to increase heart rate capture accuracy.</string>
     <string name="dbaccess_error_executing">Error executing \'%1$s\'</string>
-    <string name="controlcenter_start_activitymonitor">Your activity (ALPHA)</string>
+    <string name="controlcenter_start_activitymonitor">Your activity</string>
     <string name="cannot_connect">Cannot connect: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">Unable to find a handler to install this file.</string>
     <string name="pbw_install_handler_unable_to_install">Unable to install the given file: %1$s</string>
@@ -1472,8 +1475,9 @@
     <string name="watchface_setting_wrist_flick_hour">Hour hand (-360 to 360)</string>
     <string name="watchface_setting_wrist_flick_minute">Minute hand (-360 to 360)</string>
     <string name="watchface_setting_wrist_flick_duration">Duration (in ms)</string>
-    <string name="watchface_setting_title_button_toggle_widgets">Toggle widgets</string>
-    <string name="watchface_setting_button_toggle_widgets">Button action</string>
+    <string name="watchface_setting_title_custom_events">Custom events</string>
+    <string name="watchface_setting_button_toggle_widgets">Toggle widgets</string>
+    <string name="watchface_setting_button_toggle_backlight">Turn backlight on</string>
     <string name="watchface_cache_confirm_overwrite">A watchface with this name already exists in the cache. Do you want to overwrite it?</string>
     <string name="watchface_upload_failed">Upload of the watchface failed. Please try again.</string>
     <string name="watchface_widget_type_battery">Battery</string>
@@ -1750,4 +1754,5 @@
     <string name="steps_streaks_total_steps_hint">Total number of steps in the whole streak</string>
     <string name="steps_streaks_total_steps_average_hint">Total average %d steps per day</string>
 
+    <string name="devicetype_binary_sensor">Binary sensor</string>
 </resources>

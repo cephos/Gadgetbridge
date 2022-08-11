@@ -31,6 +31,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Html;
 import android.text.SpannableString;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -97,6 +98,8 @@ public class GB {
     public static final String ACTION_SET_INFO_TEXT = "GB_Set_Info_Text";
 
     private static boolean notificationChannelsCreated;
+
+    private static final String TAG = "GB";
 
     public static void createNotificationChannels(Context context) {
         if (notificationChannelsCreated) return;
