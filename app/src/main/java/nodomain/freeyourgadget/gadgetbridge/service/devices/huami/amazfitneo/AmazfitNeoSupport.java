@@ -81,6 +81,14 @@ public class AmazfitNeoSupport extends MiBand5Support {
     }
 
     @Override
+    protected AmazfitNeoSupport requestAlarms(TransactionBuilder builder) {
+        return this; //Neo always returns response array with '03' in it which marks alarms unused on connect
+    }
+
+    @Override
+    public boolean supportsHourlyChime() { return true; }
+
+    @Override
     public HuamiFWHelper createFWHelper(Uri uri, Context context) throws IOException {
         return new AmazfitNeoFWHelper(uri, context);
     }
