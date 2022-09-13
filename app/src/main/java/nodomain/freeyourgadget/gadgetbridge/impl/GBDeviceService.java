@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 
 import java.util.ArrayList;
@@ -347,6 +348,12 @@ public class GBDeviceService implements DeviceService {
     }
 
     @Override
+    public void onPhoneFound() {
+        Intent intent = createIntent().setAction(ACTION_PHONE_FOUND);
+        invokeService(intent);
+    }
+
+    @Override
     public void onSetConstantVibration(int intensity) {
         Intent intent = createIntent().setAction(ACTION_SET_CONSTANT_VIBRATION)
                 .putExtra(EXTRA_VIBRATION_INTENSITY, intensity);
@@ -394,8 +401,11 @@ public class GBDeviceService implements DeviceService {
                 .putExtra(EXTRA_CALENDAREVENT_TYPE, calendarEventSpec.type)
                 .putExtra(EXTRA_CALENDAREVENT_TIMESTAMP, calendarEventSpec.timestamp)
                 .putExtra(EXTRA_CALENDAREVENT_DURATION, calendarEventSpec.durationInSeconds)
+                .putExtra(EXTRA_CALENDAREVENT_ALLDAY, calendarEventSpec.allDay)
                 .putExtra(EXTRA_CALENDAREVENT_TITLE, calendarEventSpec.title)
                 .putExtra(EXTRA_CALENDAREVENT_DESCRIPTION, calendarEventSpec.description)
+                .putExtra(EXTRA_CALENDAREVENT_CALNAME, calendarEventSpec.calName)
+                .putExtra(EXTRA_CALENDAREVENT_COLOR, calendarEventSpec.color)
                 .putExtra(EXTRA_CALENDAREVENT_LOCATION, calendarEventSpec.location);
         invokeService(intent);
     }
@@ -431,7 +441,7 @@ public class GBDeviceService implements DeviceService {
     @Override
     public void onSendWeather(WeatherSpec weatherSpec) {
         Intent intent = createIntent().setAction(ACTION_SEND_WEATHER)
-                .putExtra(EXTRA_WEATHER, weatherSpec);
+                .putExtra(EXTRA_WEATHER, (Parcelable) weatherSpec);
         invokeService(intent);
     }
 
@@ -442,12 +452,8 @@ public class GBDeviceService implements DeviceService {
      * @return contact DisplayName, if found it
      */
     private String getContactDisplayNameByNumber(String number) {
-        Uri uri;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.ENTERPRISE_CONTENT_FILTER_URI, Uri.encode(number));
-        } else {
-            uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-        }
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.ENTERPRISE_CONTENT_FILTER_URI, Uri.encode(number));
+
         String name = number;
 
         if (number == null || number.equals("")) {

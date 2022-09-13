@@ -74,6 +74,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.model.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.NotificationCollectorMonitorService;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
@@ -98,10 +99,6 @@ import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.fromKey;
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID;
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_ID_ERROR;
 
-import androidx.multidex.MultiDex;
-
-import com.jakewharton.threetenabp.AndroidThreeTen;
-
 /**
  * Main Application class that initializes and provides access to certain things like
  * logging and DB access.
@@ -124,7 +121,7 @@ public class GBApplication extends Application {
     private static GBPrefs gbPrefs;
     private static LockHandler lockHandler;
     /**
-     * Note: is null on Lollipop and Kitkat
+     * Note: is null on Lollipop
      */
     private static NotificationManager notificationManager;
 
@@ -169,12 +166,6 @@ public class GBApplication extends Application {
         // don't do anything here, add it to onCreate instead
     }
 
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
-    }
-
     public static Logging getLogging() {
         return logging;
     }
@@ -192,9 +183,6 @@ public class GBApplication extends Application {
             // guard against multiple invocations (robolectric)
             return;
         }
-
-        // Initialize the timezones library
-        AndroidThreeTen.init(this);
 
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs = new Prefs(sharedPrefs);
@@ -216,6 +204,8 @@ public class GBApplication extends Application {
         }
 
         setupExceptionHandler();
+
+        Weather.getInstance().setCacheFile(getCacheDir(), prefs.getBoolean("cache_weather", true));
 
         deviceManager = new DeviceManager(this);
         String language = prefs.getString("language", "default");
@@ -372,10 +362,6 @@ public class GBApplication extends Application {
      */
     public static void releaseDB() {
         dbLock.unlock();
-    }
-
-    public static boolean isRunningLollipopOrLater() {
-        return VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
     public static boolean isRunningMarshmallowOrLater() {

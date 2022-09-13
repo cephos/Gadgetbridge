@@ -31,6 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiService;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitneo.AmazfitNeoFWHelper;
+import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
@@ -42,6 +43,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.Upd
 
 public class AmazfitNeoSupport extends MiBand5Support {
     private static final Logger LOG = LoggerFactory.getLogger(AmazfitNeoSupport.class);
+
+    private boolean heartRateRealtimeStarted = false;
+    private boolean heartRateTestStarted = false;
+    private byte heartRateRealtimeCount = 0;
 
     @Override
     protected boolean notificationHasExtraHeader() {
@@ -87,6 +92,70 @@ public class AmazfitNeoSupport extends MiBand5Support {
 
     @Override
     public boolean supportsHourlyChime() { return true; }
+
+    @Override
+    protected AmazfitNeoSupport setHeartrateSleepSupport(TransactionBuilder builder) {
+        final boolean enableHrSleepSupport = MiBandCoordinator.getHeartrateSleepSupport(gbDevice.getAddress());
+        LOG.info("Setting Amazfit Neo heartrate sleep support to " + enableHrSleepSupport);
+        writeToConfiguration(builder, new byte[] {0x06, 0x3c, 0x00, (byte) (enableHrSleepSupport ? 1 : 0 )});
+        return this;
+    }
+
+    @Override
+    public void onHeartRateTest() {
+        if (characteristicHRControlPoint == null) {
+            return;
+        }
+        try {
+            TransactionBuilder builder = performInitialized("HeartRateTest");
+            enableNotifyHeartRateMeasurements(true, builder);
+            builder.write(characteristicHRControlPoint, new byte[]{ 0x15, 0x01, 0x01 });
+            builder.queue(getQueue());
+            heartRateTestStarted = true;
+        } catch (IOException ex) {
+            LOG.error("Unable to read heart rate from Huami device", ex);
+        }
+    }
+
+    @Override
+    public void onEnableRealtimeHeartRateMeasurement(boolean enable) {
+        heartRateTestStarted = false;
+        if (characteristicHRControlPoint == null) {
+            return;
+        }
+        try {
+            TransactionBuilder builder = performInitialized("Enable realtime heart rate measurement");
+            enableNotifyHeartRateMeasurements(enable, builder);
+            if (enable) {
+                if (heartRateRealtimeStarted) {
+                    if(heartRateRealtimeCount >= 10) {
+                        builder.write(characteristicHRControlPoint, new byte[]{ 0x16 }); //send continue every 10 seconds
+                        heartRateRealtimeCount = 0;
+                    }
+                    heartRateRealtimeCount++;
+                }
+                else {
+                    builder.write(characteristicHRControlPoint, new byte[]{ 0x15, 0x01, 0x01 });
+                    heartRateRealtimeCount = 10; //sometimes first measurement times out, send first keep alive immediately
+                }
+                heartRateRealtimeStarted = true;
+            } else {
+                builder.write(characteristicHRControlPoint, new byte[] { 0x15, 0x01, 0x00 });
+                heartRateRealtimeStarted = false;
+            }
+            builder.queue(getQueue());
+            enableRealtimeSamplesTimer(enable);
+        } catch (IOException ex) {
+            LOG.error("Unable to enable realtime heart rate measurement", ex);
+        }
+    }
+
+    @Override
+    protected void handleHeartrate(byte[] value) {
+        super.handleHeartrate(value);
+        if (heartRateTestStarted)
+            onEnableRealtimeHeartRateMeasurement(false); //stop test after single measurement, disable HR notify
+    }
 
     @Override
     public HuamiFWHelper createFWHelper(Uri uri, Context context) throws IOException {

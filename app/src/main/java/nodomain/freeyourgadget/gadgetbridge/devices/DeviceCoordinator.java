@@ -28,11 +28,13 @@ import android.os.Build;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
+import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -139,7 +141,6 @@ public interface DeviceCoordinator {
      * @return the list of scan filters, may be empty
      */
     @NonNull
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     Collection<? extends ScanFilter> createBLEScanFilters();
 
     GBDevice createDevice(GBDeviceCandidate candidate);
@@ -448,4 +449,6 @@ public interface DeviceCoordinator {
     boolean supportsPowerOff();
 
     PasswordCapabilityImpl.Mode getPasswordCapability();
+
+    List<HeartRateCapability.MeasurementInterval> getHeartRateMeasurementIntervals();
 }

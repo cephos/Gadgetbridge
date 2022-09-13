@@ -55,12 +55,16 @@ public class HuamiConst {
     public static final String AMAZFIT_BAND5_NAME = "Amazfit Band 5";
     public static final String AMAZFIT_NEO_NAME = "Amazfit Neo";
     public static final String AMAZFIT_X = "Amazfit X";
+    public static final String AMAZFIT_GTS3_NAME = "Amazfit GTS 3";
 
+    public static final String XIAOMI_SMART_BAND7_NAME = "Xiaomi Smart Band 7";
 
     public static final String PREF_DISPLAY_ITEMS = "display_items";
+    public static final String PREF_ALL_DISPLAY_ITEMS = "all_display_items";
     public static final String PREF_DISPLAY_ITEMS_SORTABLE = "display_items_sortable";
     public static final String PREF_WORKOUT_ACTIVITY_TYPES_SORTABLE = "workout_activity_types_sortable";
     public static final String PREF_SHORTCUTS = "shortcuts";
+    public static final String PREF_ALL_SHORTCUTS = "all_shortcuts";
     public static final String PREF_SHORTCUTS_SORTABLE = "shortcuts_sortable";
     public static final String PREF_EXPOSE_HR_THIRDPARTY = "expose_hr_thirdparty";
     public static final String PREF_USE_CUSTOM_FONT = "use_custom_font";
