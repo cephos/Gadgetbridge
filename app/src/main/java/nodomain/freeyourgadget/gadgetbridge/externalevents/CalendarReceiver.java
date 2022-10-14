@@ -28,11 +28,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Calendar;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 import java.util.Hashtable;
 import java.util.List;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -191,14 +190,16 @@ public class CalendarReceiver extends BroadcastReceiver {
                 calendarEventSpec.timestamp = calendarEvent.getBeginSeconds();
                 calendarEventSpec.durationInSeconds = calendarEvent.getDurationSeconds(); //FIXME: leads to problems right now
                 if (calendarEvent.isAllDay()) {
-                    //force the all day events to begin at midnight and last a whole day
-                    OffsetDateTime o = OffsetDateTime.now();
-                    LocalDateTime d = LocalDateTime.ofEpochSecond(calendarEvent.getBegin()/1000, 0, o.getOffset());
-                    o = OffsetDateTime.of(d, o.getOffset()).withHour(0);
+                    //force the all day events to begin at midnight and last N whole days
+                    Calendar c = GregorianCalendar.getInstance();
+                    int numDays = (int)TimeUnit.DAYS.convert(calendarEvent.getEnd()-calendarEvent.getBegin(),
+                            TimeUnit.MILLISECONDS);
+                    c.setTimeInMillis(calendarEvent.getBegin());
+                    c.set(Calendar.HOUR_OF_DAY, 0);
                     //workaround for negative timezones
-                    if(o.getOffset().compareTo(ZoneOffset.UTC)>0) o = o.plusDays(1);
-                    calendarEventSpec.timestamp = (int)o.toEpochSecond();
-                    calendarEventSpec.durationInSeconds = 24 * 60 * 60;
+                    if(c.getTimeZone().getRawOffset()<0) c.add(Calendar.DAY_OF_MONTH, 1);
+                    calendarEventSpec.timestamp = (int) (c.getTimeInMillis() / 1000);
+                    calendarEventSpec.durationInSeconds = 24 * 60 * 60 * numDays;
                 }
                 calendarEventSpec.description = calendarEvent.getDescription();
                 calendarEventSpec.location = calendarEvent.getLocation();

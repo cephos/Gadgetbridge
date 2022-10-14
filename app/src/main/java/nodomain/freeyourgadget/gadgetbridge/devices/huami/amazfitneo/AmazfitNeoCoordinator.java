@@ -79,7 +79,17 @@ public class AmazfitNeoCoordinator extends HuamiCoordinator {
 
     @Override
     public boolean supportsActivityTracks() {
-        return true;
+        return false;
+    }
+
+    @Override
+    public int getWorldClocksSlotCount() {
+        return 20; // max in Zepp app
+    }
+
+    @Override
+    public int getWorldClocksLabelLength() {
+        return 3; // neo has 3 letter city codes
     }
 
     @Override
@@ -95,6 +105,7 @@ public class AmazfitNeoCoordinator extends HuamiCoordinator {
                 R.xml.devicesettings_heartrate_sleep_activity,
                 R.xml.devicesettings_goal_notification,
                 R.xml.devicesettings_timeformat,
+                R.xml.devicesettings_world_clocks,
                 R.xml.devicesettings_liftwrist_display,
                 R.xml.devicesettings_inactivity_dnd,
                 R.xml.devicesettings_hourly_chime,

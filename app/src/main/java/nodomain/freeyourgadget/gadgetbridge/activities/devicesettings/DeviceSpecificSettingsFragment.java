@@ -860,6 +860,7 @@ public class DeviceSpecificSettingsFragment extends PreferenceFragmentCompat imp
                 supportedSettings = ArrayUtils.addAll(supportedSettings, R.xml.devicesettings_chartstabs);
                 supportedSettings = ArrayUtils.addAll(supportedSettings, R.xml.devicesettings_device_card_activity_card_preferences);
             }
+            supportedSettings = ArrayUtils.add(supportedSettings, R.xml.devicesettings_settings_third_party_apps);
         } else if (applicationSpecificSettings.equals(DeviceSettingsActivity.MENU_ENTRY_POINTS.AUTH_SETTINGS)) { //auth settings screen
             supportedSettings = ArrayUtils.insert(0, supportedSettings, coordinator.getSupportedDeviceSpecificAuthenticationSettings());
             supportedSettings = ArrayUtils.addAll(supportedSettings, R.xml.devicesettings_pairingkey_explanation);
@@ -873,7 +874,11 @@ public class DeviceSpecificSettingsFragment extends PreferenceFragmentCompat imp
             if (supportedLanguages != null) {
                 supportedSettings = ArrayUtils.insert(0, supportedSettings, R.xml.devicesettings_language_generic);
             }
-            supportedSettings = ArrayUtils.addAll(supportedSettings, coordinator.getSupportedDeviceSpecificAuthenticationSettings());
+            final int[] supportedAuthSettings = coordinator.getSupportedDeviceSpecificAuthenticationSettings();
+            if (supportedAuthSettings != null && supportedAuthSettings.length > 0) {
+                supportedSettings = ArrayUtils.add(supportedSettings, R.xml.devicesettings_header_authentication);
+                supportedSettings = ArrayUtils.addAll(supportedSettings, supportedAuthSettings);
+            }
         }
 
         final DeviceSpecificSettingsCustomizer deviceSpecificSettingsCustomizer = coordinator.getDeviceSpecificSettingsCustomizer(device);

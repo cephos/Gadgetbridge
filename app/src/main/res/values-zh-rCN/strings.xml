@@ -299,7 +299,7 @@
     <string name="weeksteps_today_steps_description">今天的步数, 目标：%1$s</string>
     <string name="pref_title_dont_ack_transfer">不发送活动数据</string>
     <string name="pref_summary_dont_ack_transfers">如果活动数据未传输到设备，则不会被清除。 Gadgetbridge 与其他应用程序一起使用时很有用。</string>
-    <string name="pref_summary_keep_data_on_device">即使在同步之后，也会将活动数据保留在小米手环上。如果 Gadgetbridge 与其他应用程序一起使用，这将非常有用。</string>
+    <string name="pref_summary_keep_data_on_device">即使在同步之后，也会将活动数据保留在设备上。如果 Gadgetbridge 与其他应用程序一起使用，这将非常有用。</string>
     <string name="pref_title_low_latency_fw_update">使用低延迟模式进行固件更新</string>
     <string name="pref_summary_low_latency_fw_update">这可能对固件失败的设备有帮助。</string>
     <string name="live_activity_steps_history">步数历史</string>
@@ -1826,7 +1826,11 @@
 \n
 \n这可用于启动音乐应用程序并播放歌曲以及许多其他事情。
 \n
-\n请点击“%2$s”，然后点击“%1$s”并启用“允许显示在其他应用程序上”，然后点击“返回”返回到%1$s。</string>
+\n请点击“%2$s”，然后点击“%1$s”并启用“允许显示在其他应用程序上”，然后点击“返回”返回到%1$s。
+\n
+\n若需要停止 %1$s 询问权限，请进入“设置”，并取消“检查权限状态”。
+\n
+\n请确保 %1$s 已经给予了必要的权限。</string>
     <string name="pref_header_display">显示</string>
     <string name="pref_header_health">健康</string>
     <string name="pref_header_time">时间</string>
@@ -1900,4 +1904,53 @@
     <string name="devicetype_amazfit_gts3">跃我 GTS 3</string>
     <string name="kind_app">应用</string>
     <string name="menuitem_unknown_app">未知 (%s)</string>
+    <string name="pref_summary_overwrite_settings_on_connection">连接到手环时，覆盖其上的所有设置。</string>
+    <string name="pref_title_overwrite_settings_on_connection">连接时覆盖设置</string>
+    <string name="dismiss">解除</string>
+    <string name="devicetype_amazfit_gtr3">跃我 GTR 3</string>
+    <string name="fw_upgrade_notice_amazfit_gtr3">您即将安装 %s 固件在您的 跃我 GTR 3 上。
+\n
+\n您的手表将在安装了 .zip 文件后重启。
+\n
+\n风险自担！</string>
+    <string name="pref_summary_third_party_app_device_settings">允许其他已安装的应用通过意图修改设备设置。</string>
+    <string name="pref_title_third_party_app_device_settings">允许第三方应用修改设置</string>
+    <string name="activity_type_indoor_fitness">室内健身</string>
+    <string name="devicetype_super_cars">壳牌赛车</string>
+    <string name="activity_type_dance">跳舞</string>
+    <string name="activity_type_gymnastics">体操</string>
+    <string name="activity_type_kickboxing">跆拳道</string>
+    <string name="activity_type_pilates">普拉提运动</string>
+    <string name="activity_type_volleyball">排球</string>
+    <string name="activity_type_street_dance">街舞</string>
+    <string name="activity_type_stepper">爬楼梯</string>
+    <string name="activity_type_zumba">尊巴舞</string>
+    <string name="activity_type_hiit">高强度间歇训练</string>
+    <string name="activity_type_core_training">核心训练</string>
+    <string name="activity_type_stretching">拉伸</string>
+    <string name="activity_type_table_tennis">乒乓球</string>
+    <string name="activity_type_bowling">保龄球</string>
+    <string name="activity_type_boxing">拳击</string>
+    <string name="activity_type_indoor_ice_skating">室内滑冰</string>
+    <string name="watchface_setting_button_move_hands">移动手</string>
+    <string name="devicetype_amazfit_gtr_lite">跃我 GTR 青春版</string>
+    <string name="supercars_turbo_speed_label">涡轮增速</string>
+    <string name="supercars_lights_label">灯光</string>
+    <string name="abstract_chart_fragment_kind_rem_sleep">快速眼动睡眠</string>
+    <string name="pref_header_authentication">认证</string>
+    <string name="sports_activity_confirm_delete_title">删除 %d 活动</string>
+    <string name="sports_activity_confirm_delete_description">确定要删除 %d 活动吗？</string>
+    <string name="supercars_lights_blinking_label">闪烁</string>
+    <string name="HeartRateZones">心率区</string>
+    <string name="hrZoneWarmUp">热身运动</string>
+    <string name="hrZoneAerobic">有氧运动</string>
+    <string name="hrZoneAnaerobic">厌氧</string>
+    <string name="hrZoneExtreme">极端</string>
+    <string name="anaerobicTrainingEffect">厌氧效应</string>
+    <string name="currentWorkoutLoad">锻炼负荷</string>
+    <string name="maximumOxygenUptake">最大摄氧量</string>
+    <string name="hrZoneNa">不适用</string>
+    <string name="hrZoneFatBurn">脂肪燃烧</string>
+    <string name="TrainingEffect">培训效果</string>
+    <string name="aerobicTrainingEffect">有氧效应</string>
 </resources>

@@ -55,8 +55,8 @@ android {
         targetSdkVersion 29
 
         // Note: always bump BOTH versionCode and versionName!
-        versionName "0.70.0"
-        versionCode 215
+        versionName "0.71.2"
+        versionCode 218
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "GIT_HASH_SHORT", "\"${getGitHashShort()}\""
         buildConfigField "boolean", "INTERNET_ACCESS", "false"
@@ -199,17 +199,6 @@ android {
             includeAndroidResources = true
         }
     }
-    externalNativeBuild {
-        cmake {
-            path "src/main/c/CMakeLists.txt"
-            version "3.18.1"
-        }
-    }
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs'] // where libs is the name of the directory!
-        }
-    }
 }
 
 pmd {
@@ -248,6 +237,7 @@ dependencies {
     implementation "com.github.pfichtner:durationformatter:0.1.1"
     implementation "de.cketti.library.changelog:ckchangelog:1.2.2"
     implementation "net.e175.klaus:solarpositioning:0.0.9"
+    implementation "co.nstant.in:cbor:0.9"
     // use pristine greendao instead of our custom version, since our custom jitpack-packaged
     // version contains way too much and our custom patches are in the generator only.
     implementation "org.greenrobot:greendao:2.2.1"
@@ -258,6 +248,16 @@ dependencies {
     implementation 'com.github.wax911:android-emojify:0.1.7'
     implementation 'com.google.protobuf:protobuf-javalite:3.10.0'
     implementation 'com.android.volley:volley:1.2.1'
+
+// NON-FOSS dependencies
+//    implementation('androidx.core:core-google-shortcuts:1.0.1') {
+//        exclude group:'com.google.android.gms'
+//        exclude group:'com.google.firebase'
+//    }
+
+    // JSR-310 timezones backport for Android, since we're still API 21
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.4.0'
+    testImplementation 'org.threeten:threetenbp:1.6.0'
 
     // Android SDK bundles org.json, but we need an actual implementation to replace the stubs in tests
     testImplementation 'org.json:json:20180813'
@@ -342,6 +342,17 @@ tasks.withType(SpotBugsTask) {
     }
 }
 
+task cleanGenerated(type: Delete) {
+    delete fileTree('src/main/java/nodomain/freeyourgadget/gadgetbridge/proto') {
+        include '**/*.java'
+    }
+    delete fileTree('src/main/java/nodomain/freeyourgadget/gadgetbridge/entities') {
+        include '**/*.java'
+        exclude '**/Abstract*.java'
+    }
+}
+
+tasks.clean.dependsOn(tasks.cleanGenerated)
 
 protobuf {
     protoc {
@@ -350,7 +361,12 @@ protobuf {
     generateProtoTasks {
         all().each { task ->
             task.builtins {
-                java { option 'lite' }
+                java {
+                    option 'lite'
+                    // Uncomment this to get Android Studio to recognize the generated files
+                    // this makes it think that all src files are generated though...
+                    //outputSubDir = '../../../../../src/main/java/'
+                }
             }
         }
     }

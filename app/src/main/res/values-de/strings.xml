@@ -290,7 +290,7 @@
     <string name="weeksteps_today_steps_description">Schritte heute, Ziel: %1$s</string>
     <string name="pref_title_dont_ack_transfer">Übertragung der Aktivitätsdaten nicht bestätigen (ACK)</string>
     <string name="pref_summary_dont_ack_transfers">Ohne ACK (Bestätigung), löscht das Band die Aktivitätsdaten nicht. Nützlich, wenn GB zusammen mit anderen Apps verwendet wird.</string>
-    <string name="pref_summary_keep_data_on_device">Aktivitätsdaten verbleiben auf dem Mi Band, auch nach der Synchronisierung. Nützlich, wenn Gadgetbridge zusammen mit anderen Apps verwendet wird.</string>
+    <string name="pref_summary_keep_data_on_device">Aktivitätsdaten verbleiben auf dem Gerät, auch nach der Synchronisierung. Nützlich, wenn Gadgetbridge zusammen mit anderen Apps verwendet wird.</string>
     <string name="pref_title_low_latency_fw_update">Verwende den Low-Latency-Modus für Firmwareaktualisierung</string>
     <string name="pref_summary_low_latency_fw_update">Dies kann bei Geräten helfen, bei denen Firmwareupdates fehlschlagen.</string>
     <string name="live_activity_steps_history">Schrittverlauf</string>
@@ -1637,7 +1637,7 @@
     <string name="pref_summary_banglejs_text_bitmap">Wenn ein Wort nicht mit der Schriftart der Uhr gerendert werden kann, in Gadgetbridge eine Bitmap rendern und die Bitmap auf der Uhr anzeigen</string>
     <string name="pref_title_device_internet_access">Internetzugang zulassen</string>
     <string name="pref_summary_device_internet_access">Apps auf diesem Gerät Internetzugriff erlauben</string>
-    <string name="pref_title_device_intents">Absichten erlauben</string>
+    <string name="pref_title_device_intents">Eingriffe erlauben</string>
     <string name="pref_summary_device_intents">Bangle.js-Watch-Apps erlauben, Android-Intents zu senden und anderen Apps auf Android (wie Tasker) erlauben, Daten mit dem com.banglejs.uart.tx-Intent an Bangle.js zu senden. Benötigt die Berechtigung zum Anzeigen über andere Apps, um im Hintergrund zu arbeiten.</string>
     <string name="pref_screen_vibration_patterns_title">Vibrationsmuster</string>
     <string name="pref_screen_vibration_patterns_summary">Vibrationsmuster für verschiedene Benachrichtigungen konfigurieren</string>
@@ -1829,11 +1829,15 @@
     <string name="prefs_hourly_chime_summary">Die Uhr piept einmal pro Stunde</string>
     <string name="step_streaks_achievements_sharing_message">Meine täglichen Schritterfolge!</string>
     <string name="step_streaks_achievements_sharing_title">Schritterfolge</string>
-    <string name="permission_display_over_other_apps">%1$s benötigt die Berechtigung, über andere Apps angezeigt zu werden, damit Bangle.js-Watch Aktivitäten mit dem Zielsetzung starten kann, wenn %1$s im Hintergrund ist.
+    <string name="permission_display_over_other_apps">%1$s benötigt die Berechtigung, über andere Apps angezeigt zu werden, damit Bangle.js-Watch Aktivitäten mit Intents starten kann, wenn %1$s im Hintergrund ist.
 \n
 \nDies kann verwendet werden, um eine Musik-App zu starten und einen Song abzuspielen und viele andere Dinge.
 \n
-\nTippe auf \'%2$s\' und dann auf \'%1$s\', aktiviere \'Anzeige über andere Apps zulassen\' und tippe dann auf \'Zurück\', um zu %1$s zurückzukehren.</string>
+\nTippe auf \'%2$s\' und dann auf \'%1$s\', aktiviere \'Anzeige über andere Apps zulassen\' und tippe dann auf \'Zurück\', um zu %1$s zurückzukehren.
+\n
+\nUm zu verhindern, dass %1$s nach Berechtigungen fragt, gehe zu \"Einstellungen\" und entferne das Häkchen bei \"Berechtigungsstatus prüfen\".
+\n
+\nVergewissere dich, dass du %1$s die erforderlichen Berechtigungen erteilst, damit es so funktioniert, wie du es erwartest.</string>
     <string name="fw_upgrade_notice_miband7">Du bist dabei, die Firmware %s auf dein Xiaomi Smart Band 7 zu installieren.
 \n
 \nDein Band wird nach der Installation der .zip-Datei neu starten.
@@ -1897,4 +1901,63 @@
     <string name="devicetype_flipper_zero">Flipper zero</string>
     <string name="activity_prefs_summary_allow_bluetooth_intent_api">Steuerung der Bluetooth-Verbindung über Intent-API</string>
     <string name="activity_prefs_allow_bluetooth_intent_api">Bluetooth Intent-API</string>
+    <string name="fw_upgrade_notice_amazfit_gts3">Du bist dabei, die Firmware %s auf deine Amazfit GTS 3 zu installieren.
+\n
+\nDeine Uhr wird nach der Installation der .zip Datei neu starten.
+\n
+\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="pref_title_notification_prefer_long_text">Langen Benachrichtigungstext bevorzugen</string>
+    <string name="pref_summary_notification_prefer_long_text">Falls verfügbar, langen Benachrichtigungstext an das Gerät senden</string>
+    <string name="devicetype_amazfit_gts3">Amazfit GTS 3</string>
+    <string name="menuitem_unknown_app">Unbekannt (%s)</string>
+    <string name="pref_summary_overwrite_settings_on_connection">Beim Verbinden mit dem Band überschreibst du alle Einstellungen des Bandes.</string>
+    <string name="pref_title_overwrite_settings_on_connection">Überschreiben von Einstellungen bei der Verbindung</string>
+    <string name="kind_app">App</string>
+    <string name="dismiss">Ablehnen</string>
+    <string name="fw_upgrade_notice_amazfit_gtr3">Du bist dabei, die Firmware %s auf deine Amazfit GTR 3 zu installieren.
+\n
+\nDeine Uhr wird nach der Installation der .zip Datei neu starten.
+\n
+\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="devicetype_amazfit_gtr3">Amazfit GTR 3</string>
+    <string name="pref_summary_third_party_app_device_settings">Erlaube anderen installierten Apps von Drittanbietern, Geräteeinstellungen über Intents festzulegen.</string>
+    <string name="pref_title_third_party_app_device_settings">Ändern von Einstellungen durch App von Drittanbietern zulassen</string>
+    <string name="activity_type_dance">Tanzen</string>
+    <string name="activity_type_indoor_fitness">Indoor-Fitness</string>
+    <string name="activity_type_gymnastics">Gymnastik</string>
+    <string name="activity_type_hiit">Hochintensives Intervalltraining</string>
+    <string name="activity_type_core_training">Core-Training</string>
+    <string name="activity_type_stretching">Dehnen</string>
+    <string name="activity_type_stepper">Stepper</string>
+    <string name="activity_type_pilates">Pilates</string>
+    <string name="activity_type_volleyball">Volleyball</string>
+    <string name="activity_type_table_tennis">Tischtennis</string>
+    <string name="activity_type_bowling">Bowling</string>
+    <string name="activity_type_zumba">Zumba</string>
+    <string name="activity_type_indoor_ice_skating">Indoor-Eislaufen</string>
+    <string name="devicetype_amazfit_gtr_lite">Amazfit GTR Lite</string>
+    <string name="activity_type_street_dance">Street Dance</string>
+    <string name="activity_type_kickboxing">Kickboxen</string>
+    <string name="activity_type_boxing">Boxen</string>
+    <string name="abstract_chart_fragment_kind_rem_sleep">REM-Schlaf</string>
+    <string name="supercars_lights_label">Lichter</string>
+    <string name="supercars_lights_blinking_label">Blinken</string>
+    <string name="sports_activity_confirm_delete_title">%d Aktivitäten löschen</string>
+    <string name="supercars_turbo_speed_label">Turbo-Geschwindigkeit</string>
+    <string name="pref_header_authentication">Authentifizierung</string>
+    <string name="sports_activity_confirm_delete_description">Bist du sicher, dass du %d Aktivitäten löschen möchtest\?</string>
+    <string name="devicetype_super_cars">Shell Racing</string>
+    <string name="watchface_setting_button_move_hands">Zeiger bewegen</string>
+    <string name="aerobicTrainingEffect">Aerober Effekt</string>
+    <string name="HeartRateZones">Herzfrequenzzonen</string>
+    <string name="hrZoneNa">K.A.</string>
+    <string name="hrZoneAerobic">Aerob</string>
+    <string name="hrZoneWarmUp">Aufwärmen</string>
+    <string name="hrZoneAnaerobic">Anaerob</string>
+    <string name="hrZoneExtreme">Extrem</string>
+    <string name="currentWorkoutLoad">Trainingsbelastung</string>
+    <string name="hrZoneFatBurn">Fettverbrennung</string>
+    <string name="anaerobicTrainingEffect">Anaerober Effekt</string>
+    <string name="TrainingEffect">Trainingseffekt</string>
+    <string name="maximumOxygenUptake">Maximale Sauerstoffaufnahme</string>
 </resources>

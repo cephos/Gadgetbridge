@@ -23,12 +23,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Base64;
 import android.widget.Toast;
 
@@ -51,7 +51,6 @@ import org.xml.sax.InputSource;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
@@ -64,7 +63,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.SimpleTimeZone;
@@ -77,8 +75,6 @@ import io.wax911.emojify.EmojiUtils;
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
@@ -94,7 +90,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.CalendarSyncState;
 import nodomain.freeyourgadget.gadgetbridge.entities.CalendarSyncStateDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
@@ -197,7 +192,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
                         break;
                     }
                     case GBDevice.ACTION_DEVICE_CHANGED: {
-                        LOG.info("ACTION_DEVICE_CHANGED " + gbDevice.getStateString());
+                        LOG.info("ACTION_DEVICE_CHANGED " + (gbDevice!=null ? gbDevice.getStateString():""));
                         addReceiveHistory("\n================================================\nACTION_DEVICE_CHANGED "+gbDevice.getStateString()+" "+(new SimpleDateFormat("yyyy-mm-dd hh:mm:ss")).format(Calendar.getInstance().getTime())+"\n================================================\n");
                     }
                 }
@@ -568,6 +563,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
                         else if (m.equals("post")) method = Request.Method.POST;
                         else if (m.equals("head")) method = Request.Method.HEAD;
                         else if (m.equals("put")) method = Request.Method.PUT;
+                        else if (m.equals("patch")) method = Request.Method.PATCH;
                         else if (m.equals("delete")) method = Request.Method.DELETE;
                         else uartTxJSONError("http", "Unknown HTTP method "+m,id);
                     }
@@ -640,11 +636,10 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
 
                         @Override
                         public Map<String, String> getHeaders() throws AuthFailureError {
-                            Map<String, String> h = super.getHeaders();
+                            // clone the data from super.getHeaders() so we can write to it
+                            Map<String, String> h = new HashMap<>(super.getHeaders());
                             if (headers != null) {
-                                Iterator<String> iter = headers.keySet().iterator();
-                                while (iter.hasNext()) {
-                                    String key = iter.next();
+                                for (String key : headers.keySet()) {
                                     String value = headers.get(key);
                                     h.put(key, value);
                                 }
@@ -663,41 +658,60 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
             case "intent": {
                 Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()));
                 if (devicePrefs.getBoolean(PREF_DEVICE_INTENTS, false)) {
+                    String target = json.has("target") ? json.getString("target") : "broadcastreceiver";
                     Intent in = new Intent();
-                    if (json.has("action")) in.setAction((String)json.get("action"));
-                    if (json.has("category")) in.addCategory((String)json.get("category"));
-                    if (json.has("mimetype")) in.setType((String)json.get("mimetype"));
-                    if (json.has("data")) in.setData(Uri.parse((String)json.get("data")));
-                    if (json.has("package") && !json.has("class")) in.setPackage((String)json.getString("package"));
-                    if (json.has("package") && json.has("class")) in.setClassName((String)json.getString("package"), (String)json.getString("class"));
-                    String target = "";
-                    if (json.has("target"))  target = (String)json.get("target");
-                    JSONObject extra = new JSONObject();
-                    if (json.has("extra")) extra = json.getJSONObject("extra");
-                    if (extra != null) {
+                    if (json.has("action")) in.setAction(json.getString("action"));
+                    if (json.has("flags")) {
+                        JSONArray flags = json.getJSONArray("flags");
+                        for (int i = 0; i < flags.length(); i++) {
+                            in = addIntentFlag(in, flags.getString(i));
+                        }
+                    }
+                    if (json.has("categories")) {
+                        JSONArray categories = json.getJSONArray("categories");
+                        for (int i = 0; i < categories.length(); i++) {
+                            in.addCategory(categories.getString(i));
+                        }
+                    }
+                    if (json.has("package") && !json.has("class")) {
+                        in = json.getString("package").equals("gadgetbridge") ?
+                                in.setPackage(this.getContext().getPackageName()) :
+                                in.setPackage(json.getString("package"));
+                    }
+                    if (json.has("package") && json.has("class")) {
+                        in = json.getString("package").equals("gadgetbridge") ?
+                                in.setClassName(this.getContext().getPackageName(), json.getString("class")) :
+                                in.setClassName(json.getString("package"), json.getString("class"));
+                    }
+
+                    if (json.has("mimetype")) in.setType(json.getString("mimetype"));
+                    if (json.has("data")) in.setData(Uri.parse(json.getString("data")));
+                    if (json.has("extra")) {
+                        JSONObject extra = json.getJSONObject("extra");
                         Iterator<String> iter = extra.keys();
                         while (iter.hasNext()) {
                             String key = iter.next();
-                            in.putExtra(key, extra.getString(key));
+                            in.putExtra(key, extra.getString(key)); // Should this be implemented for other types, e.g. extra.getInt(key)? Or will this always work even if receiving ints/doubles/etc.?
                         }
                     }
-                    LOG.info("Sending intent: " + String.valueOf(in));
+                    LOG.info("Executing intent:\n\t" + String.valueOf(in) + "\n\tTargeting: " + target);
+                    //GB.toast(getContext(), String.valueOf(in), Toast.LENGTH_LONG, GB.INFO);
                     switch (target) {
-                        case "":
-                            // This case should make sure intents matched to the original Bangle.js Gadgetbridge intents implementation still work.
-                            this.getContext().getApplicationContext().sendBroadcast(in);
-                            break;
                         case "broadcastreceiver":
-                            this.getContext().getApplicationContext().sendBroadcast(in);
+                            getContext().sendBroadcast(in);
                             break;
-                        case "activity":
-                            in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            this.getContext().getApplicationContext().startActivity(in);
+                        case "activity": // See wakeActivity.java if you want to start activities from under the keyguard/lock sceen.
+                            getContext().startActivity(in);
                             break;
-                        case "service": // Targeting 'Service' is not yet implemented.
-                            LOG.info("Targeting 'Service' not yet implemented.");
-                            GB.toast(getContext(), "Targeting '"+target+"' is not yet implemented.", Toast.LENGTH_LONG, GB.INFO);
-                            // Use jobInfo() and jobScheduler to program this part? Context.startService()? Context.bindService()?
+                        case "service": // Should this be implemented differently, e.g. workManager?
+                            getContext().startService(in);
+                            break;
+                        case "foregroundservice": // Should this be implemented differently, e.g. workManager?
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                getContext().startForegroundService(in);
+                            } else {
+                                getContext().startService(in);
+                            }
                             break;
                         default:
                             LOG.info("Targeting '"+target+"' isn't implemented or doesn't exist.");
@@ -759,6 +773,19 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
                 LOG.info("UART RX JSON packet type '"+packetType+"' not understood.");
             }
         }
+    }
+
+    private Intent addIntentFlag(Intent intent, String flag) {
+        try {
+            final Class<Intent> intentClass = Intent.class;
+            final Field flagField = intentClass.getDeclaredField(flag);
+            intent.addFlags(flagField.getInt(null));
+        } catch (final Exception e) {
+            // The user sent an invalid flag
+            LOG.info("Flag '"+flag+"' isn't implemented or doesn't exist and was therefore not set.");
+            GB.toast(getContext(), "Flag '"+flag+"' isn't implemented or it doesn't exist and was therefore not set.", Toast.LENGTH_LONG, GB.INFO);
+        }
+        return intent;
     }
 
     @Override
@@ -839,7 +866,10 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
         if (EmojiUtils.getAllEmojis()==null)
             EmojiManager.initEmojiData(GBApplication.getContext());
         for(Emoji emoji : EmojiUtils.getAllEmojis())
-            if (word.contains(emoji.getEmoji())) hasEmoji = true;
+            if (word.contains(emoji.getEmoji())) {
+                hasEmoji = true;
+                break;
+            }
         // if we had emoji, ensure we create 3 bit color (not 1 bit B&W)
         return "\0"+bitmapToEspruinoString(textToBitmap(word), hasEmoji ? BangleJSBitmapStyle.RGB_3BPP_TRANSPARENT : BangleJSBitmapStyle.MONOCHROME_TRANSPARENT);
     }
@@ -887,7 +917,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
             for (int i=0;i<notificationSpec.attachedActions.size();i++) {
                 NotificationSpec.Action action = notificationSpec.attachedActions.get(i);
                 if (action.type==NotificationSpec.Action.TYPE_WEARABLE_REPLY)
-                    mNotificationReplyAction.add(notificationSpec.getId(), new Long(((long)notificationSpec.getId()<<4) + i + 1)); // wow. This should be easier!
+                    mNotificationReplyAction.add(notificationSpec.getId(), ((long) notificationSpec.getId() << 4) + i + 1);
             }
         try {
             JSONObject o = new JSONObject();
@@ -964,7 +994,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
             o.put("t", "call");
             String cmdName = "";
             try {
-                Field fields[] = callSpec.getClass().getDeclaredFields();
+                Field[] fields = callSpec.getClass().getDeclaredFields();
                 for (Field field : fields)
                     if (field.getName().startsWith("CALL_") && field.getInt(callSpec) == callSpec.command)
                         cmdName = field.getName().substring(5).toLowerCase();
@@ -1090,7 +1120,6 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
                 GB.toast(getContext(), "Log written to "+filename, Toast.LENGTH_LONG, GB.INFO);
             } catch (IOException e) {
                 LOG.warn("Could not write to file", e);
-                return;
             }
         }
     }
@@ -1273,9 +1302,9 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
         int height = bitmap.getHeight();
         int bpp = (style==BangleJSBitmapStyle.RGB_3BPP ||
                    style==BangleJSBitmapStyle.RGB_3BPP_TRANSPARENT) ? 3 : 1;
-        byte pixels[] = new byte[width * height];
+        byte[] pixels = new byte[width * height];
         final byte PIXELCOL_TRANSPARENT = -1;
-        final int ditherMatrix[] = {1*16,5*16,7*16,3*16}; // for bayer dithering
+        final int[] ditherMatrix = {1*16,5*16,7*16,3*16}; // for bayer dithering
         // if doing RGB_3BPP_TRANSPARENT, check image to see if it's transparent
         // MONOCHROME_TRANSPARENT is handled later on...
         boolean allowTransparency = (style == BangleJSBitmapStyle.RGB_3BPP_TRANSPARENT);
@@ -1283,7 +1312,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
         byte transparentColorIndex = 0;
         /* Work out what colour index each pixel should be and write to pixels.
          Also figure out if we're transparent at all, and how often each color is used */
-        int colUsage[] = new int[8];
+        int[] colUsage = new int[8];
         int n = 0;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -1334,7 +1363,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
         }
         // Write the header
         int headerLen = isTransparent ? 4 : 3;
-        byte bmp[] = new byte[(((height * width * bpp) + 7) >> 3) + headerLen];
+        byte[] bmp = new byte[(((height * width * bpp) + 7) >> 3) + headerLen];
         bmp[0] = (byte)width;
         bmp[1] = (byte)height;
         bmp[2] = (byte)(bpp + (isTransparent?128:0));

@@ -75,7 +75,6 @@ import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.Huami20
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -103,12 +102,10 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
@@ -130,6 +127,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miband.DoNotDisturb;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.VibrationProfile;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
@@ -159,7 +157,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
-import nodomain.freeyourgadget.gadgetbridge.util.MapUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
@@ -196,7 +193,7 @@ public abstract class Huami2021Support extends HuamiSupport {
     public void onTestNewFunction() {
         try {
             final TransactionBuilder builder = performInitialized("test");
-            findBandOneShot(builder);
+
             builder.queue(getQueue());
         } catch (final Exception e) {
             LOG.error("Failed to test new function", e);
@@ -212,19 +209,21 @@ public abstract class Huami2021Support extends HuamiSupport {
         writeToChunked2021("ack find phone", CHUNKED2021_ENDPOINT_FIND_DEVICE, cmd, true);
     }
 
-    protected void findBandOneShot(final TransactionBuilder builder) {
+    @Override
+    protected void sendFindDeviceCommand(boolean start) {
+        if (!start) {
+            return;
+        }
+
         LOG.info("Sending one-shot find band");
 
-        writeToChunked2021(builder, CHUNKED2021_ENDPOINT_FIND_DEVICE, new byte[]{FIND_BAND_ONESHOT}, true);
-    }
-
-    @Override
-    public void onFindDevice(final boolean start) {
-        // FIXME: This does not work while band is in DND (#752)
-        final CallSpec callSpec = new CallSpec();
-        callSpec.command = start ? CallSpec.CALL_INCOMING : CallSpec.CALL_END;
-        callSpec.name = "Gadgetbridge";
-        onSetCallState(callSpec);
+        try {
+            final TransactionBuilder builder = performInitialized("find huami 2021");
+            writeToChunked2021(builder, CHUNKED2021_ENDPOINT_FIND_DEVICE, new byte[]{FIND_BAND_ONESHOT}, true);
+            builder.queue(getQueue());
+        } catch (IOException e) {
+            LOG.error("error while sending find Huami 2021 device command", e);
+        }
     }
 
     @Override
@@ -1049,7 +1048,7 @@ public abstract class Huami2021Support extends HuamiSupport {
 
         try {
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            baos.write((byte) 0x09);
+            baos.write(Huami2021Service.WEATHER_CMD_SET_DEFAULT_LOCATION);
             baos.write((byte) 0x02); // ? 2 for current, 4 for default
             baos.write((byte) 0x00); // ?
             baos.write((byte) 0x00); // ?
@@ -1257,13 +1256,13 @@ public abstract class Huami2021Support extends HuamiSupport {
 
         if (isShortcuts) {
             menuType = Huami2021Service.DISPLAY_ITEMS_SHORTCUTS;
-            allSettings = prefs.getList(HuamiConst.PREF_ALL_SHORTCUTS, Collections.<String>emptyList());
-            enabledList = prefs.getList(HuamiConst.PREF_SHORTCUTS_SORTABLE, Collections.<String>emptyList());
+            allSettings = new ArrayList<>(prefs.getList(HuamiConst.PREF_ALL_SHORTCUTS, Collections.emptyList()));
+            enabledList = new ArrayList<>(prefs.getList(HuamiConst.PREF_SHORTCUTS_SORTABLE, Collections.emptyList()));
             LOG.info("Setting shortcuts");
         } else {
             menuType = Huami2021Service.DISPLAY_ITEMS_MENU;
-            allSettings = prefs.getList(HuamiConst.PREF_ALL_DISPLAY_ITEMS, Collections.<String>emptyList());
-            enabledList = prefs.getList(HuamiConst.PREF_DISPLAY_ITEMS_SORTABLE, Collections.<String>emptyList());
+            allSettings = new ArrayList<>(prefs.getList(HuamiConst.PREF_ALL_DISPLAY_ITEMS, Collections.emptyList()));
+            enabledList = new ArrayList<>(prefs.getList(HuamiConst.PREF_DISPLAY_ITEMS_SORTABLE, Collections.emptyList()));
             LOG.info("Setting menu items");
         }
 
@@ -1720,6 +1719,9 @@ public abstract class Huami2021Support extends HuamiSupport {
             case CHUNKED2021_ENDPOINT_ICONS:
                 handle2021Icons(payload);
                 return;
+            case CHUNKED2021_ENDPOINT_WEATHER:
+                handle2021Weather(payload);
+                return;
             case CHUNKED2021_ENDPOINT_WORKOUT:
                 handle2021Workout(payload);
                 return;
@@ -2024,14 +2026,18 @@ public abstract class Huami2021Support extends HuamiSupport {
             case WORKOUT_CMD_APP_OPEN:
                 final Huami2021WorkoutTrackActivityType activityType = Huami2021WorkoutTrackActivityType.fromCode(payload[3]);
                 final boolean workoutNeedsGps = (payload[2] == 1);
+                final int activityKind;
 
                 if (activityType == null) {
                     LOG.warn("Unknown workout activity type {}", String.format("0x%x", payload[3]));
+                    activityKind = ActivityKind.TYPE_UNKNOWN;
+                } else {
+                    activityKind = activityType.toActivityKind();
                 }
 
                 LOG.info("Workout starting on band: {}, needs gps = {}", activityType, workoutNeedsGps);
 
-                onWorkoutOpen(workoutNeedsGps);
+                onWorkoutOpen(workoutNeedsGps, activityKind);
                 return;
             case WORKOUT_CMD_STATUS:
                 switch (payload[1]) {
@@ -2229,9 +2235,16 @@ public abstract class Huami2021Support extends HuamiSupport {
             final Huami2021Weather.Response response = Huami2021Weather.handleHttpRequest(path, query);
 
             if (response != null) {
-                replyHttpSuccess(requestId, response.toJson());
-                return;
+                replyHttpSuccess(requestId, 200, response.toJson());
+            } else {
+                final Huami2021Weather.Response notFoundResponse = new Huami2021Weather.ErrorResponse(
+                        -2001,
+                        "Not found"
+                );
+                replyHttpSuccess(requestId, 404, notFoundResponse.toJson());
             }
+
+            return;
         }
 
         LOG.error("Unhandled URL {}", url);
@@ -2265,8 +2278,8 @@ public abstract class Huami2021Support extends HuamiSupport {
         writeToChunked2021("http reply no internet", Huami2021Service.CHUNKED2021_ENDPOINT_HTTP, cmd, true);
     }
 
-    private void replyHttpSuccess(final byte requestId, final String content) {
-        LOG.debug("Replying with success to http request {} with {}", requestId, content);
+    private void replyHttpSuccess(final byte requestId, final int status, final String content) {
+        LOG.debug("Replying with http {} request {} with {}", status, requestId, content);
 
         final byte[] contentBytes = content.getBytes(StandardCharsets.UTF_8);
         final ByteBuffer buf = ByteBuffer.allocate(8 + contentBytes.length);
@@ -2275,7 +2288,7 @@ public abstract class Huami2021Support extends HuamiSupport {
         buf.put((byte) 0x02);
         buf.put(requestId);
         buf.put(HTTP_RESPONSE_SUCCESS);
-        buf.put((byte) 0xc8); // ?
+        buf.put((byte) status);
         buf.putInt(contentBytes.length);
         buf.put(contentBytes);
 
@@ -2424,6 +2437,16 @@ public abstract class Huami2021Support extends HuamiSupport {
                 return;
             default:
                 LOG.warn("Unexpected icons byte {}", String.format("0x%02x", payload[0]));
+        }
+    }
+
+    protected void handle2021Weather(final byte[] payload) {
+        switch (payload[0]) {
+            case WEATHER_CMD_DEFAULT_LOCATION_ACK:
+                LOG.info("Weather default location ACK, status = {}", payload[1]);
+                return;
+            default:
+                LOG.warn("Unexpected weather byte {}", String.format("0x%02x", payload[0]));
         }
     }
 

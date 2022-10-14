@@ -56,6 +56,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitgtr.Ama
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitgtr.AmazfitGTRSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitgtr2.AmazfitGTR2Support;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitgtr2.AmazfitGTR2eSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitgtr3.AmazfitGTR3Support;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitgts.AmazfitGTSSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitgts2.AmazfitGTS2MiniSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.amazfitgts2.AmazfitGTS2Support;
@@ -98,6 +99,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.roidmi.RoidmiSupport
 import nodomain.freeyourgadget.gadgetbridge.service.devices.smaq2oss.SMAQ2OSSSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.SonyHeadphonesSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sonyswr12.SonySWR12DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.supercars.SuperCarsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.tlw64.TLW64Support;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.um25.Support.UM25Support;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.vesc.VescDeviceSupport;
@@ -184,6 +186,8 @@ public class DeviceSupportFactory {
                 return new ServiceDeviceSupport(new MiBand6Support());
             case AMAZFITGTS3:
                 return new ServiceDeviceSupport(new AmazfitGTS3Support());
+            case AMAZFITGTR3:
+                return new ServiceDeviceSupport(new AmazfitGTR3Support());
             case MIBAND7:
                 return new ServiceDeviceSupport(new MiBand7Support());
             case AMAZFITBIP:
@@ -330,6 +334,8 @@ public class DeviceSupportFactory {
                 return new ServiceDeviceSupport(new BinarySensorSupport());
             case FLIPPER_ZERO:
                 return new ServiceDeviceSupport(new FlipperZeroSupport());
+            case SUPER_CARS:
+                    return new ServiceDeviceSupport(new SuperCarsSupport());
         }
         return null;
     }

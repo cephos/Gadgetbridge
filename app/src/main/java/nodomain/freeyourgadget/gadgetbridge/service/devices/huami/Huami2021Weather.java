@@ -20,21 +20,16 @@ import android.location.Location;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 
 import net.e175.klaus.solarpositioning.DeltaT;
 import net.e175.klaus.solarpositioning.SPA;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 
-import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -58,7 +53,7 @@ public class Huami2021Weather {
     private static final Gson GSON = new GsonBuilder()
             .serializeNulls()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ") // for pubTimes
-            .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
+            //.registerTypeAdapter(LocalDate.class, new LocalDateSerializer()) // Requires API 26
             .create();
 
     public static Response handleHttpRequest(final String path, final Map<String, String> query) {
@@ -106,6 +101,24 @@ public class Huami2021Weather {
         }
     }
 
+    public static class ErrorResponse extends Response {
+        private final int code;
+        private final String message;
+
+        public ErrorResponse(final int code, final String message) {
+            this.code = code;
+            this.message = message;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
+
     public static abstract class Response {
         public String toJson() {
             return GSON.toJson(this);
@@ -121,50 +134,71 @@ public class Huami2021Weather {
     // locationKey=00.000,-0.000,xiaomi_accu:000000
     public static class ForecastResponse extends Response {
         public Date pubTime;
-        public List<Object> humidity = new ArrayList<>();
+        public List<String> humidity = new ArrayList<>();
         public List<Range> temperature = new ArrayList<>();
         public List<Range> weather = new ArrayList<>();
         public List<Range> windDirection = new ArrayList<>();
         public List<Range> sunRiseSet = new ArrayList<>();
         public List<Range> windSpeed = new ArrayList<>();
-        public List<Object> moonRiseSet = new ArrayList<>();
+        public Object moonRiseSet = new Object(); // MoonRiseSet
         public List<Object> airQualities = new ArrayList<>();
 
         public ForecastResponse(final WeatherSpec weatherSpec, final int days) {
+            final int actualDays = Math.min(weatherSpec.forecasts.size(), days - 1); // leave one slot for the first day
+
             pubTime = new Date(weatherSpec.timestamp * 1000L);
 
             final Calendar calendar = GregorianCalendar.getInstance();
-            calendar.setTime(new Date(weatherSpec.timestamp * 1000L));
+            calendar.setTime(pubTime);
 
-            // TODO: We should send sunrise on the same location as the weather
-            final SimpleDateFormat sunRiseSetSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT);
             final Location lastKnownLocation = new CurrentPosition().getLastKnownLocation();
             final GregorianCalendar sunriseDate = new GregorianCalendar();
             sunriseDate.setTime(calendar.getTime());
 
-            for (int i = 0; i < Math.min(weatherSpec.forecasts.size(), days); i++) {
+            // First one is for the current day
+            temperature.add(new Range(weatherSpec.todayMinTemp - 273, weatherSpec.todayMaxTemp - 273));
+            final String currentWeatherCode = String.valueOf(HuamiWeatherConditions.mapToAmazfitBipWeatherCode(weatherSpec.currentConditionCode) & 0xff);
+            weather.add(new Range(currentWeatherCode, currentWeatherCode));
+            sunRiseSet.add(getSunriseSunset(sunriseDate, lastKnownLocation));
+            sunriseDate.add(Calendar.DAY_OF_MONTH, 1);
+            windDirection.add(new Range(0, 0));
+            windSpeed.add(new Range(0, 0));
+
+            for (int i = 0; i < actualDays; i++) {
                 final WeatherSpec.Forecast forecast = weatherSpec.forecasts.get(i);
                 temperature.add(new Range(forecast.minTemp - 273, forecast.maxTemp - 273));
-                final String weatherCode = String.valueOf(HuamiWeatherConditions.mapToAmazfitBipWeatherCode(forecast.conditionCode) & 0xff); // is it?
+                final String weatherCode = String.valueOf(HuamiWeatherConditions.mapToAmazfitBipWeatherCode(forecast.conditionCode) & 0xff);
                 weather.add(new Range(weatherCode, weatherCode));
 
-                final GregorianCalendar[] sunriseTransitSet = SPA.calculateSunriseTransitSet(
-                        sunriseDate,
-                        lastKnownLocation.getLatitude(),
-                        lastKnownLocation.getLongitude(),
-                        DeltaT.estimate(sunriseDate)
-                );
-
-                final String from = sunRiseSetSdf.format(sunriseTransitSet[0].getTime());
-                final String to = sunRiseSetSdf.format(sunriseTransitSet[2].getTime());
-                sunRiseSet.add(new Range(from, to));
-
+                sunRiseSet.add(getSunriseSunset(sunriseDate, lastKnownLocation));
                 sunriseDate.add(Calendar.DAY_OF_MONTH, 1);
 
                 windDirection.add(new Range(0, 0));
                 windSpeed.add(new Range(0, 0));
             }
         }
+
+        private Range getSunriseSunset(final GregorianCalendar date, final Location location) {
+            // TODO: We should send sunrise on the same location as the weather
+            final SimpleDateFormat sunRiseSetSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT);
+
+            final GregorianCalendar[] sunriseTransitSet = SPA.calculateSunriseTransitSet(
+                    date,
+                    location.getLatitude(),
+                    location.getLongitude(),
+                    DeltaT.estimate(date)
+            );
+
+            final String from = sunRiseSetSdf.format(sunriseTransitSet[0].getTime());
+            final String to = sunRiseSetSdf.format(sunriseTransitSet[2].getTime());
+
+            return new Range(from, to);
+        }
+    }
+
+    private static class MoonRiseSet {
+        public List<String> moonPhaseValue = new ArrayList<>();
+        public List<Range> moonRise = new ArrayList<>();
     }
 
     private static class Range {
@@ -199,7 +233,7 @@ public class Huami2021Weather {
     }
 
     private static class IndexEntry {
-        public LocalDate date;
+        public String date; // YYYY-MM-DD, but LocalDate would need API 26+
         public String osi;
         public String uvi;
         public Object pai;
@@ -215,6 +249,7 @@ public class Huami2021Weather {
     // locationKey=00.000,-0.000,xiaomi_accu:000000
     public static class CurrentResponse extends Response {
         public CurrentWeatherModel currentWeatherModel;
+        public Object aqiModel = new Object();
 
         public CurrentResponse(final WeatherSpec weatherSpec) {
             this.currentWeatherModel = new CurrentWeatherModel(weatherSpec);
@@ -296,14 +331,14 @@ public class Huami2021Weather {
     // isGlobal=true
     // locationKey=00.000,-0.000,xiaomi_accu:000000
     public static class HourlyResponse extends Response {
-        public Object pubTime;
-        public Object weather;
-        public Object temperature;
-        public Object humidity;
-        public Object fxTime;
-        public Object windDirection;
-        public Object windSpeed;
-        public Object windScale;
+        public Date pubTime;
+        public List<String> weather;
+        public List<String> temperature;
+        public List<String> humidity;
+        public List<String> fxTime; // pubTime format
+        public List<String> windDirection;
+        public List<String> windSpeed;
+        public List<String> windScale; // each element in the form of 1-2
     }
 
     // /weather/alerts
@@ -314,13 +349,15 @@ public class Huami2021Weather {
     // isGlobal=true
     // locationKey=00.000,-0.000,xiaomi_accu:000000
     public static class AlertsResponse extends Response {
+        public List<IndexEntry> alerts = new ArrayList<>();
     }
 
-    private static class LocalDateSerializer implements JsonSerializer<LocalDate> {
-        @Override
-        public JsonElement serialize(final LocalDate src, final Type typeOfSrc, final JsonSerializationContext context) {
-            // Serialize as "yyyy-MM-dd" string
-            return new JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE));
-        }
-    }
+    //@RequiresApi(api = Build.VERSION_CODES.O)
+    //private static class LocalDateSerializer implements JsonSerializer<LocalDate> {
+    //    @Override
+    //    public JsonElement serialize(final LocalDate src, final Type typeOfSrc, final JsonSerializationContext context) {
+    //        // Serialize as "yyyy-MM-dd" string
+    //        return new JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE));
+    //    }
+    //}
 }

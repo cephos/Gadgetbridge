@@ -43,6 +43,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.supercars.SuperCarsCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.fitpro.FitProDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.UnknownDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.banglejs.BangleJSCoordinator;
@@ -80,6 +81,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitx.AmazfitXCoord
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.miband6.MiBand6Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.miband7.MiBand7Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitgts3.AmazfitGTS3Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitgtr3.AmazfitGTR3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppe.ZeppECoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitgtr2.AmazfitGTR2eCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitgts.AmazfitGTSCoordinator;
@@ -288,6 +290,7 @@ public class DeviceHelper {
         result.add(new MiBand6Coordinator());
         result.add(new MiBand7Coordinator());
         result.add(new AmazfitGTS3Coordinator());
+        result.add(new AmazfitGTR3Coordinator());
         result.add(new MiBand2HRXCoordinator());
         result.add(new MiBand2Coordinator()); // Note: MiBand2 and all of the above  must come before MiBand because detection is hacky, atm
         result.add(new MiBandCoordinator());
@@ -339,6 +342,7 @@ public class DeviceHelper {
         result.add(new QC35Coordinator());
         result.add(new BinarySensorCoordinator());
         result.add(new FlipperZeroCoordinator());
+        result.add(new SuperCarsCoordinator());
 
         return result;
     }

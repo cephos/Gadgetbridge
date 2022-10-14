@@ -265,7 +265,7 @@
     <string name="weeksteps_today_steps_description">צעדים היום, יעד: %1$s</string>
     <string name="pref_title_dont_ack_transfer">לא לשלוח אישור על העברת נתוני פעילות</string>
     <string name="pref_summary_dont_ack_transfers">אם הנתונים לא יאושרו בצמיד, נתוני הפעילות לא יימחקו. שימושי אם נעשה שימוש ביישומונים שונים למעט Gadgetbridge.</string>
-    <string name="pref_summary_keep_data_on_device">תכונה זו תגרום לשמירת נתוני הפעילות על ה־Mi Band גם לאחר הסנכרון. שימושי אם נעשה שימוש ביישומונים שונים למעט Gadgetbridge.</string>
+    <string name="pref_summary_keep_data_on_device">תכונה זו תגרום לשמירת נתוני הפעילות על ההתקן גם לאחר הסנכרון. שימושי אם נעשה שימוש ביישומונים שונים למעט Gadgetbridge.</string>
     <string name="pref_title_low_latency_fw_update">שימוש במצב חיבור מהיר לעדכוני קושחה</string>
     <string name="pref_summary_low_latency_fw_update">הפעלת אפשרות זו עשויה לסייע במקרים שבהם עדכון הקושחה נכשל.</string>
     <string name="live_activity_steps_history">היסטוריית הצעדים</string>
@@ -1825,7 +1825,11 @@
 \n
 \nאפשר להשתמש בזה כדי להפעיל יישומון מוזיקה ולנגן שיר ולעוד מגוון משימות.
 \n
-\nנא לגעת ב־‚%2$s’ ואז ב־‚%1$s’ ולסמן את ‚לאפשר הצגה על גבי יישומונים אחרים’, ואז לגעת ב־‚חזרה’ כדי לחזור אל %1$s.</string>
+\nנא לגעת ב־‚%2$s’ ואז ב־‚%1$s’ ולסמן את ‚לאפשר הצגה על גבי יישומונים אחרים’, ואז לגעת ב־‚חזרה’ כדי לחזור אל %1$s.
+\n
+\nכדי לעצור את בקשת ההרשאות מצד %1$s יש לגשת אל ההגדרות ולבטל את הסימון ‚בדיקת מצב הרשאות’.
+\n
+\nנא לוודא שהענקת ל־%1$s את ההרשאות הנדרשות כדי שיפעל כראוי.</string>
     <string name="pref_header_calendar">לוח שנה</string>
     <string name="pref_header_connection">חיבור</string>
     <string name="pref_header_display">תצוגה</string>
@@ -1899,4 +1903,53 @@
     <string name="activity_prefs_allow_bluetooth_intent_api">API של Bluetooth Intent</string>
     <string name="kind_app">יישומון</string>
     <string name="menuitem_unknown_app">לא ידוע (%s)</string>
+    <string name="pref_title_overwrite_settings_on_connection">דריסת הגדרות עם התחברות</string>
+    <string name="pref_summary_overwrite_settings_on_connection">בעת התחברות לצמיד, לדרוס את כל ההגדרות שבו.</string>
+    <string name="dismiss">התעלמות</string>
+    <string name="fw_upgrade_notice_amazfit_gtr3">פעולה זו תתקין את הקושחה %s על ה־Amazfit GTR 3 שלך.
+\n
+\nהצמיד שלך יופעל מחדש לאחר התקנת קובץ ה־‎.zip.
+\n
+\nהמשך התהליך הוא על אחריותך בלבד!</string>
+    <string name="devicetype_amazfit_gtr3">Amazfit GTR 3‎</string>
+    <string name="activity_type_table_tennis">טניס שולחן</string>
+    <string name="activity_type_bowling">כדורת (באולינג)</string>
+    <string name="activity_type_street_dance">ריקוד רחוב</string>
+    <string name="activity_type_zumba">זומבה</string>
+    <string name="supercars_turbo_speed_label">מהירות גבוהה</string>
+    <string name="supercars_lights_label">אורות</string>
+    <string name="pref_title_third_party_app_device_settings">לאפשר ליישומוני צד־שלישי לשנות הגדרות</string>
+    <string name="pref_summary_third_party_app_device_settings">לאפשר ליישומוני צד־שלישי אחרים שמותקנים לשנות הגדרות דרך Intents.</string>
+    <string name="activity_type_dance">ריקוד</string>
+    <string name="activity_type_indoor_fitness">אימון ביתי</string>
+    <string name="activity_type_gymnastics">כושר</string>
+    <string name="activity_type_core_training">אימון ליבה</string>
+    <string name="activity_type_stretching">מתיחות</string>
+    <string name="activity_type_stepper">סטפר</string>
+    <string name="activity_type_pilates">פילטיס</string>
+    <string name="activity_type_volleyball">כדורעף</string>
+    <string name="activity_type_hiit">אימון בעצימות גבוהה עם הפסקות</string>
+    <string name="activity_type_boxing">איגרוף</string>
+    <string name="activity_type_kickboxing">קיקבוקסינג</string>
+    <string name="activity_type_indoor_ice_skating">החלקרח במבנה</string>
+    <string name="devicetype_super_cars">מירוץ מכוניות</string>
+    <string name="devicetype_amazfit_gtr_lite">Amazfit GTR Lite‎</string>
+    <string name="watchface_setting_button_move_hands">הזזת המחוגים</string>
+    <string name="pref_header_authentication">אימות</string>
+    <string name="supercars_lights_blinking_label">הבהוב</string>
+    <string name="abstract_chart_fragment_kind_rem_sleep">שינה עמוקה</string>
+    <string name="sports_activity_confirm_delete_title">מחיקת %d פעילויות</string>
+    <string name="sports_activity_confirm_delete_description">למחוק %d פעילויות\?</string>
+    <string name="hrZoneExtreme">קיצוני</string>
+    <string name="hrZoneAnaerobic">אנאירובי</string>
+    <string name="anaerobicTrainingEffect">השפעה אנאירובית</string>
+    <string name="currentWorkoutLoad">עומס של אימון</string>
+    <string name="hrZoneAerobic">אירובי</string>
+    <string name="HeartRateZones">אזורי דופק</string>
+    <string name="hrZoneWarmUp">התחממות</string>
+    <string name="hrZoneFatBurn">שריפת שומן</string>
+    <string name="TrainingEffect">השפעת אימון</string>
+    <string name="hrZoneNa">לא זמין</string>
+    <string name="aerobicTrainingEffect">השפעת אירובי</string>
+    <string name="maximumOxygenUptake">קליטת חמצן מרבית</string>
 </resources>

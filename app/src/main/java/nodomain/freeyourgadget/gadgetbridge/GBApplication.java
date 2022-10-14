@@ -99,6 +99,8 @@ import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.fromKey;
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID;
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_ID_ERROR;
 
+import com.jakewharton.threetenabp.AndroidThreeTen;
+
 /**
  * Main Application class that initializes and provides access to certain things like
  * logging and DB access.
@@ -114,7 +116,7 @@ public class GBApplication extends Application {
     private static SharedPreferences sharedPrefs;
     private static final String PREFS_VERSION = "shared_preferences_version";
     //if preferences have to be migrated, increment the following and add the migration logic in migratePrefs below; see http://stackoverflow.com/questions/16397848/how-can-i-migrate-android-preferences-with-a-new-version
-    private static final int CURRENT_PREFS_VERSION = 17;
+    private static final int CURRENT_PREFS_VERSION = 18;
 
     private static LimitedQueue mIDSenderLookup = new LimitedQueue(16);
     private static Prefs prefs;
@@ -183,6 +185,9 @@ public class GBApplication extends Application {
             // guard against multiple invocations (robolectric)
             return;
         }
+
+        // Initialize the timezones library
+        AndroidThreeTen.init(this);
 
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs = new Prefs(sharedPrefs);
@@ -1154,6 +1159,30 @@ public class GBApplication extends Application {
             }
 
             editor.remove(GBPrefs.CALENDAR_BLACKLIST);
+        }
+
+        if (oldVersion < 18) {
+            // Migrate the default value for Huami find band vibration pattern
+            try (DBHandler db = acquireDB()) {
+                final DaoSession daoSession = db.getDaoSession();
+                final List<Device> activeDevices = DBHelper.getActiveDevices(daoSession);
+
+                for (Device dbDevice : activeDevices) {
+                    if (!dbDevice.getManufacturer().equals("Huami")) {
+                        continue;
+                    }
+
+                    final SharedPreferences deviceSharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(dbDevice.getIdentifier());
+                    final SharedPreferences.Editor deviceSharedPrefsEdit = deviceSharedPrefs.edit();
+
+                    deviceSharedPrefsEdit.putString("huami_vibration_profile_find_band", "long");
+                    deviceSharedPrefsEdit.putString("huami_vibration_count_find_band", "1");
+
+                    deviceSharedPrefsEdit.apply();
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "error acquiring DB lock");
+            }
         }
 
         editor.putString(PREFS_VERSION, Integer.toString(CURRENT_PREFS_VERSION));
