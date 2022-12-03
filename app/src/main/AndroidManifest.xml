@@ -4,8 +4,9 @@
     package="nodomain.freeyourgadget.gadgetbridge">
 
     <!--
-        Comment in for testing Pebble Emulator
+        Comment in for testing Pebble Emulator-->
         <uses-permission android:name="android.permission.INTERNET" />
+    <!--
     -->
     <!-- Used for Bluetooth access -->
     <uses-permission android:name="android.permission.BLUETOOTH" />

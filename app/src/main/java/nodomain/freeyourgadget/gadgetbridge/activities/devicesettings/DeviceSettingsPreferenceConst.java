@@ -43,6 +43,7 @@ public class DeviceSettingsPreferenceConst {
 
     public static final String PREF_DEVICE_INTERNET_ACCESS = "device_internet_access";
     public static final String PREF_DEVICE_INTENTS = "device_intents";
+    public static final String PREF_DEVICE_MQTT = "device_mqtt";
     public static final String PREF_DEVICE_MQTT_SERVER = "device_mqtt_server";
     public static final String PREF_DEVICE_MQTT_USER = "device_mqtt_user";
     public static final String PREF_DEVICE_MQTT_PWD = "device_mqtt_pwd";

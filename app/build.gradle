@@ -240,6 +240,7 @@ dependencies {
     implementation 'com.google.protobuf:protobuf-lite:3.0.1'
     implementation "androidx.multidex:multidex:2.0.1"
     implementation 'com.android.volley:volley:1.2.1'
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
 
     // JSR-310 timezones backport for Android, since we're still on java 7
     implementation 'com.jakewharton.threetenabp:threetenabp:1.4.0'

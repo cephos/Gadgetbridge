@@ -16,6 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.banglejs;
 
+import static java.lang.Integer.parseInt;
+
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.BroadcastReceiver;
@@ -41,6 +43,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.MqttTopic;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -611,32 +618,40 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
                     String topicName = json.getString("topic");
                     String data = json.getString("data");
                     int qos = 0;
-                    if(json.getString("qos")!=null){qos=json.getString("qos");}
+                    if(json.getString("qos")!=null){qos=parseInt(json.getString("qos"));}
                     if (data != null) {
                         String broker = "tcp://"+devicePrefs.getString(PREF_DEVICE_MQTT_SERVER,"test.mosquitto.org")+":"+devicePrefs.getString(PREF_DEVICE_MQTT_PORT,"1883");
                         String user = devicePrefs.getString(PREF_DEVICE_MQTT_USER,"");
                         String password = devicePrefs.getString(PREF_DEVICE_MQTT_PWD,"");
-                        
-                        MqttClient mqttClient = new MqttClient(broker,String.valueOf(System.nanoTime()));
-                        MqttMessage message = new MqttMessage(data.getBytes());
-                        message.setQos(qos);
-                        message.setRetained(true);
-                        MqttTopic topic = mqttClient.getTopic(topicName);
-                        
-                        MqttConnectOptions connOpts = new MqttConnectOptions();
-                        connOpts.setUserName(user);
-                        connOpts.setPassword(password);
-                        connOpts.setCleanSession(true); //no persistent session 
-                        connOpts.setKeepAliveInterval(1000);
-                        
-                        try{
-                        mqttClient.connect(connOpts);
-                        topic.publish(data); 
-                        }catch(MqttException e){
+
+                        MqttClient mqttClient = null;
+                        try {
+                            mqttClient = new MqttClient(broker,String.valueOf(System.nanoTime()),null);
+
+                            MqttMessage message = new MqttMessage(data.getBytes());
+                            message.setQos(qos);
+                            message.setRetained(true);
+                            MqttTopic topic = mqttClient.getTopic(topicName);
+
+                            MqttConnectOptions connOpts = new MqttConnectOptions();
+                            if(user!=null && !user.isEmpty()){
+                                connOpts.setUserName(user);
+                            }
+                            if(password!=null && !password.isEmpty()) {
+                                connOpts.setPassword(password.toCharArray());
+                            }
+                            connOpts.setCleanSession(true); //no persistent session
+                            connOpts.setKeepAliveInterval(1000);
+
+                            mqttClient.connect(connOpts);
+                            topic.publish(message);
+                            LOG.info("Published to Topic  " + topic);
+                        } catch (MqttException e) {
                             LOG.info("Could not connect MQTT client: "+ e.getMessage());
+                            e.printStackTrace();
                         }
                     }
-                    LOG.info("Published to Topic  " + topic);
+
                 } else {
                     uartTxJSONError("mqtt", "Android MQTT not enabled, check Gadgetbridge Device Settings");
                 }
