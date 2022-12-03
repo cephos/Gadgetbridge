@@ -20,9 +20,14 @@
         android:persistent="true"
         android:summary="@string/bip_prefs_shotcuts_summary"
         android:title="@string/bip_prefs_shortcuts" />
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="force_new_protocol"
-        android:summary="@string/pref_summary_huami_force_new_protocol"
-        android:title="@string/pref_title_huami_force_new_protocol" />
+    <com.mobeta.android.dslv.DragSortListPreference
+        android:icon="@drawable/ic_activity_unknown_small"
+        android:defaultValue="@array/pref_miband6_workout_activity_types_default"
+        android:dialogTitle="@string/mi5_prefs_workout_activity_types"
+        android:entries="@array/pref_miband6_workout_activity_types"
+        android:entryValues="@array/pref_miband6_workout_activity_types_values"
+        android:key="workout_activity_types_sortable"
+        android:persistent="true"
+        android:summary="@string/mi5_prefs_workout_activity_types_summary"
+        android:title="@string/mi5_prefs_workout_activity_types" />
 </androidx.preference.PreferenceScreen>

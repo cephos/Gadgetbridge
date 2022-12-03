@@ -148,7 +148,7 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
 
     private void connect() {
         mayConnect = false; // only do that once per #onCreate
-        GBApplication.deviceService().connect(device);
+        GBApplication.deviceService(device).connect();
     }
 
     private void validateInstallation() {
@@ -200,7 +200,7 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
             public void onClick(View v) {
                 setInstallEnabled(false);
                 installHandler.onStartInstall(device);
-                GBApplication.deviceService().onInstallApp(uri);
+                GBApplication.deviceService(device).onInstallApp(uri);
             }
         });
 
@@ -216,12 +216,12 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
 
             List<GBDevice> selectedDevices = GBApplication.app().getDeviceManager().getSelectedDevices();
             if(selectedDevices.size() == 0){
-                GB.toast("please connect the device you want to send to", Toast.LENGTH_LONG, GB.ERROR);
+                GB.toast(getString(R.string.open_fw_installer_connect_minimum_one_device), Toast.LENGTH_LONG, GB.ERROR);
                 finish();
                 return;
             }
             if(selectedDevices.size() != 1){
-                GB.toast("please connect ONLY the device you want to send to", Toast.LENGTH_LONG, GB.ERROR);
+                GB.toast(getString(R.string.open_fw_installer_connect_maximum_one_device), Toast.LENGTH_LONG, GB.ERROR);
                 finish();
                 return;
             }
@@ -231,7 +231,7 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
             if (device == null || !device.isConnected()) {
                 connect();
             } else {
-                GBApplication.deviceService().requestDeviceInfo();
+                GBApplication.deviceService(device).requestDeviceInfo();
             }
         }
     }
@@ -246,6 +246,7 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
         for (DeviceCoordinator coordinator : getAllCoordinatorsConnectedFirst()) {
             InstallHandler handler = coordinator.findInstallHandler(uri, this);
             if (handler != null) {
+                LOG.info("Found install handler {} from {}", handler.getClass(), coordinator.getClass());
                 return handler;
             }
         }

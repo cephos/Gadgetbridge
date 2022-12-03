@@ -1,10 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.71.2" versioncode="218">
+        <change>Zepp OS: Display HR zones and Training Effect in Activity Details</change>
+        <change>Remove shortcut feature due to non-free dependencies (#2918)</change>
+    </release>
+    <release version="0.71.1" versioncode="217">
+        <change>Try to exclude non-free stuff from shortcuts library (#2918)</change>
+        <change>SuperCars: fix periodicDataSender, add tricks</change>
+        <change>Zepp OS: Fix crash when user attempts to disable Settings display item</change>
+        <change>Fix crash when opening Gadgetbridge from the notification</change>
+    </release>
+    <release version="0.71.0" versioncode="216">
+        <change>Remove KitKat support, Gadgetbridge now requires Android 5.0</change>
+        <change>Initial support for Amazfit GTR 3</change>
+        <change>Initial support for SuperCars (Shell Racing Cars)</change>
+        <change>Huami: Add preference to overwrite band settings on connection</change>
+        <change>Huami: Fix crash when selecting automatic Always On Display</change>
+        <change>Huami: Set OpenTracks track category and icon</change>
+        <change>Huami: Implement proper find device</change>
+        <change>Huami: Change default find band vibration pattern</change>
+        <change>Flipper Zero: added duration to Intent API</change>
+        <change>Flipper Zero: fixed crash due to unregistered boradcast receiver</change>
+        <change>Flipper Zero: fetch firmware version from flipper</change>
+        <change>Fossil Hybrid HR: Correctly initialize watchface after reset or crash</change>
+        <change>Fossil Hybrid HR: Set OpenTracks track category and icon to workout type selected on watch</change>
+        <change>Fossil Hybrid HR: Allow flick_away as custom event and add move_hands event </change>
+        <change>InfiniTime: Add weather support</change>
+        <change>Amazfit Neo: Fix world clock</change>
+        <change>Amazfit Neo: Fix long caller name display</change>
+        <change>Amazfit Neo: Remove activity tracks (unsupported)</change>
+        <change>Amazfit GTS 3: Fix battery drain due to unanswered weather requests</change>
+        <change>Mi Band 7: Fix Weather</change>
+        <change>Mi Band 6: Add support for workout activity types</change>
+        <change>Mi Band 6: Enable adding workout activity types to the "more" section</change>
+        <change>Amazfit GTR: Enable button actions</change>
+        <change>Zepp OS: Implement activity, sleep and workout fetching</change>
+        <change>Zepp OS: Improve firmware upgrades</change>
+        <change>Bangle.js: Add PATCH HTTP request type, and fix for VolleyError UnsupportedOperationException when supplying custom headers.</change>
+        <change>Bangle.js: Add ability to start services on the Android device via intents.</change>
+        <change>Bangle.js: Flags and multiple categories can now be specified for intents initiated on the watch.</change>
+        <change>Bangle.js: Add ability to wake and unlock the Android device via a special intent.</change>
+        <change>Allow 3rd party apps to set device settings</change>
+        <change>Re-implement C code in Java and remove Android NDK dependency entirely</change>
+        <change>Fix crashes on older Android versions when using some devices</change>
+        <change>Add support for REM sleep</change>
+        <change>App shortcuts support (long press on the launcher icon for directly connecting a device)</change>
+    </release>
+    <release version="0.70.0" versioncode="215">
+	<change>Initial support for Amazfit GTS 3</change>
+        <change>Initial support for Fossil Hybrid Gen6</change>
+        <change>Initial support for Flipper Zero</change>
+        <change>Huami: fix default vibration pattern</change>
+        <change>Huami: Enable vibration patterns for all compatible devices</change>
+        <change>Huami: Improve large firmware zip file handling</change>
+        <change>Bangle.js: Fix null pointer issue if headers not supplied for HTTP request</change>
+        <change>Bangle.js: Support calendar color and name</change>
+        <change>Mi Band 7: Fix crash if reminder, calendar or canned messages contain non-ascii characters</change>
+        <change>Mi Band 7: Fix NPE when acknowledging that icon was sent</change>
+        <change>Mi Band 7: Fix and enable firmware upgrades</change>
+        <change>Mi Band 7: Support for watchapps</change>
+        <change>Amazfit Neo: remove 1 hour heartrate interval (not supported)</change>
+        <change>Fossil Hybrid HR: Fix watchface redraw after powersave and after wrist flick</change>
+        <change>Fossil Hybrid HR: Enable configuring middle long press on FW 3.0 and newer</change>
+        <change>InfiniTime: Fix firmware update</change>
+        <change>Make heart rate measurement intervals configurable per-device</change>
+        <change>Add option to ignore low priority notifications</change>
+        <change>Fix Skype notifications</change>
+        <change>Prefer long notification text by default</change>
+        <change>Prefer big text when scraping gmail notifications</change>
+        <change>Do not remove newline and whitespace characters from notification content</change>
+        <change>Debug: Add companion device list to debug activity</change>
+    </release>
+    <release version="0.69.0" versioncode="214">
+        <change>Initial Support for Mi Band 7</change>
+        <change>Initial support for devices using Binary Sensor Service</change>
+        <change>Mi Band 4: Enable heartrate activity monitoring support</change>
+        <change>Mi Band 4: Enable activate display on lift sensitivity setting</change>
+        <change>Mi Band 6: Enable password support</change>
+        <change>Mi Band 4/6, Amazfit Bip U: Enable sending GPS coordinates to band during workout</change>
+        <change>Mi Band 4/6, Amazfit Bip U: Enable start fitness tracking on phone when workout starts on band setting</change>
+        <change>Amazfit Neo: Support hourly chime which was added in firmware 1.1.2.46</change>
+        <change>Amazfit Neo: Fix daily steps goal and notification</change>
+        <change>Amazfit Neo: Fix heartrate sleep detection setting</change>
+        <change>Amazfit Neo: Enable heartrate activity monitoring support</change>
+        <change>Amazfit Neo: Fix alarms setting to "unused" on connect.</change>
+        <change>Bangle.js: Make text as bitmaps have transparent background, and allow font size to be specified</change>
+        <change>Bangle.js: Allow starting Activties on the Android device</change>
+        <change>Fossil Hybrid HR: Add support for Hybrid HR 38mm watches</change>
+        <change>Fossil Hybrid HR: Add optional circle backgrounds to widgets</change>
+        <change>Fossil Hybrid HR: Add toggling of widgets with physical button event</change>
+        <change>Fossil Hybrid HR: Add missing physical button options</change>
+        <change>Fossil Q Hybrid: Fix config activity after multi-device merge</change>
+        <change>InfiniTine: Fixes for steps count sync</change>
+        <change>Add steps/sleep streaks screen</change>
+        <change>Add French transliteration</change>
+        <change>Refactor file logging initialization logic</change>
+        <change>Add alert to Log Sharing if logging has not been enabled yet</change>
+        <change>Fix crash on some phones for find android device (add fallback tone)</change>
+        <change>Fix regression since 0.68.0 with active auto connect</change>
+    </release>
+    <release version="0.68.0" versioncode="213">
+        <change>Multi device support (experimental), allows connecting to multiple devices simultaneously</change>
+        <change>Fossil Hybrid HR: Allow installation of newer watch apps</change>
+        <change>Fossil Hybrid HR: Allow workout app the be added as a shortcut</change>
+        <change>Fossil Hybrid HR: Generate watchface preview image and show it in the app manager</change>
+        <change>Fossil Hybrid HR: Request custom menu config on watchface initialization</change>
+        <change>Fossil Hybrid HR: Invert widgets color when the background image is inverted</change>
+        <change>Fossil Hybrid HR: Show app versions in app manager</change>
+        <change>Fossil Hybrid HR: Make 2nd TZ widget clock duration configurable and fix wrong offset</change>
+        <change>Fossil Hybrid HR: Add option to share a cached watchface/app to another app</change>
+        <change>Fossil Hybrid HR: Allow switching already uploaded watchfaces with Intent</change>
+        <change>Mi Band 6: Fix night mode on latest firmware</change>
+        <change>Mi Band 6: add sleep menu item (also to shortcuts)</change>
+        <change>Mi Band 5: Send GPS location to band during workout</change>
+        <change>Mi Band 5: Start fitness tracking on phone when workout starts on band</change>
+        <change>Mi Band 5: Fix missing Portuguese language</change>
+        <change>Mi Band 5: Add missing breathing shortcut</change>
+        <change>Mi Band 4: Add password support</change>
+        <change>Huami: Fix setting heart rate measurement interval on connection</change>
+        <change>Huami: Fix track name being replaced by album</change>
+        <change>Huami: Display native alarm notification</change>
+        <change>Huami: Fix MTU update on device connection</change>
+        <change>Roidmi 3: Recognize "Roidmi C BLE" as Roidmi 3</change>
+        <change>Bangle.js fix message REPLY option</change>
+        <change>Bangle.js: Keep a log of data sent from the watch, and allow it to be saved with from the debug menu</change>
+        <change>Bangle.js: Support for color dithered bitmaps, and converting emoji->bitmaps</change>
+        <change>Bangle.js: Adding built-in app-loader view. (Only available on internet-enabled builds)</change>
+        <change>Bangle.js: fix null pointer issue for debug messages</change>
+        <change>Bangle.js: Enable calendar sync for bangle</change>
+        <change>Bangle.js: Add icon</change>
+        <change>Pebble: fix configuration of some watchfaces (might break other again)</change>
+        <change>FitPro: add MTU based chunking, add more device names (Sunset 6, Watch7)</change>
+        <change>UM25: fix missing firmware version</change>
+        <change>Support for incoming call notification delay</change>
+        <change>Make calendar blacklist configurable per device</change>
+        <change>Support folders in device list</change>
+        <change>Separate device settings which are specific to the application into Set preferences in device card</change>
+        <change>When pairing devices with auth key requirements, only show Auth key menu related items on long press</change>
+        <change>Provide access to the FW/App Installer via Set preferences in device card</change>
+        <change>Animate card movement in device list</change>
+        <change>Make transliteration configurable per-language</change>
+        <change>Widget: do not show sleep if not recorded</change>
+        <change>Pop up a dialog asking about Location permissions</change>
+        <change>Fix sharing log files on newer android versions</change>
+        <change>Allow to set Bluetooth discovery scanning level to prevent freezing</change>
+        <change>Various UI tweaks and fixes</change>
+        <change>Add monochrome themed icon</change>
+        <change>Add device menu item to get to the FW/App Installer via an explanation activity</change>
+    </release>
     <release version="0.67.1" versioncode="212">
         <change>Huami: Fix long music track names not displaying</change>
         <change>Amazfit Bip U/Pro/Band 5: Enable extended HR/stress monitoring setting</change>
         <change>Pebble: Fix calendar blacklist, view and storage</change>
-        <change>FitPro: Fix crash, inactivity warning preference to string    </change>
+        <change>FitPro: Fix crash, inactivity warning preference to string</change>
     </release>
     <release version="0.67.0" versioncode="211">
         <change>Initial Support for Sony WF-1000XM3</change>
@@ -625,16 +773,16 @@
         <change>Amazfit Bip: Add German, Italian, French and Turkish to language settings</change>
     </release>
     <release version="0.33.0" versioncode="148">
-        <change> BFH-16: Initial support</change>
-        <change> Mi Band 2/3/Bip/Cor: Generate random per-device security keys when pairing, allow manual override to still support multiple android devices connecting to the same device</change>
-        <change> Mi Band 3: Add Indonesian, Thai, Arabic, Vietnamese, Portuguese, Dutch, Turkish and Ukrainian to language settings</change>
-        <change> Mi Band 3: Support flashing latest Japanese-Korean font</change>
-        <change> Amazfit Cor 2: Initial experimental support (untested)</change>
-        <change> Pebble: Add pebblekit extension for reopening last app</change>
-        <change> Casio: Bugfixes and improvements</change>
-        <change> Lookup contacts also in work profile</change>
-        <change> Fix searching in application name when blacklisting</change>
-        <change> Remove misleading title from database management activity when no legacy database is available</change>
+        <change>BFH-16: Initial support</change>
+        <change>Mi Band 2/3/Bip/Cor: Generate random per-device security keys when pairing, allow manual override to still support multiple android devices connecting to the same device</change>
+        <change>Mi Band 3: Add Indonesian, Thai, Arabic, Vietnamese, Portuguese, Dutch, Turkish and Ukrainian to language settings</change>
+        <change>Mi Band 3: Support flashing latest Japanese-Korean font</change>
+        <change>Amazfit Cor 2: Initial experimental support (untested)</change>
+        <change>Pebble: Add pebblekit extension for reopening last app</change>
+        <change>Casio: Bugfixes and improvements</change>
+        <change>Lookup contacts also in work profile</change>
+        <change>Fix searching in application name when blacklisting</change>
+        <change>Remove misleading title from database management activity when no legacy database is available</change>
     </release>
     <release version="0.32.4" versioncode="147">
         <change>Make voip call support optional (disabled by default)</change>

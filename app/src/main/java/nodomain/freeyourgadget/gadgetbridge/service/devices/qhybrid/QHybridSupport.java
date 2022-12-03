@@ -44,6 +44,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -78,6 +80,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.mis
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.Version;
 
 public class QHybridSupport extends QHybridBaseSupport {
     public static final String QHYBRID_COMMAND_CONTROL = "qhybrid_command_control";
@@ -98,6 +101,7 @@ public class QHybridSupport extends QHybridBaseSupport {
     public static final String QHYBRID_COMMAND_SET_BACKGROUND_IMAGE = "nodomain.freeyourgadget.gadgetbridge.Q_SET_BACKGROUND_IMAGE";
     public static final String QHYBRID_COMMAND_UNINSTALL_APP = "nodomain.freeyourgadget.gadgetbridge.Q_UNINSTALL_APP";
     public static final String QHYBRID_COMMAND_PUSH_CONFIG = "nodomain.freeyourgadget.gadgetbridge.Q_PUSH_CONFIG";
+    public static final String QHYBRID_COMMAND_SWITCH_WATCHFACE = "nodomain.freeyourgadget.gadgetbridge.Q_SWITCH_WATCHFACE";
 
     public static final String QHYBRID_COMMAND_DOWNLOAD_FILE = "nodomain.freeyourgadget.gadgetbridge.Q_DOWNLOAD_FILE";
     public static final String QHYBRID_COMMAND_UPLOAD_FILE = "nodomain.freeyourgadget.gadgetbridge.Q_UPLOAD_FILE";
@@ -142,6 +146,7 @@ public class QHybridSupport extends QHybridBaseSupport {
 
     public QHybridSupport() {
         super(logger);
+        addSupportedService(UUID.fromString("108b5094-4c03-e51c-555e-105d1a1155f0"));
         addSupportedService(UUID.fromString("3dda0001-957f-7d4a-34a6-74696673696d"));
         addSupportedService(GattService.UUID_SERVICE_DEVICE_INFORMATION);
         addSupportedService(GattService.UUID_SERVICE_GENERIC_ACCESS);
@@ -306,6 +311,7 @@ public class QHybridSupport extends QHybridBaseSupport {
         globalFilter.addAction(QHYBRID_COMMAND_SET_WIDGET_CONTENT);
         globalFilter.addAction(QHYBRID_COMMAND_UPLOAD_FILE);
         globalFilter.addAction(QHYBRID_COMMAND_PUSH_CONFIG);
+        globalFilter.addAction(QHYBRID_COMMAND_SWITCH_WATCHFACE);
         globalCommandReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -377,6 +383,10 @@ public class QHybridSupport extends QHybridBaseSupport {
                         handleConfigSetIntent(intent);
                         break;
                     }
+                    case QHYBRID_COMMAND_SWITCH_WATCHFACE:{
+                        handleSwitchWatchfaceIntent(intent);
+                        break;
+                    }
                 }
             }
         };
@@ -386,6 +396,13 @@ public class QHybridSupport extends QHybridBaseSupport {
     private void handleConfigSetIntent(Intent intent) {
         String configJson = intent.getExtras().getString("EXTRA_CONFIG_JSON", "{}");
         watchAdapter.pushConfigJson(configJson);
+    }
+
+    private void handleSwitchWatchfaceIntent(Intent intent) {
+        String watchfaceName = intent.getExtras().getString("WATCHFACE_NAME", "");
+        if (watchfaceName != "") {
+            ((FossilHRWatchAdapter) watchAdapter).activateWatchface(watchfaceName);
+        }
     }
 
     private boolean dangerousIntentsAllowed(){
@@ -466,6 +483,10 @@ public class QHybridSupport extends QHybridBaseSupport {
 
         for (int i = 2; i <= 7; i++)
             builder.notify(getCharacteristic(UUID.fromString("3dda000" + i + "-957f-7d4a-34a6-74696673696d")), true);
+
+        builder.notify(getCharacteristic(UUID.fromString("010541ae-efe8-11c0-91c0-105d1a1155f0")), true);
+        builder.notify(getCharacteristic(UUID.fromString("fef9589f-9c21-4d19-9fc0-105d1a1155f0")), true);
+        builder.notify(getCharacteristic(UUID.fromString("842d2791-0d20-4ce4-1ada-105d1a1155f0")), true);
 
         builder
                 .read(getCharacteristic(UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb")))
@@ -718,11 +739,7 @@ public class QHybridSupport extends QHybridBaseSupport {
 
         PendingIntent intent = PendingIntent.getActivity(getContext(), 0, emailIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            notificationBuilder.addAction(new Notification.Action(0, "report", intent));
-        }else{
-            notificationBuilder.addAction(0, "report", intent);
-        }
+        notificationBuilder.addAction(new Notification.Action(0, "report", intent));
 
         GB.notify((int) System.currentTimeMillis(), notificationBuilder.build(), getContext());
     }
@@ -738,8 +755,15 @@ public class QHybridSupport extends QHybridBaseSupport {
         switch (characteristic.getUuid().toString()) {
             case "00002a26-0000-1000-8000-00805f9b34fb": {
                 String firmwareVersion = characteristic.getStringValue(0);
-
                 gbDevice.setFirmwareVersion(firmwareVersion);
+
+                Matcher matcher = Pattern
+                        .compile("(?<=[A-Z]{2}[0-9]\\.[0-9]\\.)[0-9]+\\.[0-9]+")
+                        .matcher(firmwareVersion);
+                if(matcher.find()){
+                    gbDevice.setFirmwareVersion2(matcher.group());
+                }
+
                 this.watchAdapter = new WatchAdapterFactory().createWatchAdapter(firmwareVersion, this);
                 this.watchAdapter.initialize();
                 showNotificationsByAllActive(false);

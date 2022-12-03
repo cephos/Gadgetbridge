@@ -33,6 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
+import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 
 /**
  * Base class for all sample providers. A Sample provider is device specific and provides
@@ -73,10 +74,18 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
 
     @Override
     public List<T> getSleepSamples(int timestamp_from, int timestamp_to) {
+        final DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(getDevice());
+
+        // If the device does not support REM sleep, we need to exclude its bit from the activity type
+        int sleepActivityType = ActivityKind.TYPE_SLEEP;
+        if (!coordinator.supportsRemSleep()) {
+            sleepActivityType &= ~ActivityKind.TYPE_REM_SLEEP;
+        }
+
         if (getRawKindSampleProperty() != null) {
-            return getGBActivitySamples(timestamp_from, timestamp_to, ActivityKind.TYPE_SLEEP);
+            return getGBActivitySamples(timestamp_from, timestamp_to, sleepActivityType);
         } else {
-            return getActivitySamplesByActivityFilter(timestamp_from, timestamp_to, ActivityKind.TYPE_SLEEP);
+            return getActivitySamplesByActivityFilter(timestamp_from, timestamp_to, sleepActivityType);
         }
     }
 
@@ -101,6 +110,26 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
         }
         Property deviceProperty = getDeviceIdentifierSampleProperty();
         qb.where(deviceProperty.eq(dbDevice.getId())).orderDesc(getTimestampSampleProperty()).limit(1);
+        List<T> samples = qb.build().list();
+        if (samples.isEmpty()) {
+            return null;
+        }
+        T sample = samples.get(0);
+        sample.setProvider(this);
+        return sample;
+    }
+
+    @Nullable
+    @Override
+    public T getFirstActivitySample() {
+        QueryBuilder<T> qb = getSampleDao().queryBuilder();
+        Device dbDevice = DBHelper.findDevice(getDevice(), getSession());
+        if (dbDevice == null) {
+            // no device, no sample
+            return null;
+        }
+        Property deviceProperty = getDeviceIdentifierSampleProperty();
+        qb.where(deviceProperty.eq(dbDevice.getId())).orderAsc(getTimestampSampleProperty()).limit(1);
         List<T> samples = qb.build().list();
         if (samples.isEmpty()) {
             return null;

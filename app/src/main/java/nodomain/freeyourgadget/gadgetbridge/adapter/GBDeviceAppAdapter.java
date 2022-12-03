@@ -17,6 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.adapter;
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +30,10 @@ import java.util.List;
 import java.util.UUID;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AbstractAppManagerFragment;
@@ -39,6 +44,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
  */
 
 public class GBDeviceAppAdapter extends RecyclerView.Adapter<GBDeviceAppAdapter.AppViewHolder> {
+    private final Logger LOG = LoggerFactory.getLogger(GBDeviceAppAdapter.class);
 
     private final int mLayoutId;
     private final List<GBDeviceApp> appList;
@@ -74,10 +80,29 @@ public class GBDeviceAppAdapter extends RecyclerView.Adapter<GBDeviceAppAdapter.
     public void onBindViewHolder(final AppViewHolder holder, int position) {
         final GBDeviceApp deviceApp = appList.get(position);
 
-        holder.mDeviceAppVersionAuthorLabel.setText(GBApplication.getContext().getString(R.string.appversion_by_creator, deviceApp.getVersion(), deviceApp.getCreator()));
+        String appVersionAuthor;
+        if ((deviceApp.getCreator().equals("")) || (deviceApp.getCreator().equals("(unknown)"))) {
+            appVersionAuthor = deviceApp.getVersion();
+        } else {
+            appVersionAuthor = GBApplication.getContext().getString(R.string.appversion_by_creator, deviceApp.getVersion(), deviceApp.getCreator());
+        }
+        holder.mDeviceAppVersionAuthorLabel.setText(appVersionAuthor);
+        if (deviceApp.isUpToDate()) {
+            holder.mDeviceAppOutdated.setVisibility(View.GONE);
+        } else {
+            holder.mDeviceAppOutdated.setVisibility(View.VISIBLE);
+        }
         // FIXME: replace with small icons
         String appNameLabelText = deviceApp.getName();
         holder.mDeviceAppNameLabel.setText(appNameLabelText);
+
+        Bitmap previewImage = deviceApp.getPreviewImage();
+        holder.mPreviewImage.setImageBitmap(previewImage);
+        if (previewImage == null) {
+            holder.mPreviewImage.setVisibility(View.GONE);
+        } else {
+            holder.mPreviewImage.setVisibility(View.VISIBLE);
+        }
 
         switch (deviceApp.getType()) {
             case APP_GENERIC:
@@ -128,15 +153,19 @@ public class GBDeviceAppAdapter extends RecyclerView.Adapter<GBDeviceAppAdapter.
     public class AppViewHolder extends RecyclerView.ViewHolder {
         final TextView mDeviceAppVersionAuthorLabel;
         final TextView mDeviceAppNameLabel;
+        final TextView mDeviceAppOutdated;
         final ImageView mDeviceImageView;
         final ImageView mDragHandle;
+        final ImageView mPreviewImage;
 
         AppViewHolder(View itemView) {
             super(itemView);
             mDeviceAppVersionAuthorLabel = (TextView) itemView.findViewById(R.id.item_details);
             mDeviceAppNameLabel = (TextView) itemView.findViewById(R.id.item_name);
+            mDeviceAppOutdated = (TextView) itemView.findViewById(R.id.item_watchapp_outdated);
             mDeviceImageView = (ImageView) itemView.findViewById(R.id.item_image);
             mDragHandle = (ImageView) itemView.findViewById(R.id.drag_handle);
+            mPreviewImage = (ImageView) itemView.findViewById(R.id.item_preview_image);
         }
 
     }

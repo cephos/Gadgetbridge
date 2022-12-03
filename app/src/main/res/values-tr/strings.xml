@@ -7,7 +7,7 @@
     <string name="StringUtils_sender">(%1$s)</string>
     <string name="_pebble_watch_mute">Sessiz</string>
     <string name="_pebble_watch_open_on_phone">Android aygıtında aç</string>
-    <string name="_pebble_watch_reply">Cevapla</string>
+    <string name="_pebble_watch_reply">Yanıtla</string>
     <string name="_unknown_">(bilinmeyen)</string>
     <string name="abstract_chart_fragment_kind_activity">Etkinlik</string>
     <string name="abstract_chart_fragment_kind_deep_sleep">Derin uyku</string>
@@ -149,7 +149,7 @@
     <string name="controlcenter_snackbar_need_longpress">Bağlantıyı kesmek için karta uzun basın</string>
     <string name="controlcenter_snackbar_requested_screenshot">Aygıtın ekran görüntüsü alınıyor</string>
     <string name="controlcenter_start_activity_tracks">Etkinlik izlemeleriniz</string>
-    <string name="controlcenter_start_activitymonitor">Etkinliğiniz (ALPHA)</string>
+    <string name="controlcenter_start_activitymonitor">Etkinliğiniz</string>
     <string name="controlcenter_start_configure_alarms">Alarmları yapılandır</string>
     <string name="controlcenter_take_screenshot">Ekran Görüntüsü Al</string>
     <string name="dateformat_date_time">Saat ve tarih</string>
@@ -234,7 +234,7 @@
     <string name="dutch">Felemenkçe</string>
     <string name="edittext_notification_filter_words_hint">Her bir sözcüğü yeni bir satıra girin</string>
     <string name="english">İngilizce</string>
-    <string name="error_creating_directory_for_logfiles">Günlük dosyaları oluşturmada hata: %1$s</string>
+    <string name="error_creating_directory_for_logfiles">Günlük dosyaları için dizin oluşturulurken hata: %1$s</string>
     <string name="error_no_location_access">Taramanın düzgün çalışması için konum erişimi verilmeli ve etkinleştirilmelidir</string>
     <string name="female">Kadın</string>
     <string name="filter_mode">Filtreleme Modu</string>
@@ -381,8 +381,6 @@
     <string name="menuitem_nfc">NFC</string>
     <string name="menuitem_notifications">Bildirimler</string>
     <string name="menuitem_settings">Ayarlar</string>
-    <string name="menuitem_shortcut_alipay">Alipay (Kısayol)</string>
-    <string name="menuitem_shortcut_weather">Hava Durumu (Kısayol)</string>
     <string name="menuitem_status">Durum</string>
     <string name="menuitem_timer">Geri Sayım</string>
     <string name="menuitem_weather">Hava Durumu</string>
@@ -488,7 +486,6 @@
     <string name="pref_auto_fetch_limit_fetches">Getirmeler arasındaki asgari süre</string>
     <string name="pref_auto_fetch_limit_fetches_summary">Her %d dakikada bir getirir</string>
     <string name="pref_auto_fetch_summary">Getirme, ekran kilidi açıldığında gerçekleşir. Yalnızca bir kilit mekanizması ayarlanmışsa çalışır!</string>
-    <string name="pref_blacklist">Kara Liste Uygulamaları</string>
     <string name="pref_blacklist_calendars">Kara Liste Takvimleri</string>
     <string name="pref_button_action_disabled">Engellenmiş</string>
     <string name="pref_button_action_disabled_value">Bilinmeyen</string>
@@ -513,7 +510,7 @@
     <string name="pref_header_cannned_messages">Mesaj şablonları</string>
     <string name="pref_header_charts">Çizelge Ayarları</string>
     <string name="pref_header_datetime">Tarih ve Saat</string>
-    <string name="pref_header_development">Gelişmiş Seçenekler</string>
+    <string name="pref_header_development">Gelişmiş seçenekler</string>
     <string name="pref_header_general">Genel Ayarlar</string>
     <string name="pref_header_location">Konum</string>
     <string name="pref_header_notifications">Bildirimler</string>
@@ -574,7 +571,7 @@
     <string name="pref_summary_enable_pebblekit">PebbleKit kullanırken Android uygulamaları için deneysel desteği etkinleştirin</string>
     <string name="pref_summary_expose_hr">Gadgetbridge bağlıyken diğer uygulamaların kalp ritmi verilerine gerçek zamanlı erişmesine izin verir</string>
     <string name="pref_summary_force_white_color_scheme">Saatinizin koyu renkli ibreleri varsa kullanışlıdır</string>
-    <string name="pref_summary_keep_data_on_device">Eşzamanlamadan sonra bile etkinlik verilerini Mi Band üzerinde tutar. GB diğer uygulamalarla birlikte kullanılıyorsa kullanışlıdır.</string>
+    <string name="pref_summary_keep_data_on_device">Eşzamanlamadan sonra bile etkinlik verilerini aygıt üzerinde tutar. GB diğer uygulamalarla birlikte kullanılıyorsa kullanışlıdır.</string>
     <string name="pref_summary_location_keep_uptodate">Geçerli konumu çalışma zamanında almaya çalış, depolanan konumu yedek olarak kullan</string>
     <string name="pref_summary_low_latency_fw_update">Bu, ürün yazılımı kurulmasının başarısız olduğu aygıtlarda yardımcı olabilir.</string>
     <string name="pref_summary_minimize_priority_off">Durum çubuğunda simge ve kilit ekranında bildirim gösterilir</string>
@@ -607,11 +604,11 @@
     <string name="pref_title_auto_export_enabled">Otomatik dışa aktarma etkinleştirildi</string>
     <string name="pref_title_auto_export_interval">Dışa aktarma aralığı</string>
     <string name="pref_title_auto_export_location">Dışa aktarma konumu</string>
-    <string name="pref_title_autoremove_notifications">Yok sayılan bildirimleri otomatik kaldır</string>
+    <string name="pref_title_autoremove_notifications">Kapatılan bildirimleri otomatik kaldır</string>
     <string name="pref_title_call_privacy_mode">Çağrı gizlilik modu</string>
-    <string name="pref_title_canned_messages_dismisscall">Çağrı Yok Sayma</string>
+    <string name="pref_title_canned_messages_dismisscall">Çağrı Kapatma</string>
     <string name="pref_title_canned_messages_set">Aygıtta güncelleme</string>
-    <string name="pref_title_canned_replies">Cevaplar</string>
+    <string name="pref_title_canned_replies">Yanıtlar</string>
     <string name="pref_title_canned_reply_suffix">Ortak son ek</string>
     <string name="pref_title_chart_heartrate_color">Kalp ritmi rengi</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Uyku aralığı</string>
@@ -638,8 +635,6 @@
     <string name="pref_title_location_latitude">Enlem</string>
     <string name="pref_title_location_longitude">Boylam</string>
     <string name="pref_title_low_latency_fw_update">Ürün yazılımı kurarken düşük gecikme modu kullan</string>
-    <string name="pref_title_lower_button_function">Alt Düğme</string>
-    <string name="pref_title_middle_button_function">Orta Düğme</string>
     <string name="pref_title_minimize_priority">Gadgetbridge bildirimini gizle</string>
     <string name="pref_title_notification_filter">Rahatsız Etme</string>
     <string name="pref_title_notifications_call">Telefon Çağrıları</string>
@@ -675,7 +670,6 @@
     <string name="pref_title_timeformat">Zaman biçimi</string>
     <string name="pref_title_transliteration">Karakter çevirisi</string>
     <string name="pref_title_unit_system">Birimler</string>
-    <string name="pref_title_upper_button_function">Üst Düğme</string>
     <string name="pref_title_use_custom_font">Özel yazı tipi kullan</string>
     <string name="pref_title_vibration_strength">Titreşim gücü</string>
     <string name="pref_title_weather">Hava Durumu</string>
@@ -750,7 +744,6 @@
     <string name="timeformat_am_pm">ÖÖ/ÖS</string>
     <string name="title_activity_alarm_details">Alarm ayrıntıları</string>
     <string name="title_activity_android_pairing">Aygıt eşleştir</string>
-    <string name="title_activity_appblacklist">Bildirim kara listesi</string>
     <string name="title_activity_appmanager">Uygulama Yöneticisi</string>
     <string name="title_activity_calblacklist">Kara Listeye Alınan Takvimler</string>
     <string name="title_activity_charts">Etkinlik ve Uyku</string>
@@ -769,7 +762,6 @@
     <string name="title_activity_vibration">Titreşim</string>
     <string name="title_activity_watch9_calibration">Watch 9 kalibrasyonu</string>
     <string name="title_activity_watch9_pairing">Watch 9 eşleştirme</string>
-    <string name="toast_app_must_not_be_blacklisted">Uygulamanın yapılandırılması için kara listeye alınmaması gerekir</string>
     <string name="toast_aqurired_networklocation">konum alındı</string>
     <string name="toast_enable_networklocationprovider">Lütfen ağ konumunu etkinleştirin</string>
     <string name="toast_notification_filter_saved_successfully">Bildirim filtresi kaydedildi</string>
@@ -832,8 +824,6 @@
     <string name="widget_5_minutes">5 dakika</string>
     <string name="widget_listing_label">Durum ve Alarmlar</string>
     <string name="widget_set_alarm_after">Alarm kur:</string>
-    <string name="widget_sleep_label">Uyku: %1$s</string>
-    <string name="widget_steps_label">Adım: %1$02d</string>
     <string name="you_did_not_sleep">Uyumadınız</string>
     <string name="you_slept">Saat %1$s ile %2$s arası uyudunuz</string>
     <string name="zetime_activity_tracking">Etkinlik izleme</string>
@@ -963,13 +953,13 @@
     <string name="ignore_bonded_devices_description">Bu seçeneğin etkinleştirilmesi, tarama sırasında önceden etkileşimde/eşleştirilmiş olan aygıtları yok sayar</string>
     <string name="ignore_bonded_devices">Etkileşimde olan aygıtları yok say</string>
     <string name="device_is_currently_bonded">ZATEN ETKİLEŞİMDE</string>
-    <string name="device_requires_key">ANAHTAR GEREKLİ</string>
+    <string name="device_requires_key">ANAHTAR GEREKLİ, GİRMEK İÇİN UZUN BASIN</string>
     <string name="error_location_enabled_mandatory">Aygıtları taramak için konumun açık olması gerekmektedir</string>
     <string name="error_retrieving_devices_database">Veri tabanından aygıtlar alınırken hata oluştu</string>
     <string name="error_setting_alias">Takma ad ayarlanırken hata oluştu:</string>
     <string name="error_exporting_device_preferences">Aygıta özel tercihler dışa aktarılırken hata oluştu</string>
     <string name="pref_check_permission_status_summary">Anında gerekmediklerinde bile eksik izinleri denetleyin ve isteyin. Bunu yalnızca aygıtlarınız bu özelliklerin hiçbirini desteklemiyorsa devre dışı bırakın. İzin verilmemesi sorunlara neden olabilir!</string>
-    <string name="pref_check_permission_status">İzin durumuna göz at</string>
+    <string name="pref_check_permission_status">İzin durumunu denetle</string>
     <string name="companiondevice_pairing">CompanionDevice Eşleştirme</string>
     <string name="require_location_provider">Konum etkinleştirilmelidir</string>
     <string name="devicetype_pinetime_jf">PineTime (JF Ürün Yazılımı)</string>
@@ -1188,7 +1178,7 @@
     <string name="activity_db_management_clean_export_directory_label">Dışa/İçe aktarma dizinindeki dosyaları sil</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">%1$s dışa aktarma dizininden dosyaları silerken hata oluştu</string>
     <string name="devicetype_amazfit_neo">Amazfit Neo</string>
-    <string name="activity_type_strength_training">Kuvvet Eğitimi</string>
+    <string name="activity_type_strength_training">Kuvvet Antrenmanı</string>
     <string name="mi_h">mi/sa</string>
     <string name="mi">mi</string>
     <string name="minutes_mi">dak/mi</string>
@@ -1220,13 +1210,12 @@
     <string name="fossil_hr_auth_failed">Kimlik doğrulama başarısız oldu, sınırlı işlevsellik</string>
     <string name="fossil_hr_unavailable_unauthed">Kimliği doğrulanmamış modda kullanılamaz</string>
     <string name="fossil_hr_synced_activity_data">Etkinlik verileri eşzamanlandı</string>
-    <string name="fossil_hr_commute_processing">İstek işleniyor...</string>
+    <string name="fossil_hr_commute_processing">İstek işleniyor…</string>
     <string name="qhybrid_title_calibration">Kalibrasyon</string>
     <string name="qhybrid_title_apps_management">Uygulama yönetimi</string>
     <string name="qhybrid_title_file_management">Dosya yönetimi</string>
     <string name="qhybrid_title_background_image">Arka plan görüntüsü</string>
     <string name="qhybrid_title_apps">Uygulamalar</string>
-    <string name="qhybrid_title_watchface_apps">Saat arayüzü ve uygulamalar</string>
     <string name="devicetype_um25">UM-25</string>
     <string name="fossil_hr_warning_firmware_too_new">Saatin ürün yazılımı çok yeni olduğu için bazı işlevler devre dışı bırakıldı</string>
     <string name="prefs_sounds_summary">Aygıtın ne zaman bip sesi çıkaracağını yapılandırın</string>
@@ -1247,7 +1236,7 @@
 \n
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
     <string name="devicetype_miband6">Mi Band 6</string>
-    <string name="pref_summary_canned_messages_dismisscall">Çağrıları SMS mesajıyla saatten sonlandırın</string>
+    <string name="pref_summary_canned_messages_dismisscall">Çağrıları SMS mesajıyla saatten kapatın</string>
     <string name="pref_summary_canned_messages_set">Aşağıda yapılandırılan mesajları aygıtınıza gönderin</string>
     <string name="qhybrid_summary_calibration">Saatin ibrelerini kalibre edin</string>
     <string name="qhybrid_summary_file_management">Dosyaları karşıya yükleyin ve indirin</string>
@@ -1286,28 +1275,28 @@
     <string name="set">Ayarla</string>
     <string name="watchface_upload_failed">Saat arayüzünün karşıya yüklenmesi başarısız oldu. Lütfen tekrar deneyin.</string>
     <string name="watchface_cache_confirm_overwrite">Önbellekte bu ada sahip bir saat arayüzü zaten var. Üzerine yazmak istiyor musunuz\?</string>
-    <string name="watchface_setting_wrist_flick_duration">Süre (ms cinsinden):</string>
-    <string name="watchface_setting_wrist_flick_minute">Dakika ibresi (-360 ila 360):</string>
-    <string name="watchface_setting_wrist_flick_hour">Saat ibresi (-360 ila 360):</string>
-    <string name="watchface_setting_wrist_flick_move_relative">İbreleri zamana göreceli hareket ettir:</string>
+    <string name="watchface_setting_wrist_flick_duration">Süre (ms cinsinden)</string>
+    <string name="watchface_setting_wrist_flick_minute">Dakika ibresi (-360 ila 360)</string>
+    <string name="watchface_setting_wrist_flick_hour">Saat ibresi (-360 ila 360)</string>
+    <string name="watchface_setting_wrist_flick_move_relative">İbreleri zamana göreceli hareket ettir</string>
     <string name="watchface_setting_desc_wrist_flick">(tamamen devre dışı bırakmak için, göreceli hareketi etkinleştirin ve tüm değerleri 0\'a ayarlayın)</string>
     <string name="watchface_setting_title_wrist_flick">Bilek hareketi</string>
-    <string name="watchface_setting_display_refresh_partial">Kısmi yenileme (dakika olarak):</string>
-    <string name="watchface_setting_display_refresh_full">Tam yenileme (dakika olarak):</string>
+    <string name="watchface_setting_display_refresh_partial">Kısmi yenileme (dakika olarak)</string>
+    <string name="watchface_setting_display_refresh_full">Tam yenileme (dakika olarak)</string>
     <string name="watchface_setting_title_display_refresh_timeout">Ekran yenileme zaman aşımı</string>
     <string name="watchface_dialog_title_settings">Saat arayüzü ayarları</string>
     <string name="watchface_dialog_widget_color_black">Siyah</string>
     <string name="watchface_dialog_widget_color_white">Beyaz</string>
-    <string name="watchface_dialog_widget_color">Renk:</string>
+    <string name="watchface_dialog_widget_color">Renk</string>
     <string name="qhybrid_title_watchface_designer">Saat arayüzü tasarımcısı</string>
     <string name="watchface_dialog_widget_preset_right">Sağ</string>
     <string name="watchface_dialog_widget_preset_left">Sol</string>
     <string name="watchface_dialog_widget_preset_bottom">Aşağı</string>
     <string name="watchface_dialog_widget_preset_top">Yukarı</string>
-    <string name="watchface_dialog_widget_presets">Konum ön ayarları:</string>
-    <string name="watchface_dialog_widget_y_coordinate">Y koordinatı (en fazla 240):</string>
-    <string name="watchface_dialog_widget_x_coordinate">X koordinatı (en fazla 240):</string>
-    <string name="watchface_dialog_widget_type">Tür:</string>
+    <string name="watchface_dialog_widget_presets">Konum ön ayarları</string>
+    <string name="watchface_dialog_widget_y_coordinate">Y koordinatı (en fazla 240)</string>
+    <string name="watchface_dialog_widget_x_coordinate">X koordinatı (en fazla 240)</string>
+    <string name="watchface_dialog_widget_type">Tür</string>
     <string name="appmanager_app_edit">Düzenle</string>
     <string name="button_watchface_save_apply">Kaydet ve uygula</string>
     <string name="watchface_widget_type_heart_rate">Kalp ritmi</string>
@@ -1361,7 +1350,7 @@
     <string name="nothing_prefs_inear_title">Kulak içi algılama</string>
     <string name="nothing_prefs_audiomode_title">Ses modu</string>
     <string name="pref_applications_settings">Uygulamalar listesi</string>
-    <string name="pref_title_notification_use_as">Uygulamalar listesini kullanarak...</string>
+    <string name="pref_title_notification_use_as">Uygulamalar listesini kullanarak…</string>
     <string name="toast_app_must_not_be_selected">Yapılandırmak için uygulama seçili olmamalıdır</string>
     <string name="pref_header_notification_application_settings">Uygulama başına ayarlar</string>
     <string name="title_activity_notification_management">Bildirim ayarları</string>
@@ -1383,7 +1372,6 @@
     <string name="prefs_game_mode">Oyun modu</string>
     <string name="prefs_game_mode_summary">Yalnızca telefonunuz oyun modunu destekliyorsa</string>
     <string name="prefs_ambient_volume">Ortam ses seviyesi</string>
-    <string name="prefs_ambient_volume_summary">pref_galaxy_buds_ambient_volume</string>
     <string name="prefs_ambient_voice_focus">Ses Odaklama</string>
     <string name="prefs_ambient_voice_summary">Sesi öne çıkar</string>
     <string name="prefs_ambient_sound">Ortam Sesi</string>
@@ -1407,7 +1395,6 @@
     <string name="prefs_active_noise_cancelling_summary">Çevredeki sesleri engelleyin</string>
     <string name="sony_sound_position_off">Kapalı</string>
     <string name="sony_sound_position_front">Ön</string>
-    <string name="sony_surround_position_mutually_exclusive">Uyarı: Ses konumu / çevre modu ayarlarından aynı anda yalnızca biri kullanılabilir.</string>
     <string name="sony_warn_sbc_codec">Uyarı: Bu ayarlar yalnızca SBC ses kod çözücü için çalışır.</string>
     <string name="sony_equalizer">Dengeleyici</string>
     <string name="sony_equalizer_preset_off">Kapalı</string>
@@ -1417,7 +1404,6 @@
     <string name="sony_equalizer_preset_bass_boost">Bas Güçlendirme</string>
     <string name="sony_equalizer_preset_speech">Konuşma</string>
     <string name="sony_equalizer_preset_manual">El ile</string>
-    <string name="pref_header_sony_equalizer_preset_manual">El ile Ön Ayar</string>
     <string name="pref_header_sony_equalizer_preset_custom_1">Özel Ön Ayar 1</string>
     <string name="sony_equalizer_band_400">400</string>
     <string name="sony_equalizer_band_2500">2.5b</string>
@@ -1462,7 +1448,6 @@
     <string name="sony_equalizer_preset_treble_boost">Tiz Güçlendirme</string>
     <string name="sony_equalizer_preset_custom_1">Özel 1</string>
     <string name="sony_equalizer_band_16000">16b</string>
-    <string name="sony_dsee_hx">DSEE HX</string>
     <string name="sony_equalizer_band_1000">1b</string>
     <string name="sony_touch_sensor">Dokunma sensörü denetimi</string>
     <string name="sony_notification_voice_guide">Bildirimler ve Sesli Rehber</string>
@@ -1474,15 +1459,13 @@
     <string name="device_card_activity_card_title_summary">Aygıt kartında hangi etkinlik ayrıntılarının görüntüleneceğini seçin</string>
     <string name="prefs_activity_in_device_card_title">Aygıt kartında etkinlik bilgilerini göster</string>
     <string name="prefs_activity_in_device_card_distance_title_summary">Mesafe, adımlardan ve adım uzunluğundan hesaplanır (Ayarlar - Hakkınızda bölümünden ayarlanabilir)</string>
-    <string name="live_activity_sleep_duration">Uyku zamanı</string>
-    <string name="live_activity_total_distance">Toplam mesafe</string>
     <string name="sony_automatic_power_off_when_taken_off">Çıkarıldığında</string>
     <string name="prefs_fm_presets_presets">Ön ayarlar</string>
     <string name="prefs_fm_preset_instructions">Ön ayarı saklamak için düğmeye uzun basın</string>
-    <string name="watchface_dialog_widget_timezone">Saat dilimi:</string>
-    <string name="watchface_dialog_widget_timeout_show_circle">Zaman aşımında çember göster:</string>
-    <string name="watchface_dialog_widget_timeout_hide_text">Zaman aşımında metni gizle:</string>
-    <string name="watchface_dialog_widget_update_timeout">Dakika cinsinden güncelleme zaman aşımı:</string>
+    <string name="watchface_dialog_widget_timezone">Saat dilimi</string>
+    <string name="watchface_dialog_widget_timeout_show_circle">Zaman aşımında çember göster</string>
+    <string name="watchface_dialog_widget_timeout_hide_text">Zaman aşımında metni gizle</string>
+    <string name="watchface_dialog_widget_update_timeout">Dakika cinsinden güncelleme zaman aşımı</string>
     <string name="qhybrid_summary_on_device_confirmation">Aygıt üzerinde eşleştirme onayları can sıkıcı olabilir. Bunları devre dışı bırakmak, işlevsellik kaybına neden olabilir.</string>
     <string name="qhybrid_title_on_device_confirmation">Aygıt üzerinde eşleştirme onayını etkinleştir</string>
     <string name="title_activity_set_reminders">Hatırlatıcıları yapılandır</string>
@@ -1523,7 +1506,7 @@
     <string name="sony_audio_upsampling">Ses Üst Örnekleme</string>
     <string name="sony_button_mode_right">Düğme Modu (Sağ)</string>
     <string name="sony_button_mode_playback_control">Oynatım Denetimi</string>
-    <string name="discover_unsupported_devices_description">Bu seçeneğin etkinleştirilmesi, tarama sırasında keşfedilen tüm bluetooth aygıtlarını görüntüleyecektir. Kısa dokunma, aygıt adını ve MAC adresini panoya kopyalayacaktır. Uzun basıldığında, `Test aygıtı ekle` iletişim kutusu açılacaktır.</string>
+    <string name="discover_unsupported_devices_description">Bu seçeneğin etkinleştirilmesi, tarama sırasında keşfedilen tüm bluetooth aygıtlarını görüntüleyecektir. Kısa dokunma, aygıt adını ve MAC adresini panoya kopyalayacaktır. Uzun basıldığında, `Test aygıtı ekle` iletişim kutusu açılacaktır. Olası uygulama donma sorunlarına neden olabilir.</string>
     <string name="controlcenter_power_off_confirm_description">Aygıtı kapatmak istediğinizden emin misiniz\?</string>
     <string name="controlcenter_power_off_confirm_title">Kapat</string>
     <string name="devicetype_sony_wf_sp800n">Sony WF-SP800N</string>
@@ -1569,7 +1552,7 @@
     <string name="sony_speak_to_chat_sensitivity_auto">Otomatik</string>
     <string name="sony_speak_to_chat_sensitivity_high">Yüksek</string>
     <string name="sony_speak_to_chat_sensitivity_low">Düşük</string>
-    <string name="watchface_dialog_widget_width">Genişlik:</string>
+    <string name="watchface_dialog_widget_width">Widget genişliği (piksel olarak)</string>
     <string name="device_unsupported">DESTEKLENMİYOR</string>
     <string name="sony_speak_to_chat_focus_on_voice">Sese Odaklan</string>
     <string name="sony_speak_to_chat_timeout">Zaman aşımı</string>
@@ -1721,7 +1704,7 @@
     <string name="prefs_seamless_connection_switch_summary">Kulaklıkları eşleştirilen aygıtlar arasında otomatik olarak değiştirir</string>
     <string name="prefs_ambient_volume_right">Ortam Ses Seviyesi Sağ</string>
     <string name="pref_title_banglejs_text_bitmap">Bit Eşlem Olarak Metin</string>
-    <string name="pref_summary_device_intents">Bangle.js saat uygulamalarının Android Amaçları göndermesine ve Android\'deki diğer uygulamaların (Tasker gibi) com.banglejs.uart.tx Niyeti ile Bangle.js\'ye veri göndermesine izin ver.</string>
+    <string name="pref_summary_device_intents">Bangle.js saat uygulamalarının Android Amaçları göndermesine ve Android\'deki diğer uygulamaların (Tasker gibi) com.banglejs.uart.tx Amacı ile Bangle.js\'ye veri göndermesine izin ver. Arka planda çalışmak için diğer uygulamalar üzerinde görüntüleme izni gerekir.</string>
     <string name="pref_title_device_intents">Amaçlara İzin Ver</string>
     <string name="pref_summary_device_internet_access">Bu aygıttaki uygulamaların internete erişmesine izin ver</string>
     <string name="pref_summary_banglejs_text_bitmap">Bir sözcük saatin yazı tipi kullanılarak görüntülenemiyorsa, onu Gadgetbridge\'de bir bit eşleme dönüştür ve bit eşlemi saatte görüntüle</string>
@@ -1736,10 +1719,10 @@
     <string name="pref_workout_send_gps_title">Egzersiz sırasında GPS gönder</string>
     <string name="permission_notification_listener">%1$s, telefonunuzun ekranı kapalıyken saatinizde görüntülemek için Bildirimlere erişmeye ihtiyaç duyuyor.
 \n
-\nLütfen önce \'%2$s\', sonra \'%1$s\' düğmesine dokunun ve \'Bildirim Erişimine İzin Ver\' seçeneğini etkinleştirin, ardından %1$s\'e dönmek için \'Geri\' düğmesine dokunun</string>
+\nLütfen önce \'%2$s\', sonra \'%1$s\' düğmesine dokunun ve \'Bildirim Erişimine İzin Ver\' seçeneğini etkinleştirin, ardından %1$s\'e dönmek için \'Geri\' düğmesine dokunun.</string>
     <string name="permission_notification_policy_access">%1$s, telefonunuzun ekranı kapalıyken saatinizde bu ayarları yerine getirebilmek için Rahatsız Etme ayarlarına erişmeye ihtiyaç duyuyor.
 \n
-\nLütfen önce \'%2$s\', sonra \'%1$s\' düğmesine dokunun ve \'Rahatsız Etmeye İzin Ver\' seçeneğini etkinleştirin, ardından %1$s\'e dönmek için \'Geri\' düğmesine dokunun</string>
+\nLütfen önce \'%2$s\', sonra \'%1$s\' düğmesine dokunun ve \'Rahatsız Etmeye İzin Ver\' seçeneğini etkinleştirin, ardından %1$s\'e dönmek için \'Geri\' düğmesine dokunun.</string>
     <string name="discovery_scanning_intensity">Tarama yoğunluğu</string>
     <string name="discovery_scanning_intensity_warning">Donma veya yanıt alamama yaşıyorsanız, tarama yoğunluğunu daha düşük bir seviyeye ayarlamayı deneyin. Aygıtınız bulunamıyorsa, tarama yoğunluğunu daha yüksek bir seviyeye ayarlamayı deneyin.</string>
     <string name="quick_alarm">Hızlı alarm</string>
@@ -1747,8 +1730,241 @@
     <string name="portuguese_pt">Portekizce (Portekiz)</string>
     <string name="portuguese_br">Portekizce (Brezilya)</string>
     <string name="pref_title_banglejs_webview_url">Uygulama yükleyici URL\'si</string>
-    <string name="pref_summary_banglejs_webview_url">Özel bir uygulama yükleyicisi istiyorsanız https://.../android.html URL\'nizi buraya koyun. Aksi takdirde https://banglejs.com/apps için boş bırakın</string>
+    <string name="pref_summary_banglejs_webview_url">Özel bir uygulama yükleyicisi istiyorsanız https://…/android.html URL\'nizi buraya koyun. Aksi takdirde https://banglejs.com/apps için boş bırakın</string>
     <string name="permission_location">%1$s ekranınız kapalıyken bile saatinize bağlı kalmasını sağlamak için arka planda konumunuza erişmeye ihtiyaç duyuyor.
 \n
 \nKabul etmek için lütfen \'%2$s\' düğmesine dokunun.</string>
+    <string name="info_no_devices_connected">bağlı aygıt yok</string>
+    <string name="info_connected_count">%d aygıt bağlı</string>
+    <string name="estonian">Estonca</string>
+    <string name="lithuanian">Litvanyaca</string>
+    <string name="persian">Farsça</string>
+    <string name="ukranian">Ukraynaca</string>
+    <string name="scandinavian">İskandinavca</string>
+    <string name="bengali">Bengalce</string>
+    <string name="extended_ascii">Genişletilmiş ASCII</string>
+    <string name="czech">Çekçe</string>
+    <string name="icelandic">İzlandaca</string>
+    <string name="pref_explanation_authkey">Bazı aygıtlar, aygıtın ilk kez başlatılması için özel bir eşleştirme anahtarı gerektirir. Wiki sayfasında daha fazla ayrıntı için buraya dokunun.</string>
+    <string name="pref_explanation_authkey_new_protocol">Bileklikte \"Uygulamayı en son sürüme güncelleyin\" mesajı alırsanız, yukarıdaki \"Yeni Kimlik Doğrulama Protokolü\" seçeneğini işaretlediğinizden emin olun. Wiki sayfasında daha fazla ayrıntı için buraya dokunun.</string>
+    <string name="prefs_password">Parola</string>
+    <string name="prefs_password_summary">Bilekten çıkarıldığında bilekliği bir parolayla kilitleyin</string>
+    <string name="prefs_password_4_digits_1_to_4_summary">Parola 1\'den 4\'e kadar rakamlardan oluşmalı ve 4 basamaklı olmalıdır</string>
+    <string name="prefs_password_6_digits_0_to_9_summary">Parola 6 basamaklı olmalı ve yalnızca rakamlar kullanılmalıdır</string>
+    <string name="controlcenter_add_new_folder">Yeni klasör ekle</string>
+    <string name="controlcenter_set_parent_folder">Üst klasörü ayarla</string>
+    <string name="controlcenter_set_preferences">Tercihleri ayarla</string>
+    <string name="controlcenter_connected_fraction">Bağlandı: %d/%d</string>
+    <string name="controlcenter_toggle_details">Ayrıntıları aç/kapat</string>
+    <string name="error_setting_parent_folder">Üst klasör ayarlanırken hata oluştu: %s</string>
+    <string name="error_deleting_device">Aygıt silinirken hata oluştu: %s</string>
+    <string name="controlcenter_folder_name">Klasör adı:</string>
+    <string name="controlcenter_unset_folder">Klasörün ayarını kaldır</string>
+    <string name="controlcenter_set_folder_title">Yeni klasör ayarla veya oluştur</string>
+    <string name="pref_title_notification_delay_calls">Çağrı bildirim gecikmesi</string>
+    <string name="pref_summary_notification_delay_calls">Gelen çağrı bildirimlerini aygıta göndermeden önceki saniye cinsinden gecikme.</string>
+    <string name="pref_blacklist_calendars_summary">Kara listeye alınan takvimler aygıtla eşzamanlanmayacak</string>
+    <string name="prefs_password_enabled">Parola Etkin</string>
+    <string name="auto_reconnect_ble_title">Aygıta otomatik yeniden bağlan</string>
+    <string name="auto_reconnect_ble_summary">Temkinli olarak düzenli aralıklarla aygıta bağlanmaya çalış</string>
+    <string name="connection_over_ble">BLE üzerinden bağlantı</string>
+    <string name="connection_over_bt_classic">Klasik Bluetooth üzerinden bağlantı</string>
+    <string name="autoconnect_from_device_title">Aygıttan bağlantıda bağlan</string>
+    <string name="autoconnect_from_device_summary">Kulaklık gibi bir aygıt tarafından bağlantı başlatıldığında bağlantı kur</string>
+    <string name="watchface_dialog_widget_timezone_duration">Saat görünürlük süresi (saniye cinsinden)</string>
+    <string name="open_fw_installer_warning_title">Uyarı</string>
+    <string name="open_fw_installer_pick_file">Dosya seç</string>
+    <string name="open_fw_installer_connect_maximum_one_device">Lütfen dosyayı göndermek istediğiniz YALNIZCA BİR aygıtı bağlayın.</string>
+    <string name="open_fw_installer_select_file">Aygıta yüklemek istediğiniz bir dosya seçin: %s</string>
+    <string name="open_fw_installer_info_text">Ürün Yazılımı/Saat Arayüzü/Uygulama/Dosya Kurucusu, desteklenen dosyaları (ürün yazılımı, saat arayüzleri, uygulamalar, GPS, kaynaklar, yazı tipleri...) aygıta yüklemenizi/kurmanızı sağlar. Wiki sayfasında daha fazla bilgi edinin: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_warning_text">Bu özelliğin aygıtınızı kullanılamaz duruma getirme olasılığı vardır. Bununla birlikte, kurulum sırasında hiçbir geliştiricinin başına böyle bir şey gelmemiştir, ancak bunu kendi sorumluluğunuzda yaptığınızı unutmayın.</string>
+    <string name="open_fw_installer_getting_files_title">Ürün yazılımı/uygulama dosyasını edinme</string>
+    <string name="open_fw_installer_info_text_title">Dosya Kurucusu</string>
+    <string name="open_fw_installer_connect_minimum_one_device">Lütfen dosyayı göndermek istediğiniz EN AZ BİR aygıtı bağlayın.</string>
+    <string name="open_fw_installer_ensure_device_connected">%s aygıtının bağlı olduğundan emin olun</string>
+    <string name="open_fw_installer_getting_files_text">Ürün yazılımı dosyalarını dağıtamayacağımız için, dosyaları kendiniz edinmeniz gerekecektir. Bu, dosyaları apk dosyalarında, çevrim içi olarak, forumlarda, Amazfitwatchfaces\'de (Miband/Amazfit aygıtları için) vb. aramanız gerektiği anlamına gelir.</string>
+    <string name="appmanager_item_outdated">(güncel değil)</string>
+    <string name="appmanager_app_share">Paylaş</string>
+    <string name="watchface_dialog_widget_cat_custom_widget">Özel widget</string>
+    <string name="watchface_dialog_widget_cat_generic">Genel</string>
+    <string name="watchface_dialog_title_widget">Widget ayarları</string>
+    <string name="pref_title_banglejs_txt_bitmap_size">Metin Bit Eşlemleri Boyutu</string>
+    <string name="hybridhr_widget_bg_thin_circle">İnce çember</string>
+    <string name="pref_summary_banglejs_txt_bitmap_size">\'Bit Eşlem Olarak Metin\' etkinse, metin hangi boyutta oluşturulmalıdır\?</string>
+    <string name="watchface_dialog_widget_cat_2nd_tz_widget">2. saat dilimi widget\'ı</string>
+    <string name="watchface_dialog_widget_cat_position">Konum</string>
+    <string name="watchface_dialog_widget_background">Arka plan</string>
+    <string name="hybridhr_widget_bg_double_circle">Çift çember</string>
+    <string name="hybridhr_widget_bg_dashed_circle">Kesikli çember</string>
+    <string name="watchface_setting_title_button_toggle_widgets">Widget\'ları değiştir</string>
+    <string name="watchface_setting_button_toggle_widgets">Widget\'ları aç/kapat</string>
+    <string name="steps_streaks_total_steps">Toplam
+\nadım</string>
+    <string name="steps_streaks">Adım serisi</string>
+    <string name="steps_streaks_total_steps_hint_totals">Şimdiye kadar kaydedilen toplam adım sayısı</string>
+    <string name="steps_streaks_hint">Adım hedefine ulaşılan kesintisiz ardışık günler serisi</string>
+    <string name="step_streak_ongoing">Devam eden</string>
+    <string name="step_streak_total">Toplam</string>
+    <string name="step_streak_longest">En uzun</string>
+    <string name="steps_streaks_streak_days">Seri
+\nGünler</string>
+    <string name="step_streak_average_steps_hint">Serinin günlük ortalama adım sayısı</string>
+    <string name="steps_streaks_average_steps">Ortalama
+\nadım</string>
+    <string name="steps_streaks_achievement_rate">Başarı
+\noranı</string>
+    <string name="steps_streaks_total_days_hint_totals">Adım atılan tüm günlere göre hedefe ulaşılan günlerin yüzdesi</string>
+    <string name="steps_streaks_since_date">%s\'den beri</string>
+    <string name="step_streak_days_hint">Adım hedefine ulaşılan ardışık gün sayısı</string>
+    <string name="steps_streaks_total_steps_hint">Tüm serideki toplam adım sayısı</string>
+    <string name="steps_streaks_total_steps_average_hint">Günlük toplam ortalama %d adım</string>
+    <string name="share_log_not_enabled_message">Önce Ayarlar - Günlük dosyalarını yaz bölümünde günlük kaydını etkinleştirmelisiniz</string>
+    <string name="note">Not</string>
+    <string name="watchface_setting_title_custom_events">Özel etkinlikler</string>
+    <string name="watchface_setting_button_toggle_backlight">Arka ışığı aç</string>
+    <string name="controlcenter_get_heartrate_measurement">Kalp ritmi ölçümünü al</string>
+    <string name="pref_write_logfiles_not_available">Dosya günlüğü başlatılamadı, günlük dosyalarının yazılması şu anda kullanılamıyor. Günlük dosyalarını tekrar başlatmayı denemek için uygulamayı yeniden başlatın.</string>
+    <string name="devicetype_binary_sensor">İkili sensör</string>
+    <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (Gecelik)</string>
+    <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js Gadgetbridge (Gecelik)</string>
+    <string name="about_activity_title_banglejs_nightly">Bangle.js Gadgetbridge (Gecelik) Hakkında</string>
+    <string name="gadgetbridge_running_banglejs_nightly">Gecelik Bangle.js çalışıyor</string>
+    <string name="about_description_banglejs_nightly">Bangle.js için Gadgetbridge projesinin üzerine inşa edilmiş, internet erişimi eklenmiş Android yardımcı uygulaması.
+\n
+\nGoogle Play Store politikaları nedeniyle, uygulamanın kendisinde bir bağış bağlantısına izin verilmiyor, ancak bu uygulamayı beğendiyseniz lütfen aşağıdaki Gadgetbridge ana sayfası üzerinden bağış yapmayı düşünün.</string>
+    <string name="prefs_hourly_chime">Saatlik zil</string>
+    <string name="prefs_hourly_chime_summary">Saat, saatte bir kez bip sesi çıkaracak</string>
+    <string name="step_streaks_achievements_sharing_message">Günlük adım başarılarım!</string>
+    <string name="step_streaks_achievements_sharing_title">Adım Başarıları</string>
+    <string name="permission_display_over_other_apps">%1$s, %1$s arka plandayken Bangle.js saatlerinin amaçlar aracılığıyla etkinlikleri başlatmasına izin vermek için diğer uygulamalar üzerinde görüntüleme iznine ihtiyaç duyuyor.
+\n
+\nBu, bir müzik uygulamasını başlatmak ve bir şarkı çalmak ve diğer birçok şey için kullanılabilir.
+\n
+\nLütfen önce \'%2$s\', sonra \'%1$s\' düğmesine dokunun ve \'Diğer uygulamalar üzerinden görüntülemeye izin ver\' seçeneğini etkinleştirin, ardından %1$s\'e dönmek için \'Geri\' düğmesine dokunun.
+\n
+\n%1$s için izin istenmesini durdurmak için \'Ayarlar\'a gidin ve \'İzin durumunu denetle\' seçeneğinin işaretini kaldırın.
+\n
+\n%1$s\'e beklediğiniz gibi çalışması için gereken izinleri verdiğinizden emin olun.</string>
+    <string name="pref_header_calendar">Takvim</string>
+    <string name="pref_header_health">Sağlık</string>
+    <string name="pref_header_workout">Egzersiz</string>
+    <string name="pref_title_screen_on_on_notifications">Bildirimlerde ekranı aç</string>
+    <string name="pref_summary_screen_on_on_notifications">Bir bildirim geldiğinde bilekliğin ekranını aç</string>
+    <string name="pref_cache_weather">Hava durumu bilgilerini önbelleğe al</string>
+    <string name="heartrate_bpm_40">40 kalp atışı/dakika</string>
+    <string name="heartrate_bpm_45">45 kalp atışı/dakika</string>
+    <string name="heartrate_bpm_50">50 kalp atışı/dakika</string>
+    <string name="heartrate_bpm_115">115 kalp atışı/dakika</string>
+    <string name="spo2_perc_80">%80</string>
+    <string name="spo2_perc_85">%85</string>
+    <string name="spo2_perc_90">%90</string>
+    <string name="prefs_relaxation_reminder_title">Rahatlama hatırlatıcısı</string>
+    <string name="seconds_6">6 saniye</string>
+    <string name="pref_sleep_breathing_quality_monitoring">Uykuda solunum kalitesi izleme</string>
+    <string name="prefs_always_on_display_summary">Bilekliğin ekranını her zaman açık tut</string>
+    <string name="smart">Akıllı</string>
+    <string name="mi2_dnd_always">Her zaman</string>
+    <string name="pref_header_heartrate_sleep">Uyku</string>
+    <string name="pref_header_heartrate_allday">Tüm gün izleme</string>
+    <string name="pref_header_heartrate_alerts">Kalp ritmi uyarıları</string>
+    <string name="pref_header_stress">Stres</string>
+    <string name="pref_header_spo2">Kan Oksijeni</string>
+    <string name="pref_header_time">Zaman</string>
+    <string name="pref_summary_canned_replies">Önceden ayarlanan mesajları kullanarak saatten yanıtlayın</string>
+    <string name="fw_upgrade_notice_miband7">Xiaomi Smart Band 7 aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
+\n
+\nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak.
+\n
+\nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
+    <string name="pref_header_connection">Bağlantı</string>
+    <string name="pref_cache_weather_summary">Hava durumu bilgileri, uygulama yeniden başlatmalarında önbelleğe alınacaktır.</string>
+    <string name="prefs_heartrate_alert_low_threshold">Düşük kalp ritmi uyarı eşiği</string>
+    <string name="prefs_spo2_alert_threshold">SPO2 uyarı eşiği</string>
+    <string name="menuitem_workout_status">Egzersiz Durumu</string>
+    <string name="pref_header_display">Ekran</string>
+    <string name="prefs_heartrate_alert_high_threshold">Yüksek kalp ritmi uyarı eşiği</string>
+    <string name="menuitem_workout_history">Egzersiz Geçmişi</string>
+    <string name="spo2_off">Kapalı</string>
+    <string name="seconds_15">15 saniye</string>
+    <string name="prefs_spo2_monitoring_title">Kan Oksijen İzleme</string>
+    <string name="prefs_spo2_monitoring_description">Gün boyunca kandaki oksijen seviyesini otomatik olarak izle</string>
+    <string name="prefs_relaxation_reminder_description">Stres değeri 80\'den yüksekse bilgilendirmek için bandı titret</string>
+    <string name="seconds_7">7 saniye</string>
+    <string name="seconds_8">8 saniye</string>
+    <string name="seconds_9">9 saniye</string>
+    <string name="seconds_11">11 saniye</string>
+    <string name="seconds_12">12 saniye</string>
+    <string name="seconds_13">13 saniye</string>
+    <string name="seconds_14">14 saniye</string>
+    <string name="prefs_screen_timeout">Ekran Zaman Aşımı</string>
+    <string name="prefs_always_on_display">Ekran Her Zaman Açık</string>
+    <string name="pref_screen_brightness">Ekran Parlaklığı</string>
+    <string name="devicetype_miband7">Xiaomi Smart Band 7</string>
+    <string name="menuitem_countdown">Geri Sayım</string>
+    <string name="menuitem_female_health">Kadın Sağlığı</string>
+    <string name="menuitem_personal_activity_intelligence">Kişisel Etkinlik Bilgileri</string>
+    <string name="pref_summary_notifications_ignore_low_priority">Düşük ve asgari öncelikli bildirimleri saate gönderme</string>
+    <string name="pref_title_notifications_ignore_low_priority">Düşük öncelikli bildirimleri yok say</string>
+    <string name="devicetype_flipper_zero">Flipper zero</string>
+    <string name="activity_prefs_allow_bluetooth_intent_api">Bluetooth Amaç API\'si</string>
+    <string name="activity_prefs_summary_allow_bluetooth_intent_api">Amaç API\'si aracılığıyla Bluetooth bağlantısını denetlemeye izin verin</string>
+    <string name="fw_upgrade_notice_amazfit_gts3">Amazfit GTS 3 aygıtınıza %s ürün yazılımını kurmak üzeresiniz. 
+\n 
+\nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak. 
+\n 
+\nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
+    <string name="devicetype_amazfit_gts3">Amazfit GTS 3</string>
+    <string name="pref_title_notification_prefer_long_text">Uzun bildirim metnini tercih et</string>
+    <string name="pref_summary_notification_prefer_long_text">Kullanılabilirse, aygıta uzun bildirim metni gönder</string>
+    <string name="menuitem_unknown_app">Bilinmeyen (%s)</string>
+    <string name="kind_app">Uygulama</string>
+    <string name="pref_title_overwrite_settings_on_connection">Bağlantıda ayarların üzerine yaz</string>
+    <string name="pref_summary_overwrite_settings_on_connection">Bilekliğe bağlanırken, onun tüm ayarlarının üzerine yaz.</string>
+    <string name="dismiss">Kapat</string>
+    <string name="devicetype_amazfit_gtr3">Amazfit GTR 3</string>
+    <string name="fw_upgrade_notice_amazfit_gtr3">Amazfit GTR 3 aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
+\n
+\nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak.
+\n
+\nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
+    <string name="pref_title_third_party_app_device_settings">3. taraf uygulamaların ayarları değiştirmesine izin ver</string>
+    <string name="pref_summary_third_party_app_device_settings">Kurulu diğer 3. taraf uygulamaların aygıt ayarlarını niyetler aracılığıyla değiştirmesine izin verin.</string>
+    <string name="activity_type_dance">Dans</string>
+    <string name="activity_type_indoor_fitness">İç Mekan Fitness</string>
+    <string name="activity_type_gymnastics">Jimnastik</string>
+    <string name="activity_type_hiit">Yüksek Yoğunluklu Aralıklı Antrenman</string>
+    <string name="activity_type_core_training">Çekirdek Antrenmanı</string>
+    <string name="activity_type_stretching">Germe</string>
+    <string name="activity_type_stepper">Adım</string>
+    <string name="activity_type_pilates">Pilates</string>
+    <string name="activity_type_volleyball">Voleybol</string>
+    <string name="activity_type_table_tennis">Masa Tenisi</string>
+    <string name="activity_type_kickboxing">Kickboks</string>
+    <string name="activity_type_bowling">Bovling</string>
+    <string name="activity_type_boxing">Boks</string>
+    <string name="activity_type_street_dance">Sokak Dansı</string>
+    <string name="activity_type_indoor_ice_skating">Kapalı Alan Buz Pateni</string>
+    <string name="activity_type_zumba">Zumba</string>
+    <string name="devicetype_super_cars">Shell Yarışı</string>
+    <string name="devicetype_amazfit_gtr_lite">Amazfit GTR Lite</string>
+    <string name="watchface_setting_button_move_hands">İbreleri hareket ettir</string>
+    <string name="supercars_turbo_speed_label">Turbo Hız</string>
+    <string name="supercars_lights_label">Işıklar</string>
+    <string name="abstract_chart_fragment_kind_rem_sleep">REM uykusu</string>
+    <string name="sports_activity_confirm_delete_title">%d etkinliği sil</string>
+    <string name="pref_header_authentication">Kimlik doğrulama</string>
+    <string name="sports_activity_confirm_delete_description">%d etkinliği silmek istediğinizden emin misiniz\?</string>
+    <string name="supercars_lights_blinking_label">Yanıp Sönme</string>
+    <string name="hrZoneWarmUp">Isınma</string>
+    <string name="TrainingEffect">Antrenman Etkisi</string>
+    <string name="aerobicTrainingEffect">Aerobik Etkisi</string>
+    <string name="anaerobicTrainingEffect">Anaerobik Etkisi</string>
+    <string name="currentWorkoutLoad">Egzersiz Yükü</string>
+    <string name="maximumOxygenUptake">Azami Oksijen Alımı</string>
+    <string name="HeartRateZones">Kalp Ritmi Bölgeleri</string>
+    <string name="hrZoneNa">YOK</string>
+    <string name="hrZoneAerobic">Aerobik</string>
+    <string name="hrZoneFatBurn">Yağ Yakımı</string>
+    <string name="hrZoneAnaerobic">Anaerobik</string>
+    <string name="hrZoneExtreme">Aşırı</string>
 </resources>

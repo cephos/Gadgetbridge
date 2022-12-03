@@ -1,4 +1,4 @@
-/*  Copyright (C) 2016-2021 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+/*  Copyright (C) 2016-2022 Andreas Shimokawa, Carsten Pfeiffer, Daniele
     Gobbetti, José Rebelo, Taavi Eomäe
 
     This file is part of Gadgetbridge.
@@ -24,7 +24,7 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.AbstractDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
@@ -34,7 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
-public class PineTimeJFCoordinator extends AbstractDeviceCoordinator {
+public class PineTimeJFCoordinator extends AbstractBLEDeviceCoordinator {
     @NonNull
     @Override
     public DeviceType getSupportedType(GBDeviceCandidate candidate) {
@@ -60,6 +60,9 @@ public class PineTimeJFCoordinator extends AbstractDeviceCoordinator {
         PineTimeInstallHandler handler = new PineTimeInstallHandler(uri, context);
         return handler.isValid() ? handler : null;
     }
+
+    @Override
+    public boolean supportsFlashing() { return true; }
 
     @Override
     public boolean supportsActivityDataFetching() {
@@ -123,7 +126,7 @@ public class PineTimeJFCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public boolean supportsWeather() {
-        return false;
+        return true;
     }
 
     @Override

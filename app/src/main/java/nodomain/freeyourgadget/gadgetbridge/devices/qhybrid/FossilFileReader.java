@@ -17,8 +17,10 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.qhybrid;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -37,6 +39,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil_hr.image.ImageConverter;
+import nodomain.freeyourgadget.gadgetbridge.util.BitmapUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
 
 /**
@@ -64,6 +68,11 @@ public class FossilFileReader {
     private int config_start;
     private int file_end;
 
+    ArrayList<String> filenamesIcons;
+    ArrayList<String> filenamesLayout;
+    ArrayList<String> filenamesDisplayName;
+    ArrayList<String> filenamesConfig;
+
 
     public FossilFileReader(Uri uri, Context context) throws IOException {
         this.uri = uri;
@@ -82,8 +91,8 @@ public class FossilFileReader {
             buf.order(ByteOrder.LITTLE_ENDIAN);
 
             short handle = buf.getShort();
-            short version = buf.getShort();
-            if ((handle == 5630) && (version == 3 || version == 515 || version == 771)) {
+            byte version = buf.get();
+            if (handle == 5630 && version == 3) {
                 // This is a watch app or watch face
                 isValid = true;
                 isApp = true;
@@ -135,7 +144,9 @@ public class FossilFileReader {
         buf.order(ByteOrder.LITTLE_ENDIAN);
         buf.position(8);  // skip file handle and version
         int fileSize = buf.getInt();
-        foundVersion = (int)buf.get() + "." + (int)buf.get() + "." + (int)buf.get() + "." + (int)buf.get();
+        buf.get();  // 1 = watchface, 2 = app
+        foundVersion = (int)buf.get() + "." + (int)buf.get();
+        buf.get();  // unknown
         mAppKeys.put("version", foundVersion);
         buf.position(buf.position() + 8);  // skip null bytes
         jerryStart = buf.getInt();
@@ -153,10 +164,10 @@ public class FossilFileReader {
             mAppKeys.put("name", foundName);
             mAppKeys.put("uuid", UUID.nameUUIDFromBytes(foundName.getBytes(StandardCharsets.UTF_8)));
         }
-        ArrayList<String> filenamesIcons = parseAppFilenames(buf, layout_start,false);
-        ArrayList<String> filenamesLayout = parseAppFilenames(buf, display_name_start,true);
-        ArrayList<String> filenamesDisplayName = parseAppFilenames(buf, config_start,true);
-        ArrayList<String> filenamesConfig = parseAppFilenames(buf, file_end,true);
+        filenamesIcons = parseAppFilenames(buf, layout_start,false);
+        filenamesLayout = parseAppFilenames(buf, display_name_start,true);
+        filenamesDisplayName = parseAppFilenames(buf, config_start,true);
+        filenamesConfig = parseAppFilenames(buf, file_end,true);
 
         if (filenamesDisplayName.contains("theme_class")) {
             isApp = false;
@@ -165,7 +176,7 @@ public class FossilFileReader {
         } else {
             mAppKeys.put("type", "APP_GENERIC");
         }
-        app = new GBDeviceApp(mAppKeys, false);
+        app = new GBDeviceApp(mAppKeys, false, null);
     }
 
     private ArrayList<String> parseAppFilenames(ByteBuffer buf, int untilPosition, boolean cutTrailingNull) {
@@ -193,6 +204,52 @@ public class FossilFileReader {
         String fileString = new String(fileBytes, StandardCharsets.UTF_8);
         JSONTokener jsonTokener = new JSONTokener(fileString);
         return new JSONObject(jsonTokener);
+    }
+
+    public Bitmap getPreview() {
+        try {
+            if ((filenamesIcons != null) && (filenamesIcons.contains("!preview.rle"))) {
+                return BitmapUtil.getCircularBitmap(ImageConverter.decodeFromRLEImage(getImageFileContents("!preview.rle")));
+            }
+            if ((filenamesIcons != null) && (filenamesIcons.contains("!preview"))) {
+                return BitmapUtil.getCircularBitmap(ImageConverter.decodeFromRLEImage(getImageFileContents("!preview")));
+            }
+        } catch (IOException e) {
+            LOG.warn("Couldn't read preview image from wapp file: ", e);
+            return null;
+        }
+        LOG.warn("No preview image found in wapp file");
+        return null;
+    }
+
+    public Bitmap getBackground() {
+        try {
+            if (filenamesIcons != null) {
+                String filename = null;
+                if (filenamesIcons.contains("background.raw")) {
+                    filename = "background.raw";
+                } else if (filenamesIcons.contains("background")) {
+                    filename = "background";
+                } else {
+                    JSONObject config = getConfigJSON("customWatchFace");
+                    JSONArray layout = config.getJSONArray("layout");
+                    JSONObject firstLayoutItem = layout.getJSONObject(0);
+                    if (firstLayoutItem.getString("type").equals("image")) {
+                        filename = firstLayoutItem.getString("name");
+                    }
+                }
+                if (filename != null) {
+                    byte[] rawImage = getImageFileContents(filename);
+                    Bitmap decodedImage = ImageConverter.decodeFromRAWImage(rawImage, 240, 240);
+                    return BitmapUtil.getCircularBitmap(decodedImage);
+                }
+            }
+        } catch (Exception e) {
+            LOG.warn("Couldn't read background image from wapp file: ", e);
+            return null;
+        }
+        LOG.warn("No background image found in wapp file");
+        return null;
     }
 
     private byte[] getImageFileContents(String filename) throws IOException {

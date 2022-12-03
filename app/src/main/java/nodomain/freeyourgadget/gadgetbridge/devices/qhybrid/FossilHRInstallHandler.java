@@ -72,13 +72,18 @@ public class FossilHRInstallHandler implements InstallHandler {
             return;
         }
         if (device.getType() != DeviceType.FOSSILQHYBRID || !device.isConnected() || !fossilFile.isValid()) {
-            installActivity.setInfoText("Element cannot be installed");
+            installActivity.setInfoText("Element cannot be installed 1, type: " + device.getType() + " device: "+ device  + " is connected" + device.isConnected() + " is valid file:" + fossilFile.isValid());
             installActivity.setInstallEnabled(false);
             return;
         }
         GenericItem installItem = new GenericItem();
         installItem.setName(fossilFile.getName());
         installItem.setDetails(fossilFile.getVersion());
+        Bitmap preview = fossilFile.getPreview();
+        if (preview != null) {
+            preview = Bitmap.createScaledBitmap(preview, preview.getWidth() * 3, preview.getHeight() * 3, false);
+        }
+        installItem.setPreview(preview);
         if (fossilFile.isFirmware()) {
             installItem.setIcon(R.drawable.ic_firmware);
             installActivity.setInfoText(mContext.getString(R.string.firmware_install_warning, "(unknown)"));
@@ -89,7 +94,7 @@ public class FossilHRInstallHandler implements InstallHandler {
             installItem.setIcon(R.drawable.ic_watchface);
             installActivity.setInfoText(mContext.getString(R.string.watchface_install_info, installItem.getName(), fossilFile.getVersion(), "(unknown)"));
         } else {
-            installActivity.setInfoText("Element cannot be installed");
+            installActivity.setInfoText("Element cannot be installed 2");
             installActivity.setInstallEnabled(false);
             return;
         }
@@ -106,12 +111,12 @@ public class FossilHRInstallHandler implements InstallHandler {
         if (fossilFile.isFirmware()) {
             return;
         }
-        saveAppInCache(fossilFile, null, mCoordinator, mContext);
+        saveAppInCache(fossilFile, fossilFile.getBackground(), fossilFile.getPreview(), mCoordinator, mContext);
         // refresh list
         manager.sendBroadcast(new Intent(AbstractAppManagerFragment.ACTION_REFRESH_APPLIST));
     }
 
-    public static void saveAppInCache(FossilFileReader fossilFile, Bitmap backgroundImg, DeviceCoordinator mCoordinator, Context mContext) {
+    public static void saveAppInCache(FossilFileReader fossilFile, Bitmap backgroundImg, Bitmap previewImg, DeviceCoordinator mCoordinator, Context mContext) {
         GBDeviceApp app;
         File destDir;
         // write app file
@@ -150,10 +155,21 @@ public class FossilHRInstallHandler implements InstallHandler {
         }
         // write watchface background image
         if (backgroundImg != null) {
-            outputFile = new File(destDir, app.getUUID().toString() + ".png");
+            outputFile = new File(destDir, app.getUUID().toString() + "_bg.png");
             try {
                 FileOutputStream fos = new FileOutputStream(outputFile);
                 backgroundImg.compress(Bitmap.CompressFormat.PNG, 9, fos);
+                fos.close();
+            } catch (IOException e) {
+                LOG.error("Failed to write to output file: " + e.getMessage(), e);
+            }
+        }
+        // write watchface preview image
+        if (previewImg != null) {
+            outputFile = new File(destDir, app.getUUID().toString() + "_preview.png");
+            try {
+                FileOutputStream fos = new FileOutputStream(outputFile);
+                previewImg.compress(Bitmap.CompressFormat.PNG, 9, fos);
                 fos.close();
             } catch (IOException e) {
                 LOG.error("Failed to write to output file: " + e.getMessage(), e);

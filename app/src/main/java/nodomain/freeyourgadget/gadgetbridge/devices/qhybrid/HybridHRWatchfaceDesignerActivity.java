@@ -101,6 +101,7 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
 
     private final int CHILD_ACTIVITY_IMAGE_CHOOSER = 0;
     private final int CHILD_ACTIVITY_SETTINGS = 1;
+    private final int CHILD_ACTIVITY_WIDGET = 2;
 
     BroadcastReceiver fileUploadReceiver = new BroadcastReceiver() {
         @Override
@@ -181,6 +182,15 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
             renderWatchfacePreview();
         } else if (requestCode == CHILD_ACTIVITY_SETTINGS && resultCode == Activity.RESULT_OK && resultData != null) {
             watchfaceSettings = (HybridHRWatchfaceSettings) resultData.getSerializableExtra("watchfaceSettings");
+        } else if (requestCode == CHILD_ACTIVITY_WIDGET && resultCode == Activity.RESULT_OK && resultData != null) {
+            int widgetIndex = (int) resultData.getSerializableExtra("widgetIndex");
+            HybridHRWatchfaceWidget editedWidget = (HybridHRWatchfaceWidget) resultData.getSerializableExtra("widgetSettings");
+            if (widgetIndex >= 0) {
+                widgets.set(widgetIndex, editedWidget);
+            } else {
+                widgets.add(editedWidget);
+            }
+            renderWatchfacePreview();
         }
     }
 
@@ -227,6 +237,11 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
         } else if (v.getId() == R.id.watchface_invert_colors) {
             if (selectedBackgroundImage != null) {
                 selectedBackgroundImage = BitmapUtil.invertBitmapColors(selectedBackgroundImage);
+                for (int i=0; i<widgets.size(); i++) {
+                    HybridHRWatchfaceWidget widget = widgets.get(i);
+                    widget.setColor(widget.getColor() ^ 1);
+                    widgets.set(i, widget);
+                }
                 renderWatchfacePreview();
                 if (defaultWidgetColor == HybridHRWatchfaceWidget.COLOR_WHITE) {
                     defaultWidgetColor = HybridHRWatchfaceWidget.COLOR_BLACK;
@@ -314,7 +329,10 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
             LOG.warn("Could not get external dir while trying to access app cache.", e);
             return;
         }
-        File backgroundFile = new File(appCacheDir, appUUID + ".png");
+        File backgroundFile = new File(appCacheDir, appUUID + "_bg.png");
+        if (!backgroundFile.exists()) {
+            backgroundFile = new File(appCacheDir, appUUID + ".png");
+        }
         try {
             Bitmap cachedBackground = BitmapFactory.decodeStream(new FileInputStream(backgroundFile));
             selectedBackgroundImage = BitmapUtil.convertToGrayscale(BitmapUtil.getCircularBitmap(cachedBackground));
@@ -378,6 +396,15 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
                     if (watchfaceConfig.has("wrist_flick_move_minute")) {
                         watchfaceSettings.setWristFlickMoveMinute(watchfaceConfig.getInt("wrist_flick_move_minute"));
                     }
+                    if (watchfaceConfig.has("toggle_widgets_event")) {
+                        watchfaceSettings.setToggleWidgetsEvent(watchfaceConfig.getString("toggle_widgets_event"));
+                    }
+                    if (watchfaceConfig.has("toggle_backlight_event")) {
+                        watchfaceSettings.setToggleBacklightEvent(watchfaceConfig.getString("toggle_backlight_event"));
+                    }
+                    if (watchfaceConfig.has("move_hands_event")) {
+                        watchfaceSettings.setMoveHandsEvent(watchfaceConfig.getString("move_hands_event"));
+                    }
                     if (watchfaceConfig.has("powersave_display")) {
                         watchfaceSettings.setPowersaveDisplay(watchfaceConfig.getBoolean("powersave_display"));
                     }
@@ -401,7 +428,7 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
     }
 
     private void renderWatchfacePreview() {
-        int widgetSize = 50;
+        int widgetSize = QHybridConstants.HYBRID_HR_WATCHFACE_WIDGET_SIZE;
         if (selectedBackgroundImage == null) {
             try {
                 selectedBackgroundImage = BitmapUtil.getCircularBitmap(BitmapFactory.decodeStream(getAssets().open("fossil_hr/default_background.png")));
@@ -473,202 +500,30 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
         backgroundImageView.setImageBitmap(processedBackgroundImage);
     }
 
-    private void showWidgetEditPopup(final int index) {
-        View layout = getLayoutInflater().inflate(R.layout.dialog_hybridhr_watchface_widget, null);
-        HybridHRWatchfaceWidget widget = null;
+    private void showWidgetEditPopup(int index) {
+        HybridHRWatchfaceWidget widget;
         if (index >= 0) {
             widget = widgets.get(index);
-        }
-        // Configure widget type dropdown
-        final Spinner typeSpinner = layout.findViewById(R.id.watchface_widget_type_spinner);
-        LinkedHashMap<String, String> widgetTypes = HybridHRWatchfaceWidget.getAvailableWidgetTypes(this);
-        ArrayAdapter<String> widgetTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, widgetTypes.values().toArray(new String[0]));
-        typeSpinner.setAdapter(widgetTypeAdapter);
-        final ArrayList<String> widgetTypesArray = new ArrayList<>(widgetTypes.keySet());
-        if ((widget != null) && (widgetTypesArray.contains(widget.getWidgetType()))) {
-            typeSpinner.setSelection(widgetTypesArray.indexOf(widget.getWidgetType()));
-        }
-        // Configure widget color dropdown
-        final Spinner colorSpinner = layout.findViewById(R.id.watchface_widget_color_spinner);
-        ArrayAdapter<String> widgetColorAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{getString(R.string.watchface_dialog_widget_color_white), getString(R.string.watchface_dialog_widget_color_black)});
-        colorSpinner.setAdapter(widgetColorAdapter);
-        if (widget != null) {
-            colorSpinner.setSelection(widget.getColor());
         } else {
-            colorSpinner.setSelection(defaultWidgetColor);
-        }
-        // Set X coordinate
-        final EditText posX = layout.findViewById(R.id.watchface_widget_pos_x);
-        if (widget != null) {
-            posX.setText(Integer.toString(widget.getPosX()));
-        }
-        // Set Y coordinate
-        final EditText posY = layout.findViewById(R.id.watchface_widget_pos_y);
-        if (widget != null) {
-            posY.setText(Integer.toString(widget.getPosY()));
-        }
-
-        class WidgetPosition{
-            final int posX, posY, buttonResource, hintStringResource;
-
-            public WidgetPosition(int posX, int posY, int buttonResource, int hintStringResource) {
-                this.posX = posX;
-                this.posY = posY;
-                this.buttonResource = buttonResource;
-                this.hintStringResource = hintStringResource;
-            }
-        }
-
-        WidgetPosition[] positions = new WidgetPosition[]{
-                new WidgetPosition(120, 58, R.id.watchface_widget_preset_top, R.string.watchface_dialog_widget_preset_top),
-                new WidgetPosition(182, 120, R.id.watchface_widget_preset_right, R.string.watchface_dialog_widget_preset_right),
-                new WidgetPosition(120, 182, R.id.watchface_widget_preset_bottom, R.string.watchface_dialog_widget_preset_bottom),
-                new WidgetPosition(58, 120, R.id.watchface_widget_preset_left, R.string.watchface_dialog_widget_preset_left),
-        };
-
-        for(final WidgetPosition position : positions){
-            Button btn = layout.findViewById(position.buttonResource);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    posX.setText(String.valueOf(position.posX));
-                    posY.setText(String.valueOf(position.posY));
-                }
-            });
-        }
-
-        if(widget == null){
+            int posX = 120;
+            int posY = 120;
             int currentIndex = widgets.size();
-            if(currentIndex < 4){
-                WidgetPosition newPosition = positions[currentIndex];
-                posX.setText(String.valueOf(newPosition.posX));
-                posY.setText(String.valueOf(newPosition.posY));
+            if (currentIndex < 4) {
+                HybridHRWidgetPosition newPosition = HybridHRWatchfaceWidget.defaultPositions[currentIndex];
+                posX = newPosition.posX;
+                posY = newPosition.posY;
                 GB.toast(getString(R.string.watchface_dialog_pre_setting_position, getString(newPosition.hintStringResource)), Toast.LENGTH_SHORT, GB.INFO);
             }
-        }
-
-        // Set widget size
-        final LinearLayout sizeLayout = layout.findViewById(R.id.watchface_widget_size_layout);
-        sizeLayout.setVisibility(View.GONE);
-        final EditText widgetWidth = layout.findViewById(R.id.watchface_widget_width);
-        if ((widget != null) && (widget.getWidth() >= 0)) {
-            widgetWidth.setText(Integer.toString(widget.getWidth()));
-        }
-        // Populate timezone spinner
-        String[] timezonesList = TimeZone.getAvailableIDs();
-        final Spinner tzSpinner = layout.findViewById(R.id.watchface_widget_timezone_spinner);
-        final LinearLayout timezoneLayout = layout.findViewById(R.id.watchface_widget_timezone_layout);
-        timezoneLayout.setVisibility(View.GONE);
-        ArrayAdapter<String> widgetTZAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, timezonesList);
-        tzSpinner.setAdapter(widgetTZAdapter);
-        if ((widget != null) && (Arrays.asList(timezonesList).contains(widget.getTimezone()))) {
-            tzSpinner.setSelection(Arrays.asList(timezonesList).indexOf(widget.getTimezone()));
-        } else {
-            tzSpinner.setSelection(Arrays.asList(timezonesList).indexOf("Etc/UTC"));
-        }
-        // Set update timeout value
-        final LinearLayout updateTimeoutLayout = layout.findViewById(R.id.watchface_widget_update_timeout_layout);
-        updateTimeoutLayout.setVisibility(View.GONE);
-        final EditText updateTimeout = layout.findViewById(R.id.watchface_widget_update_timeout);
-        if ((widget != null) && (widget.getUpdateTimeout() >= 0)) {
-            updateTimeout.setText(Integer.toString(widget.getUpdateTimeout()));
-        }
-        final CheckBox timeoutHideText = layout.findViewById(R.id.watchface_widget_timeout_hide_text);
-        if ((widget != null) && (widget.getTimeoutHideText())) {
-            timeoutHideText.setChecked(widget.getTimeoutHideText());
-        }
-        final CheckBox timeoutShowCircle = layout.findViewById(R.id.watchface_widget_timeout_show_circle);
-        if ((widget != null) && (widget.getTimeoutShowCircle())) {
-            timeoutShowCircle.setChecked(widget.getTimeoutShowCircle());
-        }
-        // Show certain input fields only when the relevant TZ widget is selected
-        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedType = widgetTypesArray.get(typeSpinner.getSelectedItemPosition());
-                if (selectedType.equals("widget2ndTZ")) {
-                    timezoneLayout.setVisibility(View.VISIBLE);
-                } else {
-                    timezoneLayout.setVisibility(View.GONE);
-                }
-                if (selectedType.equals("widgetCustom")) {
-                    sizeLayout.setVisibility(View.VISIBLE);
-                    updateTimeoutLayout.setVisibility(View.VISIBLE);
-                } else {
-                    sizeLayout.setVisibility(View.GONE);
-                    updateTimeoutLayout.setVisibility(View.GONE);
-                }
+            int color = defaultWidgetColor;
+            if (widgets.size() > 0) {
+                color = widgets.get(0).getColor();
             }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-        });
-        // Show dialog
-        new AlertDialog.Builder(this)
-                .setView(layout)
-                .setNegativeButton(R.string.fossil_hr_edit_action_delete, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (index >= 0) {
-                            widgets.remove(index);
-                            renderWatchfacePreview();
-                        }
-                    }
-                })
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        int selectedPosX;
-                        int selectedPosY;
-                        try {
-                            selectedPosX = Integer.parseInt(posX.getText().toString());
-                            selectedPosY = Integer.parseInt(posY.getText().toString());
-                        } catch (NumberFormatException e) {
-                            GB.toast(getString(R.string.watchface_toast_settings_incomplete), Toast.LENGTH_SHORT, GB.WARN);
-                            LOG.warn("Error parsing input", e);
-                            return;
-                        }
-                        if (selectedPosX < 1) selectedPosX = 1;
-                        if (selectedPosX > 240) selectedPosX = 240;
-                        if (selectedPosY < 1) selectedPosY = 1;
-                        if (selectedPosY > 240) selectedPosY = 240;
-                        int selectedWidth = 76;
-                        try {
-                            selectedWidth = Integer.parseInt(widgetWidth.getText().toString());
-                        } catch (NumberFormatException e) {
-                            LOG.warn("Error parsing input", e);
-                        }
-                        String selectedType = widgetTypesArray.get(typeSpinner.getSelectedItemPosition());
-                        String selectedTZ = tzSpinner.getSelectedItem().toString();
-                        int selectedUpdateTimeout = 0;
-                        if (selectedType.equals("widgetCustom")) {
-                            try {
-                                selectedUpdateTimeout = Integer.parseInt(updateTimeout.getText().toString());
-                            } catch (NumberFormatException e) {
-                                GB.toast(getString(R.string.watchface_toast_settings_incomplete), Toast.LENGTH_SHORT, GB.WARN);
-                                LOG.warn("Error parsing input", e);
-                                return;
-                            }
-                        }
-                        boolean selectedTimeoutHideText = timeoutHideText.isChecked();
-                        boolean selectedTimeoutShowCircle = timeoutShowCircle.isChecked();
-                        HybridHRWatchfaceWidget widgetConfig;
-                        if (selectedType.equals("widget2ndTZ")) {
-                            widgetConfig = new HybridHRWatchfaceWidget(selectedType, selectedPosX, selectedPosY, 76, 76, colorSpinner.getSelectedItemPosition(), selectedTZ);
-                        } else if (selectedType.equals("widgetCustom")) {
-                            widgetConfig = new HybridHRWatchfaceWidget(selectedType, selectedPosX, selectedPosY, selectedWidth, 76, colorSpinner.getSelectedItemPosition(), selectedUpdateTimeout, selectedTimeoutHideText, selectedTimeoutShowCircle);
-                        } else {
-                            widgetConfig = new HybridHRWatchfaceWidget(selectedType, selectedPosX, selectedPosY, 76, 76, colorSpinner.getSelectedItemPosition());
-                        }
-                        if (index >= 0) {
-                            widgets.set(index, widgetConfig);
-                        } else {
-                            widgets.add(widgetConfig);
-                        }
-                        renderWatchfacePreview();
-                    }
-                })
-                .setTitle(R.string.watchface_dialog_title_add_widget)
-                .show();
+            widget = new HybridHRWatchfaceWidget("widgetDate", posX, posY, 76, 76, color, null);
+        }
+        Intent intent = new Intent(this, HybridHRWatchfaceWidgetActivity.class);
+        intent.putExtra("widgetIndex", index);
+        intent.putExtra("widgetSettings", widget);
+        startActivityForResult(intent, CHILD_ACTIVITY_WIDGET);
     }
 
     private void showWatchfaceSettingsPopup() {
@@ -715,14 +570,15 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
     }
 
     private void sendToWatch(boolean preview) {
-        HybridHRWatchfaceFactory wfFactory;
+        final Context mContext = this;
+        final HybridHRWatchfaceFactory wfFactory;
         if (preview) {
             wfFactory = new HybridHRWatchfaceFactory("previewWatchface");
         } else {
             wfFactory = new HybridHRWatchfaceFactory(watchfaceName);
         }
         wfFactory.setSettings(watchfaceSettings);
-        wfFactory.setBackground(processedBackgroundImage);
+        wfFactory.setBackground(selectedBackgroundImage);
         wfFactory.addWidgets(widgets);
         try {
             File tempFile = File.createTempFile("tmpWatchfaceFile", null);
@@ -735,13 +591,13 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
             final Uri tempAppFileUri = Uri.fromFile(tempFile);
             if (preview) {
                 findViewById(R.id.watchface_upload_progress_bar).setVisibility(View.VISIBLE);
-                GBApplication.deviceService().onInstallApp(tempAppFileUri);
+                GBApplication.deviceService(mGBDevice).onInstallApp(tempAppFileUri);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        GBApplication.deviceService().onAppDelete(UUID.nameUUIDFromBytes("previewWatchface".getBytes(StandardCharsets.UTF_8)));
+                        GBApplication.deviceService(mGBDevice).onAppDelete(UUID.nameUUIDFromBytes("previewWatchface".getBytes(StandardCharsets.UTF_8)));
                     }
-                }, 10000);
+                }, 15000);
             } else {
                 readyToCloseActivity = true;
                 final FossilFileReader fossilFile = new FossilFileReader(tempAppFileUri, this);
@@ -756,21 +612,16 @@ public class HybridHRWatchfaceDesignerActivity extends AbstractGBActivity implem
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     findViewById(R.id.watchface_upload_progress_bar).setVisibility(View.VISIBLE);
-                                    GBApplication.deviceService().onInstallApp(tempAppFileUri);
-                                    FossilHRInstallHandler.saveAppInCache(fossilFile, processedBackgroundImage, mCoordinator, HybridHRWatchfaceDesignerActivity.this);
+                                    GBApplication.deviceService(mGBDevice).onInstallApp(tempAppFileUri);
+                                    FossilHRInstallHandler.saveAppInCache(fossilFile, selectedBackgroundImage, wfFactory.getPreviewImage(mContext), mCoordinator, HybridHRWatchfaceDesignerActivity.this);
                                 }
                             })
                             .show();
                 } else {
                     findViewById(R.id.watchface_upload_progress_bar).setVisibility(View.VISIBLE);
-                    GBApplication.deviceService().onInstallApp(tempAppFileUri);
-                    FossilHRInstallHandler.saveAppInCache(fossilFile, processedBackgroundImage, mCoordinator, HybridHRWatchfaceDesignerActivity.this);
+                    GBApplication.deviceService(mGBDevice).onInstallApp(tempAppFileUri);
+                    FossilHRInstallHandler.saveAppInCache(fossilFile, selectedBackgroundImage, wfFactory.getPreviewImage(mContext), mCoordinator, HybridHRWatchfaceDesignerActivity.this);
                 }
-                Bitmap previewImage = wfFactory.getPreviewImage(this);
-                File previewFile = new File(cacheDir, app.getUUID().toString() + "_preview.png");
-                FileOutputStream previewFOS = new FileOutputStream(previewFile);
-                previewImage.compress(Bitmap.CompressFormat.PNG, 9, previewFOS);
-                previewFOS.close();
             }
         } catch (IOException e) {
             LOG.warn("Error while creating and uploading watchface", e);

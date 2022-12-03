@@ -10,6 +10,11 @@ import org.slf4j.LoggerFactory;
 
 import org.slf4j.Logger;
 
+import java.util.Arrays;
+import java.util.List;
+
+import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
+import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
@@ -84,6 +89,7 @@ public class MiBand6Coordinator extends HuamiCoordinator {
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
                 R.xml.devicesettings_miband6,
+                R.xml.devicesettings_miband6_new_protocol,
                 R.xml.devicesettings_vibrationpatterns,
                 R.xml.devicesettings_wearlocation,
                 R.xml.devicesettings_heartrate_sleep_alert_activity_stress,
@@ -95,12 +101,15 @@ public class MiBand6Coordinator extends HuamiCoordinator {
                 R.xml.devicesettings_nightmode,
                 R.xml.devicesettings_liftwrist_display_sensitivity,
                 R.xml.devicesettings_inactivity_dnd,
+                R.xml.devicesettings_workout_start_on_phone,
+                R.xml.devicesettings_workout_send_gps_to_band,
                 R.xml.devicesettings_swipeunlock,
+                R.xml.devicesettings_password,
                 R.xml.devicesettings_sync_calendar,
                 R.xml.devicesettings_reserve_reminders_calendar,
                 R.xml.devicesettings_expose_hr_thirdparty,
-                R.xml.devicesettings_pairingkey,
                 R.xml.devicesettings_high_mtu,
+                R.xml.devicesettings_overwrite_settings_on_connection,
                 R.xml.devicesettings_transliteration
         };
     }
@@ -136,5 +145,21 @@ public class MiBand6Coordinator extends HuamiCoordinator {
     @Override
     public int getBondingStyle() {
         return BONDING_STYLE_REQUIRE_KEY;
+    }
+
+    @Override
+    public PasswordCapabilityImpl.Mode getPasswordCapability() {
+        return PasswordCapabilityImpl.Mode.NUMBERS_6;
+    }
+
+    @Override
+    public List<HeartRateCapability.MeasurementInterval> getHeartRateMeasurementIntervals() {
+        return Arrays.asList(
+                HeartRateCapability.MeasurementInterval.OFF,
+                HeartRateCapability.MeasurementInterval.MINUTES_1,
+                HeartRateCapability.MeasurementInterval.MINUTES_5,
+                HeartRateCapability.MeasurementInterval.MINUTES_10,
+                HeartRateCapability.MeasurementInterval.MINUTES_30
+        );
     }
 }

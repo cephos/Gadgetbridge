@@ -20,47 +20,51 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.util.BitmapUtil;
 
 import static nodomain.freeyourgadget.gadgetbridge.util.BitmapUtil.invertBitmapColors;
 
-public class HybridHRWatchfaceWidget {
+public class HybridHRWatchfaceWidget implements Serializable {
     private String widgetType;
     private int posX;
     private int posY;
     private int width;
     private int height;
     private int color;
-    private String timezone;
-    private int updateTimeout = -1;
-    private boolean timeoutHideText = true;
-    private boolean timeoutShowCircle = true;
+    private String background;
+    private String extraConfigJSON;
 
     public static int COLOR_WHITE = 0;
     public static int COLOR_BLACK = 1;
 
-    public HybridHRWatchfaceWidget(String widgetType, int posX, int posY, int width, int height, int color) {
+    static HybridHRWidgetPosition[] defaultPositions = new HybridHRWidgetPosition[]{
+        new HybridHRWidgetPosition(120, 58, R.string.watchface_dialog_widget_preset_top),
+        new HybridHRWidgetPosition(182, 120, R.string.watchface_dialog_widget_preset_right),
+        new HybridHRWidgetPosition(120, 182, R.string.watchface_dialog_widget_preset_bottom),
+        new HybridHRWidgetPosition(58, 120, R.string.watchface_dialog_widget_preset_left),
+    };
+
+    public HybridHRWatchfaceWidget(String widgetType, int posX, int posY, int width, int height, int color, JSONObject extraConfig) {
         this.widgetType = widgetType;
         this.posX = posX;
         this.posY = posY;
         this.width = width;
         this.height = height;
         this.color = color;
+        this.background = "";
+        try {
+            this.extraConfigJSON = extraConfig.toString();
+        } catch (Exception e) {
+            this.extraConfigJSON = "{}";
+        }
     }
-    public HybridHRWatchfaceWidget(String widgetType, int posX, int posY, int width, int height, int color, String timezone) {
-        this(widgetType, posX, posY, width, height, color);
-        this.timezone = timezone;
-    }
-    public HybridHRWatchfaceWidget(String widgetType, int posX, int posY, int width, int height, int color, int updateTimeout, boolean timeoutHideText, boolean timeoutShowCircle) {
-        this(widgetType, posX, posY, width, height, color);
-        this.updateTimeout = updateTimeout;
-        this.timeoutHideText = timeoutHideText;
-        this.timeoutShowCircle = timeoutShowCircle;
-    }
-
 
     public static LinkedHashMap<String, String> getAvailableWidgetTypes(Context context) {
         LinkedHashMap<String, String> widgetTypes = new LinkedHashMap<>();
@@ -77,12 +81,24 @@ public class HybridHRWatchfaceWidget {
         return widgetTypes;
     }
 
+    public void setWidgetType(String widgetType) {
+        this.widgetType = widgetType;
+    }
     public String getWidgetType() {
         return widgetType;
     }
 
+
     public Bitmap getPreviewImage(Context context) throws IOException {
         Bitmap preview = BitmapFactory.decodeStream(context.getAssets().open("fossil_hr/" + widgetType + "_preview.png"));
+        if (getBackground() != "") {
+            try {
+                Bitmap background = BitmapFactory.decodeStream(context.getAssets().open("fossil_hr/" + getBackground() + ".png"));
+                preview = BitmapUtil.overlay(background, preview);
+            } catch (Exception e) {
+                // continue silently without background
+            }
+        }
         if (color == COLOR_WHITE) {
             return preview;
         } else {
@@ -121,17 +137,79 @@ public class HybridHRWatchfaceWidget {
     public int getColor() {
         return color;
     }
+    public void setColor(int color) {
+        this.color = color;
+    }
 
-    public String getTimezone() {
-        return timezone;
+    public String getBackground() {
+        return background;
     }
-    public int getUpdateTimeout() {
-        return updateTimeout;
+    public void setBackground(String background) {
+        this.background = background;
     }
-    public boolean getTimeoutHideText() {
-        return timeoutHideText;
+
+    public int getExtraConfigInt(String name, int fallback) {
+        try {
+            return new JSONObject(extraConfigJSON).optInt(name, fallback);
+        } catch (Exception e) {
+            return fallback;
+        }
     }
-    public boolean getTimeoutShowCircle() {
-        return timeoutShowCircle;
+    public String getExtraConfigString(String name, String fallback) {
+        try {
+            return new JSONObject(extraConfigJSON).optString(name, fallback);
+        } catch (Exception e) {
+            return fallback;
+        }
+    }
+    public Boolean getExtraConfigBoolean(String name, Boolean fallback) {
+        try {
+            return new JSONObject(extraConfigJSON).optBoolean(name, fallback);
+        } catch (Exception e) {
+            return fallback;
+        }
+    }
+
+    public void setExtraConfigInt(String name, int value) {
+        JSONObject extraConfig;
+        try {
+            extraConfig = new JSONObject(extraConfigJSON);
+        } catch (Exception e) {
+            extraConfig = new JSONObject();
+        }
+        try {
+            extraConfig.put(name, value);
+            extraConfigJSON = extraConfig.toString();
+        } catch (Exception e) {
+            return;
+        }
+    }
+    public void setExtraConfigString(String name, String value) {
+        JSONObject extraConfig;
+        try {
+            extraConfig = new JSONObject(extraConfigJSON);
+        } catch (Exception e) {
+            extraConfig = new JSONObject();
+        }
+        try {
+            extraConfig.put(name, value);
+            extraConfigJSON = extraConfig.toString();
+        } catch (Exception e) {
+            return;
+        }
+    }
+    public void setExtraConfigBoolean(String name, Boolean value) {
+        JSONObject extraConfig;
+        try {
+            extraConfig = new JSONObject(extraConfigJSON);
+        } catch (Exception e) {
+            extraConfig = new JSONObject();
+        }
+        try {
+            extraConfig.put(name, value);
+            extraConfigJSON = extraConfig.toString();
+        } catch (Exception e) {
+            return;
+        }
     }
 }

@@ -68,6 +68,9 @@ public class MiBand2HRXCoordinator extends HuamiCoordinator {
     }
 
     @Override
+    public boolean supportsFlashing() { return false; }
+
+    @Override
     public boolean supportsAlarmSnoozing() {
         return true;
     }
@@ -93,7 +96,7 @@ public class MiBand2HRXCoordinator extends HuamiCoordinator {
                 R.xml.devicesettings_liftwrist_display,
                 R.xml.devicesettings_inactivity_dnd,
                 R.xml.devicesettings_rotatewrist_cycleinfo,
-                R.xml.devicesettings_pairingkey,
+                R.xml.devicesettings_overwrite_settings_on_connection,
                 R.xml.devicesettings_transliteration
         };
     }

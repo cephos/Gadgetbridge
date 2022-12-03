@@ -1,5 +1,153 @@
 ### Changelog
 
+### 0.71.2
+* Zepp OS: Display HR zones and Training Effect in Activity Details
+* Remove shortcut feature due to non-free dependencies (#2918)
+
+### 0.71.1
+* Try to exclude non-free stuff from shortcuts library (#2918)
+* SuperCars: fix periodicDataSender, add tricks
+* Zepp OS: Fix crash when user attempts to disable Settings display item
+* Fix crash when opening Gadgetbridge from the notification
+
+### 0.71.0
+* Remove KitKat support, Gadgetbridge now requires Android 5.0
+* Initial support for Amazfit GTR 3
+* Initial support for SuperCars (Shell Racing Cars)
+* Huami: Add preference to overwrite band settings on connection
+* Huami: Fix crash when selecting automatic Always On Display
+* Huami: Set OpenTracks track category and icon
+* Huami: Implement proper find device
+* Huami: Change default find band vibration pattern
+* Flipper Zero: added duration to Intent API
+* Flipper Zero: fixed crash due to unregistered boradcast receiver
+* Flipper Zero: fetch firmware version from flipper
+* Fossil Hybrid HR: Correctly initialize watchface after reset or crash
+* Fossil Hybrid HR: Set OpenTracks track category and icon to workout type selected on watch
+* Fossil Hybrid HR: Allow flick_away as custom event and add move_hands event 
+* InfiniTime: Add weather support
+* Amazfit Neo: Fix world clock
+* Amazfit Neo: Fix long caller name display
+* Amazfit Neo: Remove activity tracks (unsupported)
+* Amazfit GTS 3: Fix battery drain due to unanswered weather requests
+* Mi Band 7: Fix Weather
+* Mi Band 6: Add support for workout activity types
+* Mi Band 6: Enable adding workout activity types to the "more" section
+* Amazfit GTR: Enable button actions
+* Zepp OS: Implement activity, sleep and workout fetching
+* Zepp OS: Improve firmware upgrades
+* Bangle.js: Add PATCH HTTP request type, and fix for VolleyError UnsupportedOperationException when supplying custom headers.
+* Bangle.js: Add ability to start services on the Android device via intents.
+* Bangle.js: Flags and multiple categories can now be specified for intents initiated on the watch.
+* Bangle.js: Add ability to wake and unlock the Android device via a special intent.
+* Allow 3rd party apps to set device settings
+* Re-implement C code in Java and remove Android NDK dependency entirely
+* Fix crashes on older Android versions when using some devices
+* Add support for REM sleep
+* App shortcuts support (long press on the launcher icon for directly connecting a device)
+
+### 0.70.0
+* Initial support for Amazfit GTS 3
+* Initial support for Fossil Hybrid Gen6
+* Initial support for Flipper Zero
+* Huami: fix default vibration pattern
+* Huami: Enable vibration patterns for all compatible devices
+* Huami: Improve large firmware zip file handling
+* Bangle.js: Fix null pointer issue if headers not supplied for HTTP request
+* Bangle.js: Support calendar color and name
+* Mi Band 7: Fix crash if reminder, calendar or canned messages contain non-ascii characters
+* Mi Band 7: Fix NPE when acknowledging that icon was sent
+* Mi Band 7: Fix and enable firmware upgrades
+* Mi Band 7: Support for watchapps
+* Amazfit Neo: remove 1 hour heartrate interval (not supported)
+* Fossil Hybrid HR: Fix watchface redraw after powersave and after wrist flick
+* Fossil Hybrid HR: Enable configuring middle long press on FW 3.0 and newer
+* InfiniTime: Fix firmware update
+* Make heart rate measurement intervals configurable per-device
+* Add option to ignore low priority notifications
+* Fix Skype notifications
+* Prefer long notification text by default
+* Prefer big text when scraping gmail notifications
+* Do not remove newline and whitespace characters from notification content
+* Debug: Add companion device list to debug activity
+
+### 0.69.0
+* Initial Support for Mi Band 7
+* Initial support for devices using Binary Sensor Service
+* Mi Band 4: Enable heartrate activity monitoring support
+* Mi Band 4: Enable activate display on lift sensitivity setting
+* Mi Band 6: Enable password support
+* Mi Band 4/6, Amazfit Bip U: Enable sending GPS coordinates to band during workout
+* Mi Band 4/6, Amazfit Bip U: Enable start fitness tracking on phone when workout starts on band setting
+* Amazfit Neo: Support hourly chime which was added in firmware 1.1.2.46
+* Amazfit Neo: Fix daily steps goal and notification
+* Amazfit Neo: Fix heartrate sleep detection setting
+* Amazfit Neo: Enable heartrate activity monitoring support
+* Amazfit Neo: Fix alarms setting to "unused" on connect.
+* Bangle.js: Make text as bitmaps have transparent background, and allow font size to be specified
+* Bangle.js: Allow starting Activties on the Android device
+* Fossil Hybrid HR: Add support for Hybrid HR 38mm watches
+* Fossil Hybrid HR: Add optional circle backgrounds to widgets
+* Fossil Hybrid HR: Add toggling of widgets with physical button event
+* Fossil Hybrid HR: Add missing physical button options
+* Fossil Q Hybrid: Fix config activity after multi-device merge
+* InfiniTine: Fixes for steps count sync
+* Add steps/sleep streaks screen
+* Add French transliteration
+* Refactor file logging initialization logic
+* Add alert to Log Sharing if logging has not been enabled yet
+* Fix crash on some phones for find android device (add fallback tone)
+* Fix regression since 0.68.0 with active auto connect
+
+### 0.68.0
+* Multi device support (experimental), allows connecting to multiple devices simultaneously
+* Fossil Hybrid HR: Allow installation of newer watch apps
+* Fossil Hybrid HR: Allow workout app the be added as a shortcut
+* Fossil Hybrid HR: Generate watchface preview image and show it in the app manager
+* Fossil Hybrid HR: Request custom menu config on watchface initialization
+* Fossil Hybrid HR: Invert widgets color when the background image is inverted
+* Fossil Hybrid HR: Show app versions in app manager
+* Fossil Hybrid HR: Make 2nd TZ widget clock duration configurable and fix wrong offset
+* Fossil Hybrid HR: Add option to share a cached watchface/app to another app
+* Fossil Hybrid HR: Allow switching already uploaded watchfaces with Intent
+* Mi Band 6: Fix night mode on latest firmware
+* Mi Band 6: add sleep menu item (also to shortcuts)
+* Mi Band 5: Send GPS location to band during workout
+* Mi Band 5: Start fitness tracking on phone when workout starts on band
+* Mi Band 5: Fix missing Portuguese language
+* Mi Band 5: Add missing breathing shortcut
+* Mi Band 4: Add password support
+* Huami: Fix setting heart rate measurement interval on connection
+* Huami: Fix track name being replaced by album
+* Huami: Display native alarm notification
+* Huami: Fix MTU update on device connection
+* Roidmi 3: Recognize "Roidmi C BLE" as Roidmi 3
+* Bangle.js fix message REPLY option
+* Bangle.js: Keep a log of data sent from the watch, and allow it to be saved with from the debug menu
+* Bangle.js: Support for color dithered bitmaps, and converting emoji->bitmaps
+* Bangle.js: Adding built-in app-loader view. (Only available on internet-enabled builds)
+* Bangle.js: fix null pointer issue for debug messages
+* Bangle.js: Enable calendar sync for bangle
+* Bangle.js: Add icon
+* Pebble: fix configuration of some watchfaces (might break other again)
+* FitPro: add MTU based chunking, add more device names (Sunset 6, Watch7)
+* UM25: fix missing firmware version
+* Support for incoming call notification delay
+* Make calendar blacklist configurable per device
+* Support folders in device list
+* Separate device settings which are specific to the application into Set preferences in device card
+* When pairing devices with auth key requirements, only show Auth key menu related items on long press
+* Provide access to the FW/App Installer via Set preferences in device card
+* Animate card movement in device list
+* Make transliteration configurable per-language
+* Widget: do not show sleep if not recorded
+* Pop up a dialog asking about Location permissions
+* Fix sharing log files on newer android versions
+* Allow to set Bluetooth discovery scanning level to prevent freezing
+* Various UI tweaks and fixes
+* Add monochrome themed icon
+* Add device menu item to get to the FW/App Installer via an explanation activity
+
 ### 0.67.1
 * Huami: Fix long music track names not displaying
 * Amazfit Bip U/Pro/Band 5: Enable extended HR/stress monitoring setting

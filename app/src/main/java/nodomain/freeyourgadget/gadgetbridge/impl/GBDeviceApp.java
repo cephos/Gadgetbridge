@@ -17,6 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.impl;
 
+import android.graphics.Bitmap;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +33,21 @@ public class GBDeviceApp {
     private final boolean inCache;
     private boolean isOnDevice;
     private final boolean configurable;
+    private final Bitmap previewImage;
+    private boolean isUpToDate = true;
+
+    public GBDeviceApp(UUID uuid, String name, String creator, String version, Type type, Bitmap previewImage) {
+        this.uuid = uuid;
+        this.name = name;
+        this.creator = creator;
+        this.version = version;
+        this.type = type;
+        this.previewImage = previewImage;
+        //FIXME: do not assume
+        this.inCache = false;
+        this.configurable = false;
+        this.isOnDevice = false;
+    }
 
     public GBDeviceApp(UUID uuid, String name, String creator, String version, Type type) {
         this.uuid = uuid;
@@ -38,13 +55,14 @@ public class GBDeviceApp {
         this.creator = creator;
         this.version = version;
         this.type = type;
+        this.previewImage = null;
         //FIXME: do not assume
         this.inCache = false;
         this.configurable = false;
         this.isOnDevice = false;
     }
 
-    public GBDeviceApp(JSONObject json, boolean configurable) {
+    public GBDeviceApp(JSONObject json, boolean configurable, Bitmap previewImage) {
         UUID uuid = UUID.fromString("00000000-0000-0000-0000-000000000000");
         String name = "";
         String creator = "";
@@ -66,6 +84,7 @@ public class GBDeviceApp {
         this.creator = creator;
         this.version = version;
         this.type = type;
+        this.previewImage = previewImage;
         //FIXME: do not assume
         this.inCache = true;
         this.configurable = configurable;
@@ -103,6 +122,10 @@ public class GBDeviceApp {
         return type;
     }
 
+    public Bitmap getPreviewImage() {
+        return previewImage;
+    }
+
     public enum Type {
         UNKNOWN,
         WATCHFACE,
@@ -128,5 +151,13 @@ public class GBDeviceApp {
 
     public boolean isConfigurable() {
         return configurable;
+    }
+
+    public void setUpToDate(boolean isUpToDate) {
+        this.isUpToDate = isUpToDate;
+    }
+
+    public boolean isUpToDate() {
+        return isUpToDate;
     }
 }

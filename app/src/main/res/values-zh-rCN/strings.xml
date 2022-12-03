@@ -37,23 +37,22 @@
     <string name="appmanager_weather_install_provider">安装天气通知应用</string>
     <string name="app_configure">配置</string>
     <string name="app_move_to_top">移至顶部</string>
-    <string name="title_activity_appblacklist">通知黑名单</string>
     <string name="title_activity_calblacklist">阻止记录</string>
     <string name="title_activity_fw_app_insaller">FW/App 安装器</string>
     <string name="fw_upgrade_notice">您即将安装 %s 。</string>
-    <string name="fw_upgrade_notice_amazfitbip">即将在您的华米手表青春版(Amazfit Bip)上安装固件 %s 。 
-\n 
-\n请确保安装.fw文件，然后安装.res文件，最后安装.gps文件。 安装.fw文件后，手表将重新启动。 
-\n 
-\n注意：如果这些文件与之前安装的完全一样，则不必安装.res和.gps文件。 
-\n 
+    <string name="fw_upgrade_notice_amazfitbip">即将在您的跃我手表青春版(Amazfit Bip)上安装固件 %s 。
+\n
+\n请确保安装.fw文件，然后安装.res文件，最后安装.gps文件。 安装.fw文件后，手表将重新启动。
+\n
+\n注意：如果这些文件与之前安装的完全一样，则不必安装.res和.gps文件。
+\n
 \n***继续需要您自担风险！</string>
-    <string name="fw_upgrade_notice_amazfitcor">您即将在您的华米手环(Amazfit Cor)上安装固件 %s 。 
-\n 
-\n请确保安装了 .fw 文件，然后安装 .rec 文件。 安装 .fw 文件后，手表将重新启动。 
-\n 
-\n注意：如果这些文件与之前安装的完全一样，则不必安装 .res 。 
-\n 
+    <string name="fw_upgrade_notice_amazfitcor">您即将在您的跃我手环(Amazfit Cor)上安装固件 %s 。
+\n
+\n请确保安装了 .fw 文件，然后安装 .rec 文件。 安装 .fw 文件后，手表将重新启动。
+\n
+\n注意：如果这些文件与之前安装的完全一样，则不必安装 .res 。
+\n
 \n您需要自行承担风险！</string>
     <string name="fw_multi_upgrade_notice">您即将安装固件 %1$s 和 %2$s，代替当前在小米手环上的固件。</string>
     <string name="miband_firmware_known">该固件已经过测试，并且已知与 Gadgetbridge 兼容。</string>
@@ -101,7 +100,6 @@
     <string name="pref_call_privacy_mode_number">隐藏号码但显示姓名</string>
     <string name="pref_call_privacy_mode_complete">隐藏姓名和号码</string>
     <string name="pref_title_weather_location">天气位置 (由LineageOS天气服务提供)</string>
-    <string name="pref_blacklist">黑名单应用</string>
     <string name="pref_blacklist_calendars">黑名单列表</string>
     <string name="pref_header_cannned_messages">保存的消息</string>
     <string name="pref_title_canned_replies">回复</string>
@@ -197,7 +195,7 @@
     <string name="pairing_already_bonded">已与 %1$s (%2$s) 绑定，正在连接…</string>
     <string name="message_cannot_pair_no_mac">没有 MAC 地址通过, 不能配对。</string>
     <string name="preferences_category_device_specific_settings">设备特定设置</string>
-    <string name="preferences_miband_settings">小米手环/华米手环设置</string>
+    <string name="preferences_miband_settings">小米手环/跃我手环设置</string>
     <string name="male">男</string>
     <string name="female">女</string>
     <string name="other">其它</string>
@@ -260,7 +258,7 @@
     <string name="user_feedback_miband_activity_data_transfer">即将从 %2$s 开始传输 %1$s 数据</string>
     <string name="miband_prefs_fitness_goal">每天步数目标</string>
     <string name="dbaccess_error_executing">执行 \'%1$s\' 时出错</string>
-    <string name="controlcenter_start_activitymonitor">您的活动 (ALPHA测试)</string>
+    <string name="controlcenter_start_activitymonitor">您的活动</string>
     <string name="cannot_connect">无法连接: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">无法找到安装此文件的处理程序。</string>
     <string name="pbw_install_handler_unable_to_install">无法安装指定的文件: %1$s</string>
@@ -301,7 +299,7 @@
     <string name="weeksteps_today_steps_description">今天的步数, 目标：%1$s</string>
     <string name="pref_title_dont_ack_transfer">不发送活动数据</string>
     <string name="pref_summary_dont_ack_transfers">如果活动数据未传输到设备，则不会被清除。 Gadgetbridge 与其他应用程序一起使用时很有用。</string>
-    <string name="pref_summary_keep_data_on_device">即使在同步之后，也会将活动数据保留在小米手环上。如果 Gadgetbridge 与其他应用程序一起使用，这将非常有用。</string>
+    <string name="pref_summary_keep_data_on_device">即使在同步之后，也会将活动数据保留在设备上。如果 Gadgetbridge 与其他应用程序一起使用，这将非常有用。</string>
     <string name="pref_title_low_latency_fw_update">使用低延迟模式进行固件更新</string>
     <string name="pref_summary_low_latency_fw_update">这可能对固件失败的设备有帮助。</string>
     <string name="live_activity_steps_history">步数历史</string>
@@ -333,8 +331,6 @@
     <string name="mi2_prefs_button_action_vibrate_summary">在已触发的按钮动作上启用手环振动</string>
     <string name="mi2_prefs_button_press_count_max_delay">按钮最大延迟</string>
     <string name="mi2_prefs_button_press_count_max_delay_summary">按下按钮之间的最大延迟，以毫秒为单位</string>
-    <string name="mi2_prefs_button_press_count_match_delay">按钮操作激活后延迟</string>
-    <string name="mi2_prefs_button_press_count_match_delay_summary">一个按钮动作激活后的延迟时间(number is in button_id intent extra) 输入0为立即</string>
     <string name="mi2_prefs_goal_notification">达标提醒</string>
     <string name="mi2_prefs_goal_notification_summary">达成运动目标后, 手环/手表将会振动提醒</string>
     <string name="mi2_prefs_display_items">显示内容</string>
@@ -454,8 +450,8 @@
     <string name="devicetype_unknown">未知设备</string>
     <string name="devicetype_miband">小米手环</string>
     <string name="devicetype_miband2">小米手环2</string>
-    <string name="devicetype_amazfit_bip">华米手表青春版</string>
-    <string name="devicetype_amazfit_cor">华米手环</string>
+    <string name="devicetype_amazfit_bip">跃我手表青春版</string>
+    <string name="devicetype_amazfit_cor">跃我手环</string>
     <string name="pref_title_weather">天气</string>
     <string name="vibration_profile_waterdrop">水滴</string>
     <string name="devicetype_test">测试设备</string>
@@ -582,8 +578,6 @@
     <string name="devicetype_watch9">Watch 9</string>
     <string name="devicetype_roidmi">睿米</string>
     <string name="devicetype_roidmi3">睿米 3</string>
-    <string name="menuitem_shortcut_alipay">支付宝（快捷方式）</string>
-    <string name="menuitem_shortcut_weather">天气（快捷方式）</string>
     <string name="menuitem_status">状态</string>
     <string name="menuitem_notifications">通知</string>
     <string name="menuitem_activity">锻炼历史</string>
@@ -618,7 +612,6 @@
     <string name="debugactivity_really_factoryreset">恢复出厂设置将会删除已连接设备上的所有数据（如果支持）。小米/华米设备将会同时改变蓝牙MAC地址。对Gadgetbridge而言，这将是一个新设备。</string>
     <string name="devicetype_casiogb6900">卡西欧 GB-6900</string>
     <string name="title_activity_notification_filter">通知过滤器</string>
-    <string name="toast_app_must_not_be_blacklisted">只有不在黑名单中的应用才能够进行配置</string>
     <string name="edittext_notification_filter_words_hint">输入期望的字词，一行一个</string>
     <string name="toast_notification_filter_saved_successfully">已保存通知过滤器</string>
     <string name="filter_mode_none">不要过滤</string>
@@ -689,14 +682,14 @@
     <string name="pref_title_authkey">认证密钥</string>
     <string name="pref_summary_authkey">将您想要连接的所有 Android 设备上的认证密钥更改为通用的密钥。默认所有设备的密钥是 0123456789@ABCDE</string>
     <string name="devicetype_bfh16">BFH-16</string>
-    <string name="fw_upgrade_notice_amazfitcor2">您即将在华米手环2(Amazfit Cor 2)上安装 %s 版本的固件 
-\n 
-\n请确保先安装 .fw 文件，再安装 .res 文件。您的手环将会在安装了 .fw 文件后重启 
-\n 
-\n备注：如果您安装的 .res 文件和之前相同，则无需安装 .res 文件 
-\n 
-\n风险自担！ 
-\n 
+    <string name="fw_upgrade_notice_amazfitcor2">您即将在跃我手环2(Amazfit Cor 2)上安装 %s 版本的固件
+\n
+\n请确保先安装 .fw 文件，再安装 .res 文件。您的手环将会在安装了 .fw 文件后重启
+\n
+\n备注：如果您安装的 .res 文件和之前相同，则无需安装 .res 文件
+\n
+\n风险自担！
+\n
 \n此功能未经测试，如果您的设备名为“Amazfit Band 2”，您可能需要刷入 BEATS_W 固件</string>
     <string name="dutch">荷兰语</string>
     <string name="turkish">土耳其语</string>
@@ -706,7 +699,7 @@
     <string name="thai">泰语</string>
     <string name="vietnamese">越南语</string>
     <string name="portuguese">葡萄牙语</string>
-    <string name="devicetype_amazfit_cor2">华米手环2</string>
+    <string name="devicetype_amazfit_cor2">跃我手环2</string>
     <string name="devicetype_miband4">小米手环4</string>
     <string name="fw_upgrade_notice_miband4">您即将在您的的小米手环4上安装 %s 固件。
 \n
@@ -744,8 +737,6 @@
     <string name="activity_db_management_exportimport_label">导入与导出</string>
     <string name="activity_db_management_empty_db_warning">警告！当按下此按钮后，将会清空您的数据库并从零开始。</string>
     <string name="appwidget_sleep_alarm_widget_label">睡眠闹钟</string>
-    <string name="widget_steps_label">步数：%1$02d</string>
-    <string name="widget_sleep_label">睡眠：%1$s</string>
     <string name="widget_listing_label">状态与闹钟</string>
     <string name="widget_set_alarm_after">多久后闹铃：</string>
     <string name="widget_5_minutes">5 分钟</string>
@@ -756,33 +747,32 @@
     <string name="pref_display_add_device_fab_on">总是可见</string>
     <string name="pref_display_add_device_fab_off">仅当没有设备添加时可见</string>
     <plurals name="widget_alarm_target_hours">
-        <item quantity="one">%d 小时</item>
         <item quantity="other">%d 小时</item>
     </plurals>
     <string name="activity_error_no_app_for_gpx">若需要查看活动轨迹，请安装一个能查看 GPX 文件的应用。</string>
     <string name="preferences_makibes_hr3_settings">Makibes HR3 设置</string>
     <string name="devicetype_makibes_hr3">Makibes HR3</string>
-    <string name="devicetype_amazfit_bip_lite">华米手表青春版 Lite</string>
+    <string name="devicetype_amazfit_bip_lite">跃我手表青春版 Lite</string>
     <string name="prefs_find_phone">查找手机</string>
     <string name="prefs_enable_find_phone">启用“查找手机”</string>
     <string name="prefs_find_phone_summary">使用您的手环以在手机上播放铃声。</string>
     <string name="prefs_find_phone_duration">铃声将持续数秒</string>
     <string name="maximum_duration">持续</string>
     <string name="discovery_need_to_enter_authkey">此设备需要认证密钥，请在设备上长按以输入密钥。具体请阅读 Wiki 。</string>
-    <string name="fw_upgrade_notice_amazfitbip_lite">您即将在华米手表青春版 Lite(Amazfit Bip Lite)上安装 %s 版本的固件 
-\n 
-\n请确保先安装 .fw 文件，再安装 .res 文件。您的手环将会在安装了 .fw 文件后重启 
-\n 
-\n备注：如果您安装的 .res 文件和之前相同，则无需安装 .res 文件 
-\n 
+    <string name="fw_upgrade_notice_amazfitbip_lite">您即将在跃我手表青春版 Lite(Amazfit Bip Lite)上安装 %s 版本的固件
+\n
+\n请确保先安装 .fw 文件，再安装 .res 文件。您的手环将会在安装了 .fw 文件后重启
+\n
+\n备注：如果您安装的 .res 文件和之前相同，则无需安装 .res 文件
+\n
 \n风险自担！</string>
-    <string name="devicetype_amazfit_gtr">华米 GTR</string>
-    <string name="fw_upgrade_notice_amazfitgtr">即将在您的华米 GTR (Amazfit GTR) 上安装固件 %s 。 
-\n 
-\n请确保先安装 .fw 文件，然后再安装 .res 文件，最后再安装 .gps 文件。您的手表将会安装了 .fw 文件后重启。 
-\n 
-\n注意：如果 .res 和 .gps 文件和上一个版本相同，您则无需安装。 
-\n 
+    <string name="devicetype_amazfit_gtr">跃我 GTR</string>
+    <string name="fw_upgrade_notice_amazfitgtr">即将在您的跃我 GTR (Amazfit GTR) 上安装固件 %s 。
+\n
+\n请确保先安装 .fw 文件，然后再安装 .res 文件，最后再安装 .gps 文件。您的手表将会安装了 .fw 文件后重启。
+\n
+\n注意：如果 .res 和 .gps 文件和上一个版本相同，您则无需安装。
+\n
 \n风险自担！</string>
     <string name="pref_chart_heartrate_color_red">红</string>
     <string name="pref_chart_heartrate_color_orange">橙</string>
@@ -790,18 +780,17 @@
     <string name="pref_title_chart_sleep_rolling_24_hour">睡眠范围</string>
     <string name="pref_chart_sleep_rolling_24_on">过去 24 小时</string>
     <string name="pref_chart_sleep_rolling_24_off">中午到中午</string>
-    <string name="devicetype_amazfit_gts">华米 GTS</string>
-    <string name="fw_upgrade_notice_amazfitgts">您即将在华米手表 GTS(Amazfit GTS)上安装 %s 版本的固件 
-\n 
-\n请确保先安装 .fw 文件，再安装 .res 文件。您的手环将会在安装了 .fw 文件后重启。 
-\n 
-\n备注：如果您安装的 .res 文件和之前相同，则无需安装 .res 文件。 
-\n 
+    <string name="devicetype_amazfit_gts">跃我 GTS</string>
+    <string name="fw_upgrade_notice_amazfitgts">您即将在跃我手表 GTS(Amazfit GTS)上安装 %s 版本的固件
+\n
+\n请确保先安装 .fw 文件，再安装 .res 文件。您的手环将会在安装了 .fw 文件后重启。
+\n
+\n备注：如果您安装的 .res 文件和之前相同，则无需安装 .res 文件。
+\n
 \n风险自担！</string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
     <string name="devicetype_qhybrid">Fossil Q Hybrid</string>
     <string name="preferences_qhybrid_settings">Q Hybrid 设置</string>
-    <string name="tasker_notification">播放 Q Hybrid 通知</string>
     <string name="watch_not_connected">手表未连接</string>
     <string name="qhybrid_vibration_strength">振动强度：</string>
     <string name="qhybrid_goal_in_steps">目标步数</string>
@@ -850,11 +839,8 @@
     <string name="hr_appname_workout">健身</string>
     <string name="hr_appname_stopwatch">秒表</string>
     <string name="hr_appname_commute">通勤</string>
-    <string name="pref_title_upper_button_function">上按钮</string>
-    <string name="pref_title_middle_button_function">中按钮</string>
-    <string name="pref_title_lower_button_function">下按钮</string>
     <string name="pref_title_vibration_strength">振动强度</string>
-    <string name="devicetype_amazfit_bips">华米手表青春版 S</string>
+    <string name="devicetype_amazfit_bips">跃我手表青春版 S</string>
     <string name="pref_title_relax_firmware_checks">若您希望刷入并非为您设备设计的固件，请选中此项（风险自担）</string>
     <string name="pref_summary_relax_firmware_checks">放宽固件检查</string>
     <string name="pref_header_auto_fetch">自动获取</string>
@@ -905,14 +891,14 @@
     <string name="bip_prefs_shortcuts">快捷方式</string>
     <string name="hr_widget_last_notification">最近通知</string>
     <string name="controlcenter_set_alias">设置别称</string>
-    <string name="fw_upgrade_notice_amazfit_trex">您即将再您的华米 T-Rex 上安装 %s 固件。
+    <string name="fw_upgrade_notice_amazfit_trex">您即将再您的跃我 T-Rex 上安装 %s 固件。
 \n
 \n请确保先安装 .fw 文件，再安装 .res 文件，最后安装 .gps 文件。您的手表将会再安装了 .fw 文件后重启。
 \n
 \n备注：如果 .res 和 .gps 版本与之前的版本相同，您就无需安装这两个文件。
 \n
 \n风险自担！</string>
-    <string name="devicetype_amazfit_trex">华米 T-Rex</string>
+    <string name="devicetype_amazfit_trex">跃我 T-Rex</string>
     <string name="about_additional_contributions">感谢所有未列出的贡献者，他们贡献了代码、翻译、支持、想法、动力、错误报告和金钱… ✊</string>
     <string name="about_additional_device_support">额外设备支持</string>
     <string name="about_contributors">贡献者</string>
@@ -948,7 +934,7 @@
     <string name="error_exporting_device_preferences">导出设备特定首选项时遇到错误</string>
     <string name="pref_check_permission_status_summary">检查并要求尚未获得的权限即使并非立刻需要。若您的设备的确不支持此类功能，也可禁用。不进行授权可能会导致问题！</string>
     <string name="pref_check_permission_status">检查权限状态</string>
-    <string name="device_requires_key">需要密钥</string>
+    <string name="device_requires_key">需要按键，长按可进入</string>
     <string name="device_is_currently_bonded">已经绑定过了</string>
     <string name="companiondevice_pairing">CompanionDevice 配对</string>
     <string name="require_location_provider">必须启动定位</string>
@@ -985,7 +971,6 @@
     <string name="laps">圈</string>
     <string name="swimStyle">泳式</string>
     <string name="swolfIndex">SWOLF 索引</string>
-    <string name="strokes">行程</string>
     <string name="averageLapPace">平均每圈步伐</string>
     <string name="averageStrokesPerSecond">平均步伐</string>
     <string name="averageStrokeDistance">平均行程距离</string>
@@ -1107,18 +1092,18 @@
     <string name="devicestatus_connected">设备已连接</string>
     <string name="devicestatus_connecting">设备正在连接中</string>
     <string name="activity_prefs_step_length_cm">步伐厘米长度</string>
-    <string name="devicetype_amazfit_band5">华米手环 5</string>
+    <string name="devicetype_amazfit_band5">跃我手环 5</string>
     <string name="menuitem_spo2">血氧饱和度</string>
     <string name="qhybrid_calibration_align_hint">使用下面的按钮，将手表指针对准12点。</string>
     <string name="gps_track">GPS 跟踪</string>
     <string name="about_version">版本 %s</string>
-    <string name="devicetype_amazfit_bips_lite">华米 Bip S Lite</string>
+    <string name="devicetype_amazfit_bips_lite">跃我 Bip S Lite</string>
     <string name="charts_legend_heartrate_average">平均心率</string>
     <string name="charts_min_max_heartrate_popup">最低心率：%1$d
 \n最高心率：%2$d
 \n移动强度：%3$s</string>
     <string name="find_lost_device_message">搜索 %1$s ？</string>
-    <string name="devicetype_amazfit_gtr2">华米 GTR 2</string>
+    <string name="devicetype_amazfit_gtr2">跃我 GTR 2</string>
     <string name="menuitem_stopwatch">秒表</string>
     <string name="menuitem_dnd">勿扰</string>
     <string name="menuitem_alexa">Alexa</string>
@@ -1132,14 +1117,14 @@
     <string name="activity_list_summary_active_time">活跃时间</string>
     <string name="activity_list_summary_distance">距离</string>
     <string name="activity_list_summary_active_steps">活跃步数</string>
-    <string name="devicetype_amazfit_gts2">华米 GTS 2</string>
+    <string name="devicetype_amazfit_gts2">跃我 GTS 2</string>
     <string name="devicetype_casiogbx100">卡西欧 GBX-100</string>
     <string name="prefs_charts_tabs">图表标签</string>
     <string name="prefs_charts_tabs_summary">可见的图表标签</string>
     <string name="menuitem_pomodoro">Pomodoro 跟踪</string>
     <string name="menuitem_sleep">睡眠</string>
     <string name="menuitem_goal">活动目标</string>
-    <string name="devicetype_amazfit_bipu">华米 Bip U</string>
+    <string name="devicetype_amazfit_bipu">跃我 Bip U</string>
     <string name="pref_summary_connected_advertisement">即使设备已连接，也将设备蓝牙设置为可发现</string>
     <string name="pref_title_connected_advertisement">已连接时可见</string>
     <string name="prefs_autoremove_message">自动移除短信通知</string>
@@ -1148,8 +1133,8 @@
     <string name="prefs_key_vibration">按键震动</string>
     <string name="prefs_autolight">自动亮度</string>
     <string name="discovery_entered_invalid_authkey">输入的认证密钥无效！请在设备上长按以进行编辑。</string>
-    <string name="devicetype_amazfit_vergel">华米 Verge Lite</string>
-    <string name="fw_upgrade_notice_amazfitvergel">您即将在您的华米 Verge Lite 上安装 %s 固件。
+    <string name="devicetype_amazfit_vergel">跃我 Verge Lite</string>
+    <string name="fw_upgrade_notice_amazfitvergel">您即将在您的跃我 Verge Lite 上安装 %s 固件。
 \n
 \n请确保先安装 .fw 文件，再安装 .res 文件最后是 .gps 文件。您的手机表再安装了 .fw 文件后会自动重启。
 \n
@@ -1161,27 +1146,27 @@
     <string name="widget_settings_select_device_title">选择设备</string>
     <string name="dbmanagementactivity_export_confirmation">确定需要导出数据吗？之前导出的数据（若有）将会被覆盖。</string>
     <string name="dbmanagementactivity_export_data_title">导出数据？</string>
-    <string name="devicetype_amazfit_bipupro">华米 Bip U Pro</string>
+    <string name="devicetype_amazfit_bipupro">跃我 Bip U Pro</string>
     <string name="dbmanagementactivity_export_finished">已删除</string>
     <string name="activity_db_management_clean_export_directory_text">位于导入/导出目录中的已导出文件可以被您设备上的任意应用所访问。您在备份或同步这些文件后，建议删除这戏文件。请确保在进行备份后再进行删除。GPX文件、子目录和自动导出的数据库文件（若有）将不会被删除。导入/导出目录的路径是：</string>
     <string name="activity_DB_clean_export_directory_warning_title">删除导入/导出目录中的文件？</string>
     <string name="activity_DB_clean_export_directory_warning_message">确实需要删除导入/导出目录中的文件？</string>
     <string name="activity_db_management_clean_export_directory_label">删除导入/导出目录中的文件</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">从导出目录 %1$s 中删除文件时遇到错误</string>
-    <string name="devicetype_amazfit_neo">华米 Neo</string>
+    <string name="devicetype_amazfit_neo">跃我 Neo</string>
     <string name="activity_type_strength_training">力量训练</string>
     <string name="mi">英里</string>
     <string name="minutes_mi">分钟/英里</string>
     <string name="mi_h">迈</string>
     <string name="ft">英尺</string>
-    <string name="devicetype_amazfit_gts2_mini">华米 GTS 2 Mini</string>
+    <string name="devicetype_amazfit_gts2_mini">跃我 GTS 2 Mini</string>
     <string name="devicetype_zepp_e">Zepp E</string>
-    <string name="devicetype_amazfit_gtr2e">华米 GTR 2e</string>
+    <string name="devicetype_amazfit_gtr2e">跃我 GTR 2e</string>
     <string name="devicetype_waspos">Wasp os</string>
     <string name="battery_detail_activity_title">电池信息</string>
-    <string name="devicetype_amazfit_gts2e">华米 GTS 2e</string>
-    <string name="devicetype_amazfit_x">华米 X</string>
-    <string name="fw_upgrade_notice_amazfitx">您即将在您的 华米 X 上安装 %s 固件。
+    <string name="devicetype_amazfit_gts2e">跃我 GTS 2e</string>
+    <string name="devicetype_amazfit_x">跃我 X</string>
+    <string name="fw_upgrade_notice_amazfitx">您即将在您的 跃我 X 上安装 %s 固件。
 \n
 \n请确保首先安装 .fw 文件，再安装 .res 文件。您的手环将会在安装了 .fw 文件后自动重启。
 \n
@@ -1201,18 +1186,17 @@
     <string name="fossil_hr_auth_failed">由于认证失败，功能受到限制</string>
     <string name="fossil_hr_unavailable_unauthed">未认证模式下不可用</string>
     <string name="fossil_hr_synced_activity_data">已同步的活动数据</string>
-    <string name="fossil_hr_commute_processing">正在处理请求……</string>
+    <string name="fossil_hr_commute_processing">正在处理请求…</string>
     <string name="qhybrid_title_calibration">校准</string>
     <string name="qhybrid_title_apps_management">应用管理</string>
     <string name="qhybrid_title_file_management">文件管理</string>
     <string name="qhybrid_title_background_image">背景图片</string>
     <string name="qhybrid_title_apps">应用</string>
-    <string name="qhybrid_title_watchface_apps">表盘与应用</string>
     <string name="devicetype_um25">UM-25</string>
     <string name="fossil_hr_warning_firmware_too_new">由于手表固件过新，某些功能被禁用</string>
     <string name="prefs_sounds_summary">进行配置时设备将会发出声响</string>
     <string name="prefs_sounds">声音</string>
-    <string name="fw_upgrade_notice_amazfitneo">您即将在您的华米 Neo 上安装 %s 固件。
+    <string name="fw_upgrade_notice_amazfitneo">您即将在您的跃我 Neo 上安装 %s 固件。
 \n
 \n您的手环将在安装了 .fw 文件后重启。
 \n
@@ -1260,7 +1244,7 @@
     <string name="pref_title_developer_settings">开发者设置</string>
     <string name="qhybrid_pref_summary_actions">为通勤应用的动作</string>
     <string name="qhybrid_pref_title_actions">动作</string>
-    <string name="devicetype_amazfit_trex_pro">华米 T-Rex Pro</string>
+    <string name="devicetype_amazfit_trex_pro">跃我 T-Rex Pro</string>
     <string name="menuitem_barometer">气压计</string>
     <string name="pref_theme_black_background">在深色主题中使用黑色背景</string>
     <string name="gpx_receiver_overwrite_some_files">某些文件已经存在，覆盖吗？</string>
@@ -1269,28 +1253,28 @@
     <string name="activity_summary_detail_editing_gpx_track">编辑已连接的 GPX 跟踪</string>
     <string name="activity_summary_detail_clear_gpx_track">清除 GPX 跟踪</string>
     <string name="activity_summary_detail_select_gpx_track">选择 GPX 跟踪</string>
-    <string name="watchface_setting_wrist_flick_duration">时间长度 （毫秒）：</string>
-    <string name="watchface_setting_wrist_flick_minute">分针 （-360 到 360）：</string>
-    <string name="watchface_setting_wrist_flick_move_relative">相对于时间移动指针：</string>
-    <string name="watchface_setting_wrist_flick_hour">时针（-360 到 360）：</string>
+    <string name="watchface_setting_wrist_flick_duration">时间长度 （毫秒）</string>
+    <string name="watchface_setting_wrist_flick_minute">分针 （-360 到 360）</string>
+    <string name="watchface_setting_wrist_flick_move_relative">相对于时间移动指针</string>
+    <string name="watchface_setting_wrist_flick_hour">时针（-360 到 360）</string>
     <string name="watchface_setting_desc_wrist_flick">（要完全禁用，请启用相对运动，并将所有数值设为0）</string>
     <string name="watchface_setting_title_wrist_flick">轻弹手腕</string>
-    <string name="watchface_setting_display_refresh_partial">部分刷新（分钟）：</string>
-    <string name="watchface_setting_display_refresh_full">完整刷新（分钟）：</string>
+    <string name="watchface_setting_display_refresh_partial">部分刷新（分钟）</string>
+    <string name="watchface_setting_display_refresh_full">完整刷新（分钟）</string>
     <string name="watchface_setting_title_display_refresh_timeout">显示刷新超时</string>
     <string name="watchface_dialog_title_settings">表盘设置</string>
     <string name="watchface_dialog_widget_color_black">黑</string>
     <string name="watchface_dialog_widget_color_white">白</string>
-    <string name="watchface_dialog_widget_color">颜色：</string>
+    <string name="watchface_dialog_widget_color">颜色</string>
     <string name="qhybrid_title_watchface_designer">表盘设计器</string>
     <string name="watchface_dialog_widget_preset_right">右</string>
     <string name="watchface_dialog_widget_preset_left">左</string>
     <string name="watchface_dialog_widget_preset_bottom">底部</string>
     <string name="watchface_dialog_widget_preset_top">顶部</string>
-    <string name="watchface_dialog_widget_presets">定位预设：</string>
-    <string name="watchface_dialog_widget_y_coordinate">Y 坐标 （最大240）：</string>
-    <string name="watchface_dialog_widget_x_coordinate">X 坐标（最大240）：</string>
-    <string name="watchface_dialog_widget_type">类型：</string>
+    <string name="watchface_dialog_widget_presets">定位预设</string>
+    <string name="watchface_dialog_widget_y_coordinate">Y 坐标 （最大240）</string>
+    <string name="watchface_dialog_widget_x_coordinate">X 坐标（最大240）</string>
+    <string name="watchface_dialog_widget_type">类型</string>
     <string name="appmanager_app_edit">编辑</string>
     <string name="button_watchface_save_apply">保存并应用</string>
     <string name="button_watchface_preview">在手表上预览</string>
@@ -1378,7 +1362,6 @@
     <string name="pref_title_equalizer_trebble">高音增强</string>
     <string name="pref_title_equalizer_clear">清晰</string>
     <string name="prefs_game_mode_summary">仅在您的手机支持游戏模式时</string>
-    <string name="prefs_ambient_volume_summary">pref_galaxy_buds_ambient_volume</string>
     <string name="left_earbud">左耳耳塞</string>
     <string name="right_earbud">右耳耳塞</string>
     <string name="battery_case">充电盒</string>
@@ -1405,7 +1388,6 @@
     <string name="sony_surround_mode">环绕声模式</string>
     <string name="sony_surround_mode_off">关</string>
     <string name="sony_surround_mode_concert_hall">音乐厅</string>
-    <string name="sony_surround_position_mutually_exclusive">警告：声音位置和环绕声模式是冲突的。</string>
     <string name="sony_equalizer_preset_bright">明亮</string>
     <string name="sony_equalizer_preset_excited">激动</string>
     <string name="sony_equalizer_preset_mellow">柔和</string>
@@ -1415,7 +1397,6 @@
     <string name="sony_equalizer_preset_bass_boost">低音增强</string>
     <string name="sony_equalizer_preset_custom_1">定制1</string>
     <string name="sony_equalizer_preset_custom_2">定制2</string>
-    <string name="pref_header_sony_equalizer_preset_manual">手动预置</string>
     <string name="pref_header_sony_equalizer_preset_custom_1">自定义预置1</string>
     <string name="pref_header_sony_equalizer_preset_custom_2">自定义预置2</string>
     <string name="sony_equalizer_band_400">400</string>
@@ -1423,7 +1404,6 @@
     <string name="sony_equalizer_band_6300">6.3K</string>
     <string name="sony_equalizer_band_16000">16K</string>
     <string name="sony_equalizer_clear_bass">清晰重低音</string>
-    <string name="sony_dsee_hx">数字声音增强引擎</string>
     <string name="sony_touch_sensor">触摸感应器控制</string>
     <string name="sony_notification_voice_guide">通知与语音引导</string>
     <string name="sony_automatic_power_off">自动关机</string>
@@ -1458,10 +1438,10 @@
     <string name="sony_automatic_power_off_when_taken_off">摘下时</string>
     <string name="prefs_fm_preset_instructions">长按按钮以存储预设</string>
     <string name="prefs_fm_presets_presets">预设</string>
-    <string name="watchface_dialog_widget_timezone">时区：</string>
-    <string name="watchface_dialog_widget_update_timeout">更新超时时间（分钟）：</string>
-    <string name="watchface_dialog_widget_timeout_hide_text">隐藏文字超时：</string>
-    <string name="watchface_dialog_widget_timeout_show_circle">显示圆圈超时：</string>
+    <string name="watchface_dialog_widget_timezone">时区</string>
+    <string name="watchface_dialog_widget_update_timeout">更新超时时间（分钟）</string>
+    <string name="watchface_dialog_widget_timeout_hide_text">隐藏文字超时</string>
+    <string name="watchface_dialog_widget_timeout_show_circle">显示圆圈超时</string>
     <string name="qhybrid_title_on_device_confirmation">启用设备侧的配对确认</string>
     <string name="qhybrid_summary_on_device_confirmation">设备侧配对确认可能会有些恼人。禁用它可能会失去部分功能。</string>
     <string name="title_activity_set_reminders">配置提醒</string>
@@ -1507,7 +1487,7 @@
     <string name="activity_prefs_discovery_pairing">发现和配对选项</string>
     <string name="add_test_device">添加测试设备</string>
     <string name="discover_unsupported_devices">发现未支持的设备</string>
-    <string name="discover_unsupported_devices_description">启用该选项将会显示扫描时所有已发现的设备。短按将会复制设备名称和MAC地址到剪切板。长按将会显示“添加测试设备”对话框。</string>
+    <string name="discover_unsupported_devices_description">启用该选项将会显示扫描时所有已发现的设备。短按将会复制设备名称和MAC地址到剪切板。长按将会显示“添加测试设备”对话框。可能导致潜在的应用程序冻结问题。</string>
     <string name="sony_button_mode_off">关</string>
     <string name="sony_pause_when_taken_off">当摘下耳机时暂停</string>
     <string name="sony_button_mode_left">按钮模式（左）</string>
@@ -1563,7 +1543,7 @@
     <string name="sony_speak_to_chat_sensitivity_low">低</string>
     <string name="sony_speak_to_chat_timeout_off">关</string>
     <string name="sony_speak_to_chat_timeout_short">短（15秒）</string>
-    <string name="watchface_dialog_widget_width">宽度：</string>
+    <string name="watchface_dialog_widget_width">小部件宽度（以像素为单位）</string>
     <string name="discovery_bluetooth_scan">蓝牙扫描：</string>
     <string name="discovery_bluetooth_le_scan">低功耗蓝牙扫描：</string>
     <string name="device_unsupported">不支持</string>
@@ -1583,8 +1563,8 @@
     <string name="sony_anc_optimizer_status_not_running">没有运行</string>
     <string name="sony_anc_optimizer_status_finished">即将完成…</string>
     <string name="sony_anc_optimizer_status_starting">正在开始…</string>
-    <string name="devicetype_amazfit_pop_pro">华米 Pop Pro</string>
-    <string name="devicetype_amazfit_pop">华米 Pop</string>
+    <string name="devicetype_amazfit_pop_pro">跃我 Pop Pro</string>
+    <string name="devicetype_amazfit_pop">跃我 Pop</string>
     <string name="menuitem_nothing">无</string>
     <string name="pref_title_opentracks_packagename">OpenTracks 包名</string>
     <string name="pref_summary_opentracks_packagename">用于启动/停止外部健身应用的 GPS 追踪记录。</string>
@@ -1600,12 +1580,16 @@
     <string name="watchface_dialog_pre_setting_position">预设位置为 %s</string>
     <string name="watchface_setting_light_up_on_notification">有新通知时亮起</string>
     <string name="menuitem_email">电子邮件</string>
-    <string name="about_description_banglejs_main">Bangle.js 的 Android 配套应用程序构建在 Gadgetbridge 项目之上，增加了 Internet 访问。</string>
+    <string name="about_description_banglejs_main">Bangle.js 的 Android 配套应用程序构建在 Gadgetbridge 项目之上，增加了 Internet 访问。
+\n
+\n由于 Google Play 商店的政策，我们不允许在应用程序本身有捐赠链接，但如果你喜欢这个应用程序，请考虑通过下面的Gadgetbridge主页进行捐赠。</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js 正在运行</string>
     <string name="application_name_banglejs_nopebble">Bangle.js Gadgetbridge</string>
     <string name="title_activity_controlcenter_banglejs_nopebble">Bangle.js Gadgetbridge</string>
     <string name="about_activity_title_banglejs_nopebble">关于 Bangle.js Gadgetbridge</string>
-    <string name="about_description_banglejs_nopebble">Bangle.js 的 Android 配套应用程序构建在 Gadgetbridge 项目之上，增加了 Internet 访问。</string>
+    <string name="about_description_banglejs_nopebble">Bangle.js 的 Android 配套应用程序构建在 Gadgetbridge 项目之上，增加了 Internet 访问。
+\n
+\n由于 Google Play 商店的政策，我们不允许在应用程序本身有捐赠链接，但如果你喜欢这个应用程序，请考虑通过下面的Gadgetbridge主页进行捐赠。</string>
     <string name="gadgetbridge_running_banglejs_nopebble">Bangle.js 正在运行</string>
     <string name="application_name_main_nightly">Gadgetbridge (每夜编译版本)</string>
     <string name="title_activity_controlcenter_main_nightly">Gadgetbridge 每夜编译版本</string>
@@ -1707,19 +1691,19 @@
     <string name="mi2_prefs_heart_rate_monitoring_alerts_summary">配置心率监测和警报阈值</string>
     <string name="pref_title_banglejs_text_bitmap">作为位图的文本</string>
     <string name="pref_summary_banglejs_text_bitmap">如果无法使用手表的字体呈现单词，请将其呈现为 Gadgetbridge 中的位图，并在手表上显示位图</string>
-    <string name="pref_summary_device_intents">允许 Bangle.js 手表应用发送 Android 意图，并允许 Android 上的其他应用（如 Tasker）使用 com.banglejs.uart.tx 意图向 Bangle.js 发送数据。</string>
+    <string name="pref_summary_device_intents">允许 Bangle.js 手表应用发送 Android 意图，并允许 Android 上的其他应用（如 Tasker）使用 com.banglejs.uart.tx 意图向 Bangle.js 发送数据。需要“能在其他应用前显示”权限。</string>
     <string name="pref_title_device_intents">允许意向</string>
     <string name="pref_title_device_internet_access">允许互联网访问</string>
     <string name="pref_summary_device_internet_access">允许此设备上的应用访问互联网</string>
     <string name="pref_workout_start_on_phone_title">健身应用追踪</string>
     <string name="pref_workout_start_on_phone_summary">在手环上开始 GPS 锻炼时，在手机上开始/停止健身应用跟踪</string>
     <string name="notification_channel_gps">GPS跟踪</string>
-    <string name="permission_notification_listener">%1$s需要访问通知，以便在你的手表上显示这些通知。
+    <string name="permission_notification_listener">%1$s需要访问通知，以便当您的手机屏幕息屏时能在您的手表上显示这些通知。
 \n
-\n请点击\'%2$s\'然后\'%1$s\'并启用\'允许通知访问\'，然后点击\'返回\'以返回到%1$s</string>
-    <string name="permission_notification_policy_access">%1$s 需要访问“请勿打扰”设置才能在您的手表上使用它们。
+\n请点击\'%2$s\'然后\'%1$s\'并启用\'允许通知访问\'，然后点击\'返回\'以返回到%1$s。</string>
+    <string name="permission_notification_policy_access">%1$s 需要访问“请勿打扰”设置以便在您的手机息屏时才能在手表上使用它们。
 \n
-\n请点击“%2$s”然后点击“%1$s”并启用“允许请勿打扰”，然后点击“返回”返回到%1$s</string>
+\n请点击“%2$s”然后点击“%1$s”并启用“允许请勿打扰”，然后点击“返回”返回到%1$s。</string>
     <string name="pref_workout_send_gps_title">在锻炼期间发送 GPS</string>
     <string name="pref_workout_send_gps_summary">锻炼时将当前的GPS位置发送到手环上</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
@@ -1731,4 +1715,242 @@
     <string name="quick_alarm">快速闹钟</string>
     <string name="portuguese_pt">葡萄牙语 (葡萄牙)</string>
     <string name="quick_alarm_description">从小工具发出的闹钟</string>
+    <string name="info_no_devices_connected">未连接任何设备</string>
+    <string name="info_connected_count">%d 设备已连接</string>
+    <string name="pref_title_banglejs_webview_url">应用加载程序网址</string>
+    <string name="pref_summary_banglejs_webview_url">如果您想要一个自定义的应用程序加载器，请将您的 https://…/android.html 网址放在这里。留空的话则为： https://banglejs.com/apps</string>
+    <string name="permission_location">%1$s 需要在后台访问您的位置，以使其即使在屏幕关闭时也能与您的手表保持连接。
+\n
+\n请点击 \'%2$s\' 以同意。</string>
+    <string name="lithuanian">立陶宛语</string>
+    <string name="persian">波斯语</string>
+    <string name="scandinavian">斯堪的纳维亚语</string>
+    <string name="czech">捷克语</string>
+    <string name="estonian">爱沙尼亚语</string>
+    <string name="extended_ascii">扩展的 ASCII</string>
+    <string name="ukranian">乌克兰语</string>
+    <string name="bengali">孟加拉语</string>
+    <string name="icelandic">冰岛语</string>
+    <string name="pref_explanation_authkey">有些设备在第一次初始化时需要一个特殊的配对密钥。点击这里访问Wiki以了解更多细节。</string>
+    <string name="pref_explanation_authkey_new_protocol">如果您看到“请更新应用程序到最新版本”的信息，请确保选中上面的\"新认证协议\"。点击这里以在Wiki上获得更多信息。</string>
+    <string name="prefs_password">密码</string>
+    <string name="prefs_password_summary">从手腕上取下时，用密码锁定手环</string>
+    <string name="prefs_password_4_digits_1_to_4_summary">密码必须有4位数，使用数字1至4</string>
+    <string name="prefs_password_6_digits_0_to_9_summary">密码必须有6位数，只使用数字</string>
+    <string name="controlcenter_set_parent_folder">设置父文件夹</string>
+    <string name="controlcenter_set_preferences">设置首选项</string>
+    <string name="controlcenter_toggle_details">切换详细信息</string>
+    <string name="controlcenter_connected_fraction">已连接： %d/%d</string>
+    <string name="controlcenter_add_new_folder">添加新文件夹</string>
+    <string name="autoconnect_from_device_title">从设备连接时连接</string>
+    <string name="pref_title_notification_delay_calls">来电通知延迟</string>
+    <string name="pref_summary_notification_delay_calls">向设备发送来电通知之前的延迟，以秒为单位。</string>
+    <string name="pref_blacklist_calendars_summary">被列入黑名单的日历将不会被同步到设备上</string>
+    <string name="controlcenter_unset_folder">取消设置文件夹</string>
+    <string name="controlcenter_set_folder_title">设置或创建新的文件夹</string>
+    <string name="prefs_password_enabled">密码已启用</string>
+    <string name="error_setting_parent_folder">设置父文件夹时出错： %s</string>
+    <string name="error_deleting_device">删除设备时出错： %s</string>
+    <string name="controlcenter_folder_name">文件夹名称：</string>
+    <string name="auto_reconnect_ble_title">自动重新连接到设备</string>
+    <string name="auto_reconnect_ble_summary">主动尝试定期与设备连接</string>
+    <string name="connection_over_ble">通过 BLE 进行连接</string>
+    <string name="connection_over_bt_classic">通过经典蓝牙连接</string>
+    <string name="autoconnect_from_device_summary">当连接由设备发起时，建立一个连接，如耳机</string>
+    <string name="watchface_dialog_widget_timezone_duration">时钟可见性持续时间（以秒为单位）</string>
+    <string name="open_fw_installer_warning_title">警告</string>
+    <string name="open_fw_installer_pick_file">选择文件</string>
+    <string name="open_fw_installer_info_text_title">文件安装程序</string>
+    <string name="open_fw_installer_select_file">选择您想上传到设备的文件： %s</string>
+    <string name="open_fw_installer_info_text">固件/表盘/应用程序/文件安装程序允许您将支持的文件（固件，表盘，应用程序，GPS，资源，字体等）上传/安装到设备。在 Wiki 中查看更多信息： https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_warning_text">此功能有可能使您的设备变砖。虽然如此这般，但是这从未发生在任何开发人员身上，但请记住，这样做需要您自担风险。</string>
+    <string name="open_fw_installer_getting_files_title">获取固件/应用程序文件</string>
+    <string name="open_fw_installer_getting_files_text">由于我们可能不会提供固件文件，因此您必须自己获取文件。这意味着您将需要在 apk 文件中提取固件，使用搜索引擎查找、或者在论坛搜索（如 Amazfitwatchfaces，适用于小米手环/ 跃我设备）对应的固件等。</string>
+    <string name="open_fw_installer_ensure_device_connected">请确保设备 %s 已经连接</string>
+    <string name="open_fw_installer_connect_minimum_one_device">请至少连接一个设备，以便将文件进行发送到设备上。</string>
+    <string name="open_fw_installer_connect_maximum_one_device">请只连接一个设备，以便将文件发送到该设备上。</string>
+    <string name="appmanager_item_outdated">（已过时）</string>
+    <string name="appmanager_app_share">分享</string>
+    <string name="pref_summary_banglejs_txt_bitmap_size">如果启用 \"文本为位图\"，文本应该呈现多大的尺寸？</string>
+    <string name="watchface_dialog_widget_cat_generic">通用</string>
+    <string name="watchface_dialog_widget_cat_position">位置</string>
+    <string name="watchface_dialog_widget_cat_2nd_tz_widget">第二时区小部件</string>
+    <string name="watchface_dialog_widget_cat_custom_widget">自定义小部件</string>
+    <string name="watchface_dialog_title_widget">小部件设置</string>
+    <string name="watchface_dialog_widget_background">背景</string>
+    <string name="hybridhr_widget_bg_thin_circle">细圆</string>
+    <string name="hybridhr_widget_bg_double_circle">双圆</string>
+    <string name="pref_title_banglejs_txt_bitmap_size">文本位图大小</string>
+    <string name="hybridhr_widget_bg_dashed_circle">虚线圈</string>
+    <string name="watchface_setting_title_button_toggle_widgets">切换小部件</string>
+    <string name="watchface_setting_button_toggle_widgets">切换小部件</string>
+    <string name="steps_streaks_since_date">自 %s 起</string>
+    <string name="step_streak_average_steps_hint">连续每天的平均步数</string>
+    <string name="steps_streaks_total_steps_hint_totals">记录的总步数</string>
+    <string name="steps_streaks_total_days_hint_totals">已实现目标的天数与具有步数的所有天数的百分比</string>
+    <string name="steps_streaks_total_steps_average_hint">每天平均总步数 %d</string>
+    <string name="steps_streaks">步数条纹</string>
+    <string name="steps_streaks_hint">连续几天不间断地达到步数目标</string>
+    <string name="step_streak_ongoing">进行中</string>
+    <string name="step_streak_longest">最长</string>
+    <string name="steps_streaks_streak_days">连续
+\n天数</string>
+    <string name="steps_streaks_average_steps">平均
+\n步数</string>
+    <string name="step_streak_total">共计</string>
+    <string name="steps_streaks_total_steps">总
+\n步数</string>
+    <string name="step_streak_days_hint">达到步数目标的连续天数</string>
+    <string name="steps_streaks_total_steps_hint">整个连胜中的总步数</string>
+    <string name="steps_streaks_achievement_rate">成就
+\n率</string>
+    <string name="note">注意</string>
+    <string name="share_log_not_enabled_message">必须首先在“设置 - 写入日志文件”中启用日志记录</string>
+    <string name="watchface_setting_button_toggle_backlight">开启背光灯</string>
+    <string name="watchface_setting_title_custom_events">自定义事件</string>
+    <string name="controlcenter_get_heartrate_measurement">获取心率测量值</string>
+    <string name="pref_write_logfiles_not_available">文件日志初始化失败，写日志文件目前不可用。请尝试重新启动应用程序，然诺再次初始化日志文件。</string>
+    <string name="devicetype_binary_sensor">二进制传感器</string>
+    <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (每页编译版)</string>
+    <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js Gadgetbridge (每页编译版)</string>
+    <string name="about_activity_title_banglejs_nightly">关于Bangle.js Gadgetbridge (每夜编译版)</string>
+    <string name="gadgetbridge_running_banglejs_nightly">Bangle.js 每夜编译版正在运行中</string>
+    <string name="about_description_banglejs_nightly">Bangle.js 的 Android 配套应用程序构建在 Gadgetbridge 项目之上，增加了 Internet 访问。
+\n
+\n由于 Google Play 商店政策，我们不允许在应用程序本身中提供捐赠链接，但如果您喜欢此应用程序，请考虑通过下面的 Gadgetbridge 主页进行捐赠。</string>
+    <string name="prefs_hourly_chime">整点报时</string>
+    <string name="prefs_hourly_chime_summary">手表每小时将发出一次蜂鸣音</string>
+    <string name="step_streaks_achievements_sharing_message">我每天的步数成就!</string>
+    <string name="step_streaks_achievements_sharing_title">步数成就</string>
+    <string name="permission_display_over_other_apps">当 %1$s 在后台时，%1$s 需要显示在其他应用程序上的权限，以便让 Bangle.js 手表通过意图启动活动。
+\n
+\n这可用于启动音乐应用程序并播放歌曲以及许多其他事情。
+\n
+\n请点击“%2$s”，然后点击“%1$s”并启用“允许显示在其他应用程序上”，然后点击“返回”返回到%1$s。
+\n
+\n若需要停止 %1$s 询问权限，请进入“设置”，并取消“检查权限状态”。
+\n
+\n请确保 %1$s 已经给予了必要的权限。</string>
+    <string name="pref_header_display">显示</string>
+    <string name="pref_header_health">健康</string>
+    <string name="pref_header_time">时间</string>
+    <string name="pref_header_workout">锻炼</string>
+    <string name="pref_summary_canned_replies">在手表上使用预设的消息进行回复</string>
+    <string name="pref_title_screen_on_on_notifications">来通知时亮屏</string>
+    <string name="pref_summary_screen_on_on_notifications">收到通知时亮起手环屏幕</string>
+    <string name="pref_cache_weather">缓存天气信息</string>
+    <string name="heartrate_bpm_40">40 次/分钟</string>
+    <string name="heartrate_bpm_45">45 次/分钟</string>
+    <string name="heartrate_bpm_50">50 次/分钟</string>
+    <string name="heartrate_bpm_115">115 次/分钟</string>
+    <string name="prefs_heartrate_alert_high_threshold">高心率警报阈值</string>
+    <string name="prefs_relaxation_reminder_description">如果压力值高于80，则振动手环以通知您</string>
+    <string name="prefs_spo2_monitoring_title">血氧监测</string>
+    <string name="prefs_spo2_monitoring_description">自动监测全天的血氧水平</string>
+    <string name="prefs_spo2_alert_threshold">血氧警报阈值</string>
+    <string name="seconds_6">6 秒</string>
+    <string name="seconds_7">7 秒</string>
+    <string name="seconds_8">8 秒</string>
+    <string name="seconds_9">9 秒</string>
+    <string name="seconds_11">11 秒</string>
+    <string name="seconds_12">12 秒</string>
+    <string name="seconds_13">13 秒</string>
+    <string name="seconds_14">14 秒</string>
+    <string name="seconds_15">15 秒</string>
+    <string name="smart">智能</string>
+    <string name="mi2_dnd_always">总是</string>
+    <string name="pref_header_heartrate_sleep">睡眠</string>
+    <string name="pref_header_heartrate_allday">全天监测</string>
+    <string name="pref_header_heartrate_alerts">心率警报</string>
+    <string name="pref_header_stress">压力</string>
+    <string name="pref_screen_brightness">屏幕亮度</string>
+    <string name="prefs_screen_timeout">屏幕超时</string>
+    <string name="pref_header_calendar">日历</string>
+    <string name="fw_upgrade_notice_miband7">您即将在您的小米智能手环7上安装 %s 固件。
+\n
+\n您的手环将会在安装了 .zip 文件后自动重启。
+\n
+\n风险自负！</string>
+    <string name="spo2_perc_85">85%</string>
+    <string name="prefs_heartrate_alert_low_threshold">低心率警报阈值</string>
+    <string name="pref_cache_weather_summary">天气信息将在应用程序重新启动时缓存。</string>
+    <string name="pref_header_connection">连接</string>
+    <string name="prefs_always_on_display">始终显示</string>
+    <string name="prefs_always_on_display_summary">保持手环的显示屏始终开启</string>
+    <string name="menuitem_countdown">倒计时</string>
+    <string name="menuitem_workout_status">锻炼状态</string>
+    <string name="pref_header_spo2">血氧</string>
+    <string name="spo2_perc_90">90%</string>
+    <string name="spo2_off">关闭</string>
+    <string name="spo2_perc_80">80%</string>
+    <string name="devicetype_miband7">小米智能手环7</string>
+    <string name="prefs_relaxation_reminder_title">放松提醒</string>
+    <string name="menuitem_workout_history">锻炼历史</string>
+    <string name="pref_sleep_breathing_quality_monitoring">睡眠呼吸质量监测</string>
+    <string name="menuitem_personal_activity_intelligence">个人活动情报</string>
+    <string name="menuitem_female_health">女性健康</string>
+    <string name="pref_title_notifications_ignore_low_priority">忽略低优先级通知</string>
+    <string name="pref_summary_notifications_ignore_low_priority">不要发送低优先级和最小化通知到手表上</string>
+    <string name="devicetype_flipper_zero">Flipper zero</string>
+    <string name="activity_prefs_allow_bluetooth_intent_api">蓝牙 Intent API</string>
+    <string name="activity_prefs_summary_allow_bluetooth_intent_api">允许通过 Intent API 控制蓝牙连接</string>
+    <string name="fw_upgrade_notice_amazfit_gts3">您即将在您的 跃我 GTS 3 上安装 %s 固件。
+\n
+\n您的手环将会在安装了 .zip 文件后重启。
+\n
+\n风险自担！</string>
+    <string name="pref_title_notification_prefer_long_text">首选长通知文本</string>
+    <string name="pref_summary_notification_prefer_long_text">如果可用，将长通知文本发送到设备</string>
+    <string name="devicetype_amazfit_gts3">跃我 GTS 3</string>
+    <string name="kind_app">应用</string>
+    <string name="menuitem_unknown_app">未知 (%s)</string>
+    <string name="pref_summary_overwrite_settings_on_connection">连接到手环时，覆盖其上的所有设置。</string>
+    <string name="pref_title_overwrite_settings_on_connection">连接时覆盖设置</string>
+    <string name="dismiss">解除</string>
+    <string name="devicetype_amazfit_gtr3">跃我 GTR 3</string>
+    <string name="fw_upgrade_notice_amazfit_gtr3">您即将安装 %s 固件在您的 跃我 GTR 3 上。
+\n
+\n您的手表将在安装了 .zip 文件后重启。
+\n
+\n风险自担！</string>
+    <string name="pref_summary_third_party_app_device_settings">允许其他已安装的应用通过意图修改设备设置。</string>
+    <string name="pref_title_third_party_app_device_settings">允许第三方应用修改设置</string>
+    <string name="activity_type_indoor_fitness">室内健身</string>
+    <string name="devicetype_super_cars">壳牌赛车</string>
+    <string name="activity_type_dance">跳舞</string>
+    <string name="activity_type_gymnastics">体操</string>
+    <string name="activity_type_kickboxing">跆拳道</string>
+    <string name="activity_type_pilates">普拉提运动</string>
+    <string name="activity_type_volleyball">排球</string>
+    <string name="activity_type_street_dance">街舞</string>
+    <string name="activity_type_stepper">爬楼梯</string>
+    <string name="activity_type_zumba">尊巴舞</string>
+    <string name="activity_type_hiit">高强度间歇训练</string>
+    <string name="activity_type_core_training">核心训练</string>
+    <string name="activity_type_stretching">拉伸</string>
+    <string name="activity_type_table_tennis">乒乓球</string>
+    <string name="activity_type_bowling">保龄球</string>
+    <string name="activity_type_boxing">拳击</string>
+    <string name="activity_type_indoor_ice_skating">室内滑冰</string>
+    <string name="watchface_setting_button_move_hands">移动手</string>
+    <string name="devicetype_amazfit_gtr_lite">跃我 GTR 青春版</string>
+    <string name="supercars_turbo_speed_label">涡轮增速</string>
+    <string name="supercars_lights_label">灯光</string>
+    <string name="abstract_chart_fragment_kind_rem_sleep">快速眼动睡眠</string>
+    <string name="pref_header_authentication">认证</string>
+    <string name="sports_activity_confirm_delete_title">删除 %d 活动</string>
+    <string name="sports_activity_confirm_delete_description">确定要删除 %d 活动吗？</string>
+    <string name="supercars_lights_blinking_label">闪烁</string>
+    <string name="HeartRateZones">心率区</string>
+    <string name="hrZoneWarmUp">热身运动</string>
+    <string name="hrZoneAerobic">有氧运动</string>
+    <string name="hrZoneAnaerobic">厌氧</string>
+    <string name="hrZoneExtreme">极端</string>
+    <string name="anaerobicTrainingEffect">厌氧效应</string>
+    <string name="currentWorkoutLoad">锻炼负荷</string>
+    <string name="maximumOxygenUptake">最大摄氧量</string>
+    <string name="hrZoneNa">不适用</string>
+    <string name="hrZoneFatBurn">脂肪燃烧</string>
+    <string name="TrainingEffect">培训效果</string>
+    <string name="aerobicTrainingEffect">有氧效应</string>
 </resources>

@@ -11,7 +11,6 @@
     <string name="title_activity_calblacklist">Kalendari na popisu nedopuštenih</string>
     <string name="whitelist_all_for_notifications">Sve obavijesti stavi na popis dopuštenih</string>
     <string name="blacklist_all_for_notifications">Sve obavijesti stavi na popis nedopuštenih</string>
-    <string name="title_activity_appblacklist">Popis nepoželjnih obavijesti</string>
     <string name="app_move_to_top">Premjesti na vrh</string>
     <string name="app_configure">Konfiguriraj</string>
     <string name="appmanager_weather_install_provider">Instalirajte aplikaciju Weather Notification</string>
@@ -1583,4 +1582,7 @@
     <string name="watchface_setting_light_up_on_notification">Zasvijetli pri novoj obavijesti</string>
     <string name="pref_summary_opentracks_packagename">Koristi se za pokretanje/prekidanje snimanja GPS zapisa u vanjskoj aplikaciji za fitness.</string>
     <string name="menuitem_email">E-mail</string>
+    <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
+    <string name="about_activity_title_banglejs_main">O Bangle.js Gadgetbridge</string>
+    <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
 </resources>
