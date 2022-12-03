@@ -143,11 +143,8 @@ public class AppsManagementActivity extends AbstractGBActivity {
         if (webView!=null) webView.post(new Runnable() {
             @Override
             public void run() {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                    webView.evaluateJavascript(js, null);
-                } else {
-                    webView.loadUrl("javascript: "+js);
-                }
+                if (webView==null) return; // webView may have gone by the time we get called!
+                webView.evaluateJavascript(js, null);
             }
         });
     }

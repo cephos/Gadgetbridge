@@ -39,10 +39,14 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.widget.EditText;
+
+import androidx.annotation.NonNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +95,14 @@ public class NotificationManagementActivity extends AbstractSettingsActivity {
                 return true;
             }
         });
-        pref.setSummary(RingtoneManager.getRingtone(this, Uri.parse(prefs.getString(GBPrefs.PING_TONE, DEFAULT_RINGTONE_URI))).getTitle(this));
+
+        try {
+            // This fails on some ROMs. The actual implementation falls-back to an internal ping tone
+            pref.setSummary(RingtoneManager.getRingtone(this, Uri.parse(prefs.getString(GBPrefs.PING_TONE, DEFAULT_RINGTONE_URI))).getTitle(this));
+        } catch (final Exception e) {
+            LOG.error("Failed to find the configured ping ringtone");
+            pref.setSummary("-");
+        }
 
         pref = findPreference("pref_key_blacklist");
         pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

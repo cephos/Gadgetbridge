@@ -45,7 +45,7 @@ public class HuamiSettingsCustomizer implements DeviceSpecificSettingsCustomizer
     }
 
     @Override
-    public void customizeSettings(final DeviceSpecificSettingsHandler handler, Prefs prefs) {
+    public void customizeSettings(final DeviceSpecificSettingsHandler handler, final Prefs prefs) {
         for (HuamiVibrationPatternNotificationType notificationType : HuamiVibrationPatternNotificationType.values()) {
             final String typeKey = notificationType.name().toLowerCase(Locale.ROOT);
 
@@ -59,7 +59,7 @@ public class HuamiSettingsCustomizer implements DeviceSpecificSettingsCustomizer
                 tryPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                     @Override
                     public boolean onPreferenceClick(final Preference preference) {
-                        GBApplication.deviceService().onSendConfiguration(tryPrefKey);
+                        GBApplication.deviceService(device).onSendConfiguration(tryPrefKey);
                         return true;
                     }
                 });

@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
-import nodomain.freeyourgadget.gadgetbridge.devices.AbstractDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.jyou.JYouConstants;
@@ -46,7 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
-public class TeclastH30Coordinator extends AbstractDeviceCoordinator {
+public class TeclastH30Coordinator extends AbstractBLEDeviceCoordinator {
 
     protected static final Logger LOG = LoggerFactory.getLogger(TeclastH30Coordinator.class);
 
@@ -55,7 +55,6 @@ public class TeclastH30Coordinator extends AbstractDeviceCoordinator {
 
     @NonNull
     @Override
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Collection<? extends ScanFilter> createBLEScanFilters() {
         ParcelUuid uuid = new ParcelUuid(JYouConstants.UUID_SERVICE_JYOU);
         ScanFilter filter = new ScanFilter.Builder().setServiceUuid(uuid).build();

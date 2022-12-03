@@ -23,6 +23,9 @@ import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 public class StringUtils {
 
@@ -103,6 +106,10 @@ public class StringUtils {
         return "";
     }
 
+    public static boolean isNullOrEmpty(String string){
+        return string == null || string.isEmpty();
+    }
+
     public static boolean isEmpty(String string) {
         return string != null && string.length() == 0;
     }
@@ -127,6 +134,17 @@ public class StringUtils {
         newArray[newArray.length - 1] = 0;
 
         return new String(newArray);
+    }
+
+    @Nullable
+    public static String untilNullTerminator(final byte[] bytes, final int startOffset) {
+        for (int i = startOffset; i < bytes.length; i++) {
+            if (bytes[i] == 0) {
+                return new String(ArrayUtils.subarray(bytes, startOffset, i));
+            }
+        }
+
+        return null;
     }
 
     public static String bytesToHex(byte[] array) {

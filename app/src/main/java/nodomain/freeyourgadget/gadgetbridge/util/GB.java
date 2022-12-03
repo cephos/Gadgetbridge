@@ -31,9 +31,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Html;
 import android.text.SpannableString;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -97,6 +99,8 @@ public class GB {
     public static final String ACTION_SET_INFO_TEXT = "GB_Set_Info_Text";
 
     private static boolean notificationChannelsCreated;
+
+    private static final String TAG = "GB";
 
     public static void createNotificationChannels(Context context) {
         if (notificationChannelsCreated) return;
@@ -186,7 +190,7 @@ public class GB {
                 deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_DISCONNECT);
                 PendingIntent disconnectPendingIntent = PendingIntent.getService(context, 0, deviceCommunicationServiceIntent, PendingIntent.FLAG_ONE_SHOT);
                 builder.addAction(R.drawable.ic_notification_disconnected, context.getString(R.string.controlcenter_disconnect), disconnectPendingIntent);
-                if (GBApplication.isRunningLollipopOrLater() && DeviceHelper.getInstance().getCoordinator(device).supportsActivityDataFetching()) { //for some reason this fails on KK
+                if (DeviceHelper.getInstance().getCoordinator(device).supportsActivityDataFetching()) {
                     deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_FETCH_RECORDED_DATA);
                     deviceCommunicationServiceIntent.putExtra(EXTRA_RECORDED_DATA_TYPES, ActivityKind.TYPE_ACTIVITY);
                     PendingIntent fetchPendingIntent = PendingIntent.getService(context, 1, deviceCommunicationServiceIntent, PendingIntent.FLAG_ONE_SHOT);
@@ -235,7 +239,7 @@ public class GB {
                 builder.setColor(context.getResources().getColor(R.color.accent));
             }
 
-            if (GBApplication.isRunningLollipopOrLater() && anyDeviceSupportesActivityDataFetching) { //for some reason this fails on KK
+            if (anyDeviceSupportesActivityDataFetching) {
                 Intent deviceCommunicationServiceIntent = new Intent(context, DeviceCommunicationService.class);
                 deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_FETCH_RECORDED_DATA);
                 deviceCommunicationServiceIntent.putExtra(EXTRA_RECORDED_DATA_TYPES, ActivityKind.TYPE_ACTIVITY);
@@ -244,9 +248,8 @@ public class GB {
             }
         }
 
-        if (GBApplication.isRunningLollipopOrLater()) {
-            builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-        }
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
         if (GBApplication.minimizeNotification()) {
             builder.setPriority(Notification.PRIORITY_MIN);
         }
@@ -272,9 +275,9 @@ public class GB {
             PendingIntent reconnectPendingIntent = PendingIntent.getService(context, 2, deviceCommunicationServiceIntent, PendingIntent.FLAG_ONE_SHOT);
             builder.addAction(R.drawable.ic_notification, context.getString(R.string.controlcenter_connect), reconnectPendingIntent);
         }
-        if (GBApplication.isRunningLollipopOrLater()) {
-            builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-        }
+
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
         if (GBApplication.minimizeNotification()) {
             builder.setPriority(Notification.PRIORITY_MIN);
         }
@@ -630,5 +633,9 @@ public class GB {
     public static void signalActivityDataFinish() {
         Intent intent = new Intent(GBApplication.ACTION_NEW_DATA);
         LocalBroadcastManager.getInstance(GBApplication.getContext()).sendBroadcast(intent);
+    }
+
+    public static boolean checkPermission(final Context context, final String permission) {
+        return ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
     }
 }

@@ -63,10 +63,11 @@ public class AutoConnectIntervalReceiver extends BroadcastReceiver {
             boolean scheduleAutoConnect = false;
             boolean allDevicesInitialized = true;
             for(GBDevice device : devices){
-                if(!device.isInitialized()){
+                if(!device.isInitialized()) {
                     allDevicesInitialized = false;
-                }else if(device.getState() == GBDevice.State.WAITING_FOR_RECONNECT){
-                    scheduleAutoConnect = true;
+                    if (device.getState() == GBDevice.State.WAITING_FOR_RECONNECT) {
+                        scheduleAutoConnect = true;
+                    }
                 }
             }
 
@@ -81,7 +82,7 @@ public class AutoConnectIntervalReceiver extends BroadcastReceiver {
             for(GBDevice device : devices){
                 if(device.getState() == GBDevice.State.WAITING_FOR_RECONNECT) {
                     LOG.info("Will re-connect to " + device.getAddress() + "(" + device.getName() + ")");
-                    GBApplication.deviceService().connect(device);
+                    GBApplication.deviceService(device).connect();
                 }
             }
         }

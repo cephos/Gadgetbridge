@@ -38,10 +38,10 @@ public class ApplicationsListRequest extends FileLookupAndGetRequest{
             buffer.get(); // null byte
             byte handle = buffer.get();
             int hash = buffer.getInt();
-            String version = String.format(
-                    "%d.%d.%d.%d",
-                    buffer.get(), buffer.get(), buffer.get(), buffer.get()
-                    );
+            String version = String.format("%d.%d", buffer.get(), buffer.get());
+            buffer.get();  // unknown
+            buffer.get();  // unknown
+
             applicationInfos.add(new ApplicationInformation(
                     name,
                     version,

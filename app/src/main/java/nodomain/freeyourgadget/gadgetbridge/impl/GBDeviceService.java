@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 
 import java.util.ArrayList;
@@ -50,9 +51,13 @@ import nodomain.freeyourgadget.gadgetbridge.util.RtlUtils;
 
 import static nodomain.freeyourgadget.gadgetbridge.util.JavaExtensions.coalesce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class GBDeviceService implements DeviceService {
     protected final Context mContext;
+    private final GBDevice mDevice;
     private final Class<? extends Service> mServiceClass;
     public static final String[] transliterationExtras = new String[]{
             EXTRA_NOTIFICATION_SENDER,
@@ -67,10 +72,25 @@ public class GBDeviceService implements DeviceService {
             EXTRA_CALENDAREVENT_TITLE,
             EXTRA_CALENDAREVENT_DESCRIPTION
     };
+    private static final Logger LOG = LoggerFactory.getLogger(GBDeviceService.class);
 
     public GBDeviceService(Context context) {
+        this(context, null);
+    }
+
+    public GBDeviceService(Context context, GBDevice device) {
         mContext = context;
+        mDevice = device;
         mServiceClass = DeviceCommunicationService.class;
+    }
+
+    @Override
+    public DeviceService forDevice(final GBDevice device) {
+        return new GBDeviceService(mContext, device);
+    }
+
+    public GBDevice getDevice() {
+        return mDevice;
     }
 
     protected Intent createIntent() {
@@ -87,7 +107,14 @@ public class GBDeviceService implements DeviceService {
             }
         }
 
-        mContext.startService(intent);
+        if (mDevice != null) {
+            intent.putExtra(GBDevice.EXTRA_DEVICE, mDevice);
+        }
+        try {
+            mContext.startService(intent);
+        } catch (IllegalStateException e) {
+            LOG.error("IllegalStateException during startService ("+intent.getAction()+")");
+        }
     }
 
     protected void stopService(Intent intent) {
@@ -102,26 +129,13 @@ public class GBDeviceService implements DeviceService {
 
     @Override
     public void connect() {
-        connect(null, false);
+        connect(false);
     }
 
     @Override
-    public void connect(@Nullable GBDevice device) {
-        connect(device, false);
-    }
-
-    @Override
-    public void connect(@Nullable GBDevice device, boolean firstTime) {
+    public void connect(boolean firstTime) {
         Intent intent = createIntent().setAction(ACTION_CONNECT)
-                .putExtra(GBDevice.EXTRA_DEVICE, device)
                 .putExtra(EXTRA_CONNECT_FIRST_TIME, firstTime);
-        invokeService(intent);
-    }
-
-    @Override
-    public void disconnect(@Nullable GBDevice device) {
-        Intent intent = createIntent().setAction(ACTION_DISCONNECT)
-                .putExtra(GBDevice.EXTRA_DEVICE, device);
         invokeService(intent);
     }
 
@@ -341,6 +355,12 @@ public class GBDeviceService implements DeviceService {
     }
 
     @Override
+    public void onPhoneFound() {
+        Intent intent = createIntent().setAction(ACTION_PHONE_FOUND);
+        invokeService(intent);
+    }
+
+    @Override
     public void onSetConstantVibration(int intensity) {
         Intent intent = createIntent().setAction(ACTION_SET_CONSTANT_VIBRATION)
                 .putExtra(EXTRA_VIBRATION_INTENSITY, intensity);
@@ -388,8 +408,11 @@ public class GBDeviceService implements DeviceService {
                 .putExtra(EXTRA_CALENDAREVENT_TYPE, calendarEventSpec.type)
                 .putExtra(EXTRA_CALENDAREVENT_TIMESTAMP, calendarEventSpec.timestamp)
                 .putExtra(EXTRA_CALENDAREVENT_DURATION, calendarEventSpec.durationInSeconds)
+                .putExtra(EXTRA_CALENDAREVENT_ALLDAY, calendarEventSpec.allDay)
                 .putExtra(EXTRA_CALENDAREVENT_TITLE, calendarEventSpec.title)
                 .putExtra(EXTRA_CALENDAREVENT_DESCRIPTION, calendarEventSpec.description)
+                .putExtra(EXTRA_CALENDAREVENT_CALNAME, calendarEventSpec.calName)
+                .putExtra(EXTRA_CALENDAREVENT_COLOR, calendarEventSpec.color)
                 .putExtra(EXTRA_CALENDAREVENT_LOCATION, calendarEventSpec.location);
         invokeService(intent);
     }
@@ -425,7 +448,7 @@ public class GBDeviceService implements DeviceService {
     @Override
     public void onSendWeather(WeatherSpec weatherSpec) {
         Intent intent = createIntent().setAction(ACTION_SEND_WEATHER)
-                .putExtra(EXTRA_WEATHER, weatherSpec);
+                .putExtra(EXTRA_WEATHER, (Parcelable) weatherSpec);
         invokeService(intent);
     }
 
@@ -436,12 +459,8 @@ public class GBDeviceService implements DeviceService {
      * @return contact DisplayName, if found it
      */
     private String getContactDisplayNameByNumber(String number) {
-        Uri uri;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.ENTERPRISE_CONTENT_FILTER_URI, Uri.encode(number));
-        } else {
-            uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-        }
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.ENTERPRISE_CONTENT_FILTER_URI, Uri.encode(number));
+
         String name = number;
 
         if (number == null || number.equals("")) {

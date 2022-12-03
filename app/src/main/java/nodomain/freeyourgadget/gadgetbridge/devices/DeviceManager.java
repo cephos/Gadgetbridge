@@ -89,7 +89,7 @@ public class DeviceManager {
                     if (dev.getAddress() != null) {
                         int index = deviceList.indexOf(dev); // search by address
                         if (index >= 0) {
-                            deviceList.set(index, dev);
+                            deviceList.get(index).copyFromDevice(dev);
                         } else {
                             deviceList.add(dev);
                         }
@@ -173,6 +173,15 @@ public class DeviceManager {
      */
     public List<GBDevice> getDevices() {
         return Collections.unmodifiableList(deviceList);
+    }
+
+    public GBDevice getDeviceByAddress(String address){
+        for(GBDevice device : deviceList){
+            if(device.getAddress().compareToIgnoreCase(address) == 0){
+                return device;
+            }
+        }
+        return null;
     }
 
     public List<GBDevice> getSelectedDevices() {

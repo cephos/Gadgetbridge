@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -41,7 +42,8 @@ import nodomain.freeyourgadget.gadgetbridge.entities.CalendarSyncStateDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
-import nodomain.freeyourgadget.gadgetbridge.model.CalendarEvents;
+import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarEvent;
+import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarManager;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class CalendarReceiver extends BroadcastReceiver {
@@ -52,9 +54,9 @@ public class CalendarReceiver extends BroadcastReceiver {
 
     private class EventSyncState {
         private int state;
-        private CalendarEvents.CalendarEvent event;
+        private CalendarEvent event;
 
-        EventSyncState(CalendarEvents.CalendarEvent event, int state) {
+        EventSyncState(CalendarEvent event, int state) {
             this.state = state;
             this.event = event;
         }
@@ -67,11 +69,11 @@ public class CalendarReceiver extends BroadcastReceiver {
             this.state = state;
         }
 
-        public CalendarEvents.CalendarEvent getEvent() {
+        public CalendarEvent getEvent() {
             return event;
         }
 
-        public void setEvent(CalendarEvents.CalendarEvent event) {
+        public void setEvent(CalendarEvent event) {
             this.event = event;
         }
     }
@@ -89,14 +91,18 @@ public class CalendarReceiver extends BroadcastReceiver {
         onReceive(GBApplication.getContext(), new Intent());
     }
 
+    public GBDevice getGBDevice(){
+        return mGBDevice;
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         LOG.info("got calendar changed broadcast");
-        List<CalendarEvents.CalendarEvent> eventList = (new CalendarEvents()).getCalendarEventList(GBApplication.getContext());
+        List<CalendarEvent> eventList = (new CalendarManager(context, mGBDevice.getAddress())).getCalendarEventList();
         syncCalendar(eventList);
     }
 
-    public void syncCalendar(List<CalendarEvents.CalendarEvent> eventList) {
+    public void syncCalendar(List<CalendarEvent> eventList) {
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             DaoSession session = dbHandler.getDaoSession();
             syncCalendar(eventList, session);
@@ -105,14 +111,14 @@ public class CalendarReceiver extends BroadcastReceiver {
         }
     }
 
-    public void syncCalendar(List<CalendarEvents.CalendarEvent> eventList, DaoSession session) {
+    public void syncCalendar(List<CalendarEvent> eventList, DaoSession session) {
         LOG.info("Syncing with calendar.");
-        Hashtable<Long, CalendarEvents.CalendarEvent> eventTable = new Hashtable<>();
+        Hashtable<Long, CalendarEvent> eventTable = new Hashtable<>();
         Long deviceId = DBHelper.getDevice(mGBDevice, session).getId();
         QueryBuilder<CalendarSyncState> qb = session.getCalendarSyncStateDao().queryBuilder();
 
 
-        for (CalendarEvents.CalendarEvent e : eventList) {
+        for (CalendarEvent e : eventList) {
             long id = e.getId();
             eventTable.put(id, e);
             if (!eventState.containsKey(e.getId())) {
@@ -176,7 +182,7 @@ public class CalendarReceiver extends BroadcastReceiver {
             EventSyncState es = eventState.get(i);
             int syncState = es.getState();
             if (syncState == EventState.NOT_SYNCED || syncState == EventState.NEEDS_UPDATE) {
-                CalendarEvents.CalendarEvent calendarEvent = es.getEvent();
+                CalendarEvent calendarEvent = es.getEvent();
                 CalendarEventSpec calendarEventSpec = new CalendarEventSpec();
                 calendarEventSpec.id = i;
                 calendarEventSpec.title = calendarEvent.getTitle();
@@ -184,26 +190,32 @@ public class CalendarReceiver extends BroadcastReceiver {
                 calendarEventSpec.timestamp = calendarEvent.getBeginSeconds();
                 calendarEventSpec.durationInSeconds = calendarEvent.getDurationSeconds(); //FIXME: leads to problems right now
                 if (calendarEvent.isAllDay()) {
-                    //force the all day events to begin at midnight and last a whole day
+                    //force the all day events to begin at midnight and last N whole days
                     Calendar c = GregorianCalendar.getInstance();
+                    int numDays = (int)TimeUnit.DAYS.convert(calendarEvent.getEnd()-calendarEvent.getBegin(),
+                            TimeUnit.MILLISECONDS);
                     c.setTimeInMillis(calendarEvent.getBegin());
-                    c.set(Calendar.HOUR, 0);
+                    c.set(Calendar.HOUR_OF_DAY, 0);
+                    //workaround for negative timezones
+                    if(c.getTimeZone().getRawOffset()<0) c.add(Calendar.DAY_OF_MONTH, 1);
                     calendarEventSpec.timestamp = (int) (c.getTimeInMillis() / 1000);
-                    calendarEventSpec.durationInSeconds = 24 * 60 * 60;
+                    calendarEventSpec.durationInSeconds = 24 * 60 * 60 * numDays;
                 }
                 calendarEventSpec.description = calendarEvent.getDescription();
                 calendarEventSpec.location = calendarEvent.getLocation();
                 calendarEventSpec.type = CalendarEventSpec.TYPE_UNKNOWN;
+                calendarEventSpec.calName = calendarEvent.getUniqueCalName();
+                calendarEventSpec.color = calendarEvent.getColor();
                 if (syncState == EventState.NEEDS_UPDATE) {
-                    GBApplication.deviceService().onDeleteCalendarEvent(CalendarEventSpec.TYPE_UNKNOWN, i);
+                    GBApplication.deviceService(mGBDevice).onDeleteCalendarEvent(CalendarEventSpec.TYPE_UNKNOWN, i);
                 }
-                GBApplication.deviceService().onAddCalendarEvent(calendarEventSpec);
+                GBApplication.deviceService(mGBDevice).onAddCalendarEvent(calendarEventSpec);
                 es.setState(EventState.SYNCED);
                 eventState.put(i, es);
                 // update db
                 session.insertOrReplace(new CalendarSyncState(null, deviceId, i, es.event.hashCode()));
             } else if (syncState == EventState.NEEDS_DELETE) {
-                GBApplication.deviceService().onDeleteCalendarEvent(CalendarEventSpec.TYPE_UNKNOWN, i);
+                GBApplication.deviceService(mGBDevice).onDeleteCalendarEvent(CalendarEventSpec.TYPE_UNKNOWN, i);
                 eventState.remove(i);
                 // delete from db for current device only
                 QueryBuilder<CalendarSyncState> qb = session.getCalendarSyncStateDao().queryBuilder();

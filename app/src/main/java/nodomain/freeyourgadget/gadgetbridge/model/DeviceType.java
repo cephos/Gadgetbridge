@@ -45,7 +45,7 @@ public enum DeviceType {
     AMAZFITGTR(18, R.drawable.ic_device_zetime, R.drawable.ic_device_zetime_disabled, R.string.devicetype_amazfit_gtr),
     AMAZFITGTS(19, R.drawable.ic_device_amazfit_bip, R.drawable.ic_device_amazfit_bip_disabled, R.string.devicetype_amazfit_gts),
     AMAZFITBIPS(20, R.drawable.ic_device_amazfit_bip, R.drawable.ic_device_amazfit_bip_disabled, R.string.devicetype_amazfit_bips),
-    AMAZFITGTR_LITE(21, R.drawable.ic_device_zetime, R.drawable.ic_device_zetime_disabled, R.string.devicetype_amazfit_gtr),
+    AMAZFITGTR_LITE(21, R.drawable.ic_device_zetime, R.drawable.ic_device_zetime_disabled, R.string.devicetype_amazfit_gtr_lite),
     AMAZFITTREX(22, R.drawable.ic_device_zetime, R.drawable.ic_device_zetime_disabled, R.string.devicetype_amazfit_trex),
     MIBAND5(23, R.drawable.ic_device_miband2, R.drawable.ic_device_miband2_disabled, R.string.devicetype_miband5),
     AMAZFITBAND5(24, R.drawable.ic_device_miband2, R.drawable.ic_device_miband2_disabled, R.string.devicetype_amazfit_band5),
@@ -65,6 +65,9 @@ public enum DeviceType {
     AMAZFITTREXPRO(38, R.drawable.ic_device_zetime, R.drawable.ic_device_zetime_disabled, R.string.devicetype_amazfit_trex_pro),
     AMAZFITPOP(39, R.drawable.ic_device_amazfit_bip, R.drawable.ic_device_amazfit_bip_disabled, R.string.devicetype_amazfit_pop),
     AMAZFITPOPPRO(10040, R.drawable.ic_device_amazfit_bip, R.drawable.ic_device_amazfit_bip_disabled, R.string.devicetype_amazfit_pop_pro),
+    MIBAND7(10041, R.drawable.ic_device_miband6, R.drawable.ic_device_miband6_disabled, R.string.devicetype_miband7),
+    AMAZFITGTS3(10042, R.drawable.ic_device_amazfit_bip, R.drawable.ic_device_amazfit_bip_disabled, R.string.devicetype_amazfit_gts3),
+    AMAZFITGTR3(10043, R.drawable.ic_device_zetime, R.drawable.ic_device_zetime_disabled, R.string.devicetype_amazfit_gtr3),
     HPLUS(40, R.drawable.ic_device_hplus, R.drawable.ic_device_hplus_disabled, R.string.devicetype_hplus),
     MAKIBESF68(41, R.drawable.ic_device_hplus, R.drawable.ic_device_hplus_disabled, R.string.devicetype_makibes_f68),
     EXRIZUK8(42, R.drawable.ic_device_hplus, R.drawable.ic_device_hplus_disabled, R.string.devicetype_exrizu_k8),
@@ -86,7 +89,7 @@ public enum DeviceType {
     MISCALE2(131, R.drawable.ic_device_miscale2, R.drawable.ic_device_miscale2_disabled, R.string.devicetype_miscale2),
     BFH16(140, R.drawable.ic_device_default, R.drawable.ic_device_default_disabled, R.string.devicetype_bfh16),
     MAKIBESHR3(150, R.drawable.ic_device_default, R.drawable.ic_device_hplus_disabled, R.string.devicetype_makibes_hr3),
-    BANGLEJS(160, R.drawable.ic_device_zetime, R.drawable.ic_device_zetime_disabled, R.string.devicetype_banglejs),
+    BANGLEJS(160, R.drawable.ic_device_banglejs, R.drawable.ic_device_banglejs_disabled, R.string.devicetype_banglejs),
     FOSSILQHYBRID(170, R.drawable.ic_device_zetime, R.drawable.ic_device_zetime_disabled, R.string.devicetype_qhybrid),
     TLW64(180, R.drawable.ic_device_default, R.drawable.ic_device_default_disabled, R.string.devicetype_tlw64),
     PINETIME_JF(190, R.drawable.ic_device_pinetime, R.drawable.ic_device_pinetime_disabled, R.string.devicetype_pinetime_jf),
@@ -113,6 +116,9 @@ public enum DeviceType {
     BOSE_QC35(440, R.drawable.ic_device_headphones, R.drawable.ic_device_headphones_disabled, R.string.devicetype_bose_qc35),
     VESC_NRF(500, R.drawable.ic_device_vesc, R.drawable.ic_device_vesc_disabled, R.string.devicetype_vesc),
     VESC_HM10(501, R.drawable.ic_device_vesc, R.drawable.ic_device_vesc_disabled, R.string.devicetype_vesc),
+    BINARY_SENSOR(510, R.drawable.ic_device_unknown, R.drawable.ic_device_unknown_disabled, R.string.devicetype_binary_sensor),
+    FLIPPER_ZERO(520, R.drawable.ic_device_flipper, R.drawable.ic_device_flipper_disabled, R.string.devicetype_flipper_zero),
+    SUPER_CARS(530, R.drawable.ic_device_supercars, R.drawable.ic_device_supercars_disabled, R.string.devicetype_super_cars),
     TEST(1000, R.drawable.ic_device_default, R.drawable.ic_device_default_disabled, R.string.devicetype_test);
 
     private final int key;

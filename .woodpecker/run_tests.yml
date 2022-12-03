@@ -1,0 +1,13 @@
+pipeline:
+  tests:
+    image: codeberg.org/freeyourgadget/android-fdroid-tools:latest
+    commands:
+      - pwd #bump
+      - ./gradlew :app:testBangleDebugUnitTest :app:testMainDebugUnitTest
+
+#when:
+#repo: Freeyourgadget/Gadgetbridge
+#branch: master
+#this doesn't work yet:
+#https://github.com/woodpecker-ci/woodpecker/issues/687
+

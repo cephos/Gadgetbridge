@@ -35,7 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
-import nodomain.freeyourgadget.gadgetbridge.devices.AbstractDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
@@ -45,7 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
-public class BangleJSCoordinator extends AbstractDeviceCoordinator {
+public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public DeviceType getDeviceType() {
@@ -59,7 +59,6 @@ public class BangleJSCoordinator extends AbstractDeviceCoordinator {
 
     @NonNull
     @Override
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Collection<? extends ScanFilter> createBLEScanFilters() {
         // TODO: filter on name beginning Bangle.js? Doesn't appear to be built-in :(
         // https://developer.android.com/reference/android/bluetooth/le/ScanFilter.Builder.html#setDeviceName(java.lang.String)
@@ -93,7 +92,7 @@ public class BangleJSCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public boolean supportsCalendarEvents() {
-        return false;
+        return true;
     }
 
     @Override
@@ -186,10 +185,10 @@ public class BangleJSCoordinator extends AbstractDeviceCoordinator {
             settings.add(R.xml.devicesettings_device_internet_access);
         settings.add(R.xml.devicesettings_device_intents);
         settings.add(R.xml.devicesettings_device_mqtt);
+        settings.add(R.xml.devicesettings_sync_calendar);
         // must be a better way of doing this?
         int[] settingsInt = new int[settings.size()];
         for (int i=0; i<settings.size(); i++) settingsInt[i] = settings.get(i);
         return settingsInt;
     }
-
 }

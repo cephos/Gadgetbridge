@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.net.Uri;
+import android.os.ParcelUuid;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.AbstractDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
@@ -42,7 +43,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
-public class FitProDeviceCoordinator extends AbstractDeviceCoordinator {
+public class FitProDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     private static final Logger LOG = LoggerFactory.getLogger(FitProDeviceCoordinator.class);
 
 
@@ -62,9 +63,11 @@ public class FitProDeviceCoordinator extends AbstractDeviceCoordinator {
 
             if (name != null && (
                     name.startsWith("M6") ||
-                    name.startsWith("M4") ||
-                    name.equals("LH716")  ||
-                    name.equals("Fit1900"))
+                            name.startsWith("M4") ||
+                            name.equals("LH716") ||
+                            name.equals("Sunset 6") ||
+                            name.equals("Watch7") ||
+                            name.equals("Fit1900"))
             ) {
                 return DeviceType.FITPRO;
             }
@@ -178,7 +181,7 @@ public class FitProDeviceCoordinator extends AbstractDeviceCoordinator {
                 R.xml.devicesettings_donotdisturb_no_auto,
                 R.xml.devicesettings_sleep_time,
                 R.xml.devicesettings_wearlocation,
-                R.xml.devicesettings_autoheartrate,
+                //R.xml.devicesettings_autoheartrate, //removed, this is most likely not supported by these bands
                 R.xml.devicesettings_vibrations_enable,
                 R.xml.devicesettings_notifications_enable,
                 R.xml.devicesettings_fitpro,

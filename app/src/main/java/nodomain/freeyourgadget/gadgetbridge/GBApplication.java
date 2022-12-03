@@ -74,6 +74,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.model.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.NotificationCollectorMonitorService;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
@@ -98,8 +99,6 @@ import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.fromKey;
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID;
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_ID_ERROR;
 
-import androidx.multidex.MultiDex;
-
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 /**
@@ -117,14 +116,14 @@ public class GBApplication extends Application {
     private static SharedPreferences sharedPrefs;
     private static final String PREFS_VERSION = "shared_preferences_version";
     //if preferences have to be migrated, increment the following and add the migration logic in migratePrefs below; see http://stackoverflow.com/questions/16397848/how-can-i-migrate-android-preferences-with-a-new-version
-    private static final int CURRENT_PREFS_VERSION = 15;
+    private static final int CURRENT_PREFS_VERSION = 18;
 
     private static LimitedQueue mIDSenderLookup = new LimitedQueue(16);
     private static Prefs prefs;
     private static GBPrefs gbPrefs;
     private static LockHandler lockHandler;
     /**
-     * Note: is null on Lollipop and Kitkat
+     * Note: is null on Lollipop
      */
     private static NotificationManager notificationManager;
 
@@ -169,12 +168,6 @@ public class GBApplication extends Application {
         // don't do anything here, add it to onCreate instead
     }
 
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
-    }
-
     public static Logging getLogging() {
         return logging;
     }
@@ -217,6 +210,8 @@ public class GBApplication extends Application {
 
         setupExceptionHandler();
 
+        Weather.getInstance().setCacheFile(getCacheDir(), prefs.getBoolean("cache_weather", true));
+
         deviceManager = new DeviceManager(this);
         String language = prefs.getString("language", "default");
         setLanguage(language);
@@ -224,7 +219,6 @@ public class GBApplication extends Application {
         deviceService = createDeviceService();
         loadAppsNotifBlackList();
         loadAppsPebbleBlackList();
-        loadCalendarsBlackList();
 
         PeriodicExporter.enablePeriodicExport(context);
 
@@ -332,6 +326,16 @@ public class GBApplication extends Application {
     }
 
     /**
+     * Returns the facade for talking to a specific device. Devices are managed by
+     * an Android Service and this facade provides access to its functionality.
+     *
+     * @return the facade for talking to the service/device.
+     */
+    public static DeviceService deviceService(GBDevice device) {
+        return deviceService.forDevice(device);
+    }
+
+    /**
      * Returns the DBHandler instance for reading/writing or throws GBException
      * when that was not successful
      * If acquiring was successful, callers must call #releaseDB when they
@@ -363,10 +367,6 @@ public class GBApplication extends Application {
      */
     public static void releaseDB() {
         dbLock.unlock();
-    }
-
-    public static boolean isRunningLollipopOrLater() {
-        return VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
     public static boolean isRunningMarshmallowOrLater() {
@@ -555,61 +555,6 @@ public class GBApplication extends Application {
             return ("OsmAnd");
         }
         return packageName;
-    }
-
-    private static HashSet<String> calendars_blacklist = null;
-
-    public static boolean calendarIsBlacklisted(String calendarUniqueName) {
-        if (calendars_blacklist == null) {
-            GB.log("calendarIsBlacklisted: calendars_blacklist is null!", GB.INFO, null);
-        }
-        return calendars_blacklist != null && calendars_blacklist.contains(calendarUniqueName);
-    }
-
-    public static void setCalendarsBlackList(Set<String> calendarNames) {
-        if (calendarNames == null) {
-            GB.log("Set null apps_notification_blacklist", GB.INFO, null);
-            calendars_blacklist = new HashSet<>();
-        } else {
-            calendars_blacklist = new HashSet<>(calendarNames);
-        }
-        GB.log("New calendars_blacklist has " + calendars_blacklist.size() + " entries", GB.INFO, null);
-        saveCalendarsBlackList();
-    }
-
-    public static void addCalendarToBlacklist(String calendarUniqueName) {
-        if (calendars_blacklist.add(calendarUniqueName)) {
-            GB.log("Blacklisted calendar " + calendarUniqueName, GB.INFO, null);
-            saveCalendarsBlackList();
-        } else {
-            GB.log("Calendar " + calendarUniqueName + " already blacklisted!", GB.WARN, null);
-        }
-    }
-
-    public static void removeFromCalendarBlacklist(String calendarUniqueName) {
-        calendars_blacklist.remove(calendarUniqueName);
-        GB.log("Unblacklisted calendar " + calendarUniqueName, GB.INFO, null);
-        saveCalendarsBlackList();
-    }
-
-    private static void loadCalendarsBlackList() {
-        GB.log("Loading calendars_blacklist", GB.INFO, null);
-        calendars_blacklist = (HashSet<String>) sharedPrefs.getStringSet(GBPrefs.CALENDAR_BLACKLIST, null); // lgtm [java/abstract-to-concrete-cast]
-        if (calendars_blacklist == null) {
-            calendars_blacklist = new HashSet<>();
-        }
-        GB.log("Loaded calendars_blacklist has " + calendars_blacklist.size() + " entries", GB.INFO, null);
-    }
-
-    private static void saveCalendarsBlackList() {
-        GB.log("Saving calendars_blacklist with " + calendars_blacklist.size() + " entries", GB.INFO, null);
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-        if (calendars_blacklist.isEmpty()) {
-            editor.putStringSet(GBPrefs.CALENDAR_BLACKLIST, null);
-        } else {
-            Prefs.putStringSet(editor, GBPrefs.CALENDAR_BLACKLIST, calendars_blacklist);
-        }
-        editor.apply();
     }
 
     /**
@@ -1160,6 +1105,80 @@ public class GBApplication extends Application {
                         editor.remove("inactivity_warnings_threshold");
                         deviceSharedPrefsEdit.apply();
                     }
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "error acquiring DB lock");
+            }
+        }
+
+        if (oldVersion < 16) {
+            // If transliteration was enabled for a device, migrate it to the per-language setting
+            final String defaultLanguagesIfEnabled = "extended_ascii,scandinavian,german,russian,hebrew,greek,ukranian,arabic,persian,lithuanian,polish,estonian,icelandic,czech,turkish,bengali,korean";
+            try (DBHandler db = acquireDB()) {
+                final DaoSession daoSession = db.getDaoSession();
+                final List<Device> activeDevices = DBHelper.getActiveDevices(daoSession);
+
+                for (Device dbDevice : activeDevices) {
+                    final SharedPreferences deviceSharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(dbDevice.getIdentifier());
+                    final SharedPreferences.Editor deviceSharedPrefsEdit = deviceSharedPrefs.edit();
+
+                    if (deviceSharedPrefs.getBoolean("pref_transliteration_enabled", false)) {
+                        deviceSharedPrefsEdit.putString("pref_transliteration_languages", defaultLanguagesIfEnabled);
+                    }
+
+                    deviceSharedPrefsEdit.remove("pref_transliteration_enabled");
+
+                    deviceSharedPrefsEdit.apply();
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "error acquiring DB lock");
+            }
+        }
+
+        if (oldVersion < 17) {
+            final HashSet<String> calendarBlacklist = (HashSet<String>) prefs.getStringSet(GBPrefs.CALENDAR_BLACKLIST, null);
+
+            try (DBHandler db = acquireDB()) {
+                final DaoSession daoSession = db.getDaoSession();
+                final List<Device> activeDevices = DBHelper.getActiveDevices(daoSession);
+
+                for (Device dbDevice : activeDevices) {
+                    final SharedPreferences deviceSharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(dbDevice.getIdentifier());
+                    final SharedPreferences.Editor deviceSharedPrefsEdit = deviceSharedPrefs.edit();
+
+                    deviceSharedPrefsEdit.putBoolean("sync_calendar", prefs.getBoolean("enable_calendar_sync", true));
+
+                    if (calendarBlacklist != null) {
+                        Prefs.putStringSet(deviceSharedPrefsEdit, GBPrefs.CALENDAR_BLACKLIST, calendarBlacklist);
+                    }
+
+                    deviceSharedPrefsEdit.apply();
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "error acquiring DB lock");
+            }
+
+            editor.remove(GBPrefs.CALENDAR_BLACKLIST);
+        }
+
+        if (oldVersion < 18) {
+            // Migrate the default value for Huami find band vibration pattern
+            try (DBHandler db = acquireDB()) {
+                final DaoSession daoSession = db.getDaoSession();
+                final List<Device> activeDevices = DBHelper.getActiveDevices(daoSession);
+
+                for (Device dbDevice : activeDevices) {
+                    if (!dbDevice.getManufacturer().equals("Huami")) {
+                        continue;
+                    }
+
+                    final SharedPreferences deviceSharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(dbDevice.getIdentifier());
+                    final SharedPreferences.Editor deviceSharedPrefsEdit = deviceSharedPrefs.edit();
+
+                    deviceSharedPrefsEdit.putString("huami_vibration_profile_find_band", "long");
+                    deviceSharedPrefsEdit.putString("huami_vibration_count_find_band", "1");
+
+                    deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
                 Log.w(TAG, "error acquiring DB lock");

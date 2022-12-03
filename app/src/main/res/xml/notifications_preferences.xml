@@ -18,6 +18,20 @@
             android:title="@string/pref_title_whenscreenon" />
 
         <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="notifications_ignore_low_priority"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_title_notifications_ignore_low_priority"
+            android:summary="@string/pref_summary_notifications_ignore_low_priority" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="notification_prefer_long_text"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_title_notification_prefer_long_text"
+            android:summary="@string/pref_summary_notification_prefer_long_text" />
+
+        <CheckBoxPreference
             android:defaultValue="false"
             android:key="minimize_priority"
             android:layout="@layout/preference_checkbox"
@@ -42,6 +56,14 @@
             android:key="notification_support_voip_calls"
             android:layout="@layout/preference_checkbox"
             android:title="@string/pref_title_support_voip_calls" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:inputType="number"
+            android:digits="0123456789"
+            android:key="notification_delay_calls"
+            android:maxLength="2"
+            android:title="@string/pref_title_notification_delay_calls"
+            android:summary="@string/pref_summary_notification_delay_calls" />
 
         <ListPreference
             android:defaultValue="when_screen_off"
