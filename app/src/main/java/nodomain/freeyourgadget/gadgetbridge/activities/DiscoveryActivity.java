@@ -495,7 +495,11 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
 
     private void stopBTDiscovery() {
         if (adapter != null) {
-            adapter.cancelDiscovery();
+            try {
+                adapter.cancelDiscovery();
+            } catch (SecurityException e) {
+                LOG.warn("BluetoothAdaptor.cancelDiscovery failed with SecurityException - BLUETOOTH_SCAN not granted on SDK 31?");
+            }
             LOG.info("Stopped BT discovery");
         }
     }
@@ -528,7 +532,11 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
         if (!adapter.isEnabled()) {
             LOG.warn("Bluetooth not enabled");
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivity(enableBtIntent);
+            try {
+                startActivity(enableBtIntent);
+            } catch (SecurityException e) {
+                LOG.warn("startActivity(enableBtIntent) failed with SecurityException");
+            }
             this.adapter = null;
             return false;
         }
@@ -603,6 +611,13 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
                 LOG.error("No permission to access background location!");
                 toast(DiscoveryActivity.this, getString(R.string.error_no_location_access), Toast.LENGTH_SHORT, GB.ERROR);
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, 0);
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+                LOG.error("No permission to access Bluetooth scanning!");
+                toast(DiscoveryActivity.this, getString(R.string.error_no_bluetooth_scan), Toast.LENGTH_SHORT, GB.ERROR);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_SCAN}, 0);
             }
         }
 
