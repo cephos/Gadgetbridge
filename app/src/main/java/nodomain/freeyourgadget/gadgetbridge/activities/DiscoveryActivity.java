@@ -58,6 +58,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -539,6 +541,39 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
             }
             this.adapter = null;
             return false;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            List<String> wantedPermissions = new ArrayList<>();
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_DENIED) {
+                LOG.warn("No BLUETOOTH_SCAN permission");
+                wantedPermissions.add(Manifest.permission.BLUETOOTH_SCAN);
+                this.adapter = null;
+                return false;
+            }
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_DENIED) {
+                LOG.warn("No BLUETOOTH_CONNECT permission");
+                wantedPermissions.add(Manifest.permission.BLUETOOTH_CONNECT);
+
+            }
+            if (wantedPermissions.size() > 0) {
+                ActivityResultLauncher<String[]> requestMultiplePermissionsLauncher =
+                    registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted -> {
+                        if (isGranted.containsValue(true)) {
+                            // Permission is granted. Continue the action or workflow in your
+                            // app.
+                        } else {
+                            // Explain to the user that the feature is unavailable because the
+                            // feature requires a permission that the user has denied. At the
+                            // same time, respect the user's decision. Don't link to system
+                            // settings in an effort to convince the user to change their
+                            // decision.
+                            GB.toast(this, getString(R.string.permission_granting_mandatory), Toast.LENGTH_LONG, GB.ERROR);
+                        }
+                    });
+                requestMultiplePermissionsLauncher.launch(wantedPermissions.toArray(new String[0]));
+                this.adapter = null;
+                return false;
+            }
         }
         this.adapter = adapter;
         if (GB.supportsBluetoothLE())

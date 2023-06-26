@@ -118,7 +118,7 @@ public class CasioGB6900DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public int getAlarmSlotCount() {
+    public int getAlarmSlotCount(GBDevice device) {
         return 5; // 4 regular and one snooze
     }
 
@@ -138,7 +138,7 @@ public class CasioGB6900DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAppsManagement() {
+    public boolean supportsAppsManagement(final GBDevice device) {
         return false;
     }
 

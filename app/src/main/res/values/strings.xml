@@ -34,6 +34,7 @@
     <string name="action_debug">Debug</string>
     <string name="action_quit">Quit</string>
     <string name="action_donate">Donate</string>
+    <string name="action_changelog">Changelog</string>
     <string name="controlcenter_fetch_activity_data">Synchronize</string>
     <string name="controlcenter_find_device">Find lost device</string>
     <string name="find_lost_device_message">Search for %1$s?</string>
@@ -264,6 +265,12 @@
     <string name="pref_summary_banglejs_text_bitmap">If a word cannot be rendered with the watch\'s font, render it to a bitmap in Gadgetbridge and display the bitmap on the watch</string>
     <string name="pref_title_banglejs_txt_bitmap_size">Text Bitmaps Size</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">If \'Text as Bitmaps\' enabled, what size should text be rendered?</string>
+    <string name="pref_title_banglejs_phone_gps_enbale">Use phone gps data</string>
+    <string name="pref_summary_banglejs_phone_gps_enbale">Use the gps data of the phone to overwrite the gps data of the bangle device</string>
+    <string name="pref_title_banglejs_phone_gps_network_only">Only use network to determine location</string>
+    <string name="pref_summary_banglejs_phone_gps_network_only">This option is only active, if the gps data of the phone is being used. This option can be used to use only the network provider to determine the location. This reduces the power consumption for the cost of accuracy. A reconnection of the device is needed.</string>
+    <string name="pref_title_banglejs_phone_gps_update_interval">GPS data update interval in ms</string>
+    <string name="pref_summary_banglejs_phone_gps_update_interval">This option is only active, if the gps data of the phone is being used. This option sets the interval in ms how often the gps position is being updated</string>
     <string name="pref_title_banglejs_webview_url">App loader URL</string>
     <string name="pref_summary_banglejs_webview_url">If you want a custom app loader put your https://…/android.html URL here. Otherwise leave blank for https://banglejs.com/apps</string>
     <string name="pref_title_rtl">Right-To-Left</string>
@@ -785,6 +792,7 @@
     <string name="devicestatus_upload_failed">Upload has failed</string>
     <string name="firmware_update_progress">Upload is in progress\n%1d%% at %.2fkbps (average %.2fkbps)\nPart %1d of %1d</string>
     <string name="updating_firmware">Flashing firmware…</string>
+    <string name="fwapp_install_device_not_supported">File cannot be installed, device not supported.</string>
     <string name="fwapp_install_device_not_ready">File cannot be installed, device not ready.</string>
     <string name="installhandler_firmware_name">%1$s: %2$s %3$s</string>
     <string name="miband_fwinstaller_compatible_version">Compatible version</string>
@@ -1027,6 +1035,7 @@
     <string name="charts_legend_heartrate">Heart rate</string>
     <string name="live_activity_heart_rate">Heart rate</string>
     <string name="charts_legend_heartrate_average">Heart rate average</string>
+    <string name="charts_legend_stress_average">Stress average</string>
     <string name="activity_prefs_calories_burnt">Daily target: calories burnt</string>
     <string name="activity_prefs_distance_meters">Daily target: distance in meters</string>
     <string name="activity_prefs_activetime_minutes">Daily target: active time in minutes</string>
@@ -1199,6 +1208,8 @@
     <string name="activity_error_share_failed">Sharing file failed.</string>
     <string name="select_all">Select all</string>
     <string name="share">Share</string>
+    <string name="share_screenshot">Share screenshot</string>
+    <string name="screenshot_taken">Screenshot taken</string>
     <string name="reset_index">Reset fetch date</string>
     <string name="kind_firmware">Firmware</string>
     <string name="kind_invalid">Invalid data</string>
@@ -1776,6 +1787,7 @@
     <string name="watchface_widget_type_2nd_tz">2nd time zone</string>
     <string name="watchface_widget_type_active_mins">Active minutes</string>
     <string name="watchface_widget_type_chance_rain">Chance of rain</string>
+    <string name="watchface_widget_type_uv_index">UV index</string>
     <string name="watchface_setting_title_power_saving">Power saving</string>
     <string name="watchface_setting_power_saving_display">Disable display updates while off wrist</string>
     <string name="watchface_setting_power_saving_hands">Disable hands movement while off wrist</string>
@@ -1885,6 +1897,10 @@
     <string name="pref_header_spo2">Blood Oxygen</string>
     <string name="pref_header_sony_ambient_sound_control">Ambient Sound Control</string>
     <string name="pref_header_sony_device_info">Device Information</string>
+    <string name="stress_relaxed">Relaxed</string>
+    <string name="stress_mild">Mild</string>
+    <string name="stress_moderate">Moderate</string>
+    <string name="stress_high">High</string>
     <string name="sony_ambient_sound">Mode</string>
     <string name="sony_ambient_sound_off">Off</string>
     <string name="sony_ambient_sound_noise_cancelling">Noise Cancelling</string>
@@ -2117,4 +2133,21 @@
     <string name="contact_phone_number">Phone number</string>
     <string name="contact_missing_name">Contact name is empty</string>
     <string name="contact_missing_number">Contact number is empty</string>
+    <string name="voice_service_package_title">Voice service package</string>
+    <string name="voice_service_package_summary">Application that contains the service handling voice commands</string>
+    <string name="voice_service_class_title">Voice service class</string>
+    <string name="voice_service_class_summary">Full service path handling voice commands</string>
+    <string name="voice_service">Voice Service</string>
+    <string name="pref_app_logs_title">App logs</string>
+    <string name="pref_app_logs_summary">Enable logs from watch apps</string>
+    <string name="pref_app_logs_start_summary">Start logging from watch apps</string>
+    <string name="pref_app_logs_stop_summary">Stop logging from watch apps</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="preview_image">Preview image</string>
+    <string name="status_icon">Status icon</string>
+    <string name="changelog_full_title">Changelog</string>
+    <string name="changelog_show_full">More…</string>
+    <string name="changelog_ok_button">OK</string>
+    <string name="changelog_title">What\'s New</string>
 </resources>

@@ -151,12 +151,14 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public int getAlarmSlotCount() {
+    public int getAlarmSlotCount(GBDevice device) {
         return 10;
     }
 
     @Override
-    public boolean supportsAppsManagement() { return BuildConfig.INTERNET_ACCESS; }
+    public boolean supportsAppsManagement(final GBDevice device) {
+        return BuildConfig.INTERNET_ACCESS;
+    }
 
     @Override
     public Class<? extends Activity> getAppsManagementActivity() {

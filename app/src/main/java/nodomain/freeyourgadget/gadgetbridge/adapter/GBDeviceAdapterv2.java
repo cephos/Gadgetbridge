@@ -96,7 +96,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.ControlCenterv2;
 import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateDialog;
 import nodomain.freeyourgadget.gadgetbridge.activities.OpenFwAppInstallerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.VibrationActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.charts.ChartsActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.ActivityChartsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
@@ -163,7 +163,9 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
 
         for (final Map.Entry<String, List<GBDevice>> folder : devicesPerFolder.entrySet()) {
             enrichedList.add(new GBDeviceFolder(folder.getKey()));
-            enrichedList.addAll(folder.getValue());
+            if (folder.getKey().equals(expandedFolderName)) {
+                enrichedList.addAll(folder.getValue());
+            }
         }
 
         return enrichedList;
@@ -213,6 +215,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                 }else {
                     expandedFolderName = folder.getName();
                 }
+                rebuildFolders();
                 notifyDataSetChanged();
             }
         });
@@ -418,7 +421,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                                                         @Override
                                                         public void onClick(View v) {
                                                             showTransientSnackbar(R.string.busy_task_fetch_activity_data);
-                                                            GBApplication.deviceService(device).onFetchRecordedData(RecordedDataTypes.TYPE_ACTIVITY);
+                                                            GBApplication.deviceService(device).onFetchRecordedData(RecordedDataTypes.TYPE_SYNC);
                                                         }
                                                     }
         );
@@ -438,7 +441,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         );
 
         //manage apps
-        holder.manageAppsView.setVisibility((device.isInitialized() && coordinator.supportsAppsManagement()) ? View.VISIBLE : View.GONE);
+        holder.manageAppsView.setVisibility((device.isInitialized() && coordinator.supportsAppsManagement(device)) ? View.VISIBLE : View.GONE);
         holder.manageAppsView.setOnClickListener(new View.OnClickListener()
 
                                                  {
@@ -456,7 +459,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         );
 
         //set alarms
-        holder.setAlarmsView.setVisibility(coordinator.getAlarmSlotCount() > 0 ? View.VISIBLE : View.GONE);
+        holder.setAlarmsView.setVisibility(coordinator.getAlarmSlotCount(device) > 0 ? View.VISIBLE : View.GONE);
         holder.setAlarmsView.setOnClickListener(new View.OnClickListener()
 
                                                 {
@@ -493,7 +496,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                                                          @Override
                                                          public void onClick(View v) {
                                                              Intent startIntent;
-                                                             startIntent = new Intent(context, ChartsActivity.class);
+                                                             startIntent = new Intent(context, ActivityChartsActivity.class);
                                                              startIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
                                                              context.startActivity(startIntent);
                                                          }
@@ -811,7 +814,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
 
     private boolean showInstallerItem(GBDevice device) {
         final DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(device);
-        return coordinator.supportsAppsManagement() || coordinator.supportsFlashing();
+        return coordinator.supportsAppsManagement(device) || coordinator.supportsFlashing();
     }
 
     private void showDeviceSubmenu(final View v, final GBDevice device) {
@@ -1312,9 +1315,9 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
 
         //do the multiple mini-charts for activities in a loop
         Hashtable<PieChart, Pair<Boolean, Integer>> activitiesStatusMiniCharts = new Hashtable<>();
-        activitiesStatusMiniCharts.put(holder.TotalStepsChart, new Pair<>(showActivitySteps && steps > 0, ChartsActivity.getChartsTabIndex("stepsweek", device, context)));
-        activitiesStatusMiniCharts.put(holder.SleepTimeChart, new Pair<>(showActivitySleep && sleep > 0, ChartsActivity.getChartsTabIndex("sleep", device, context)));
-        activitiesStatusMiniCharts.put(holder.TotalDistanceChart, new Pair<>(showActivityDistance && steps > 0, ChartsActivity.getChartsTabIndex("activity", device, context)));
+        activitiesStatusMiniCharts.put(holder.TotalStepsChart, new Pair<>(showActivitySteps && steps > 0, ActivityChartsActivity.getChartsTabIndex("stepsweek", device, context)));
+        activitiesStatusMiniCharts.put(holder.SleepTimeChart, new Pair<>(showActivitySleep && sleep > 0, ActivityChartsActivity.getChartsTabIndex("sleep", device, context)));
+        activitiesStatusMiniCharts.put(holder.TotalDistanceChart, new Pair<>(showActivityDistance && steps > 0, ActivityChartsActivity.getChartsTabIndex("activity", device, context)));
 
         for (Map.Entry<PieChart, Pair<Boolean, Integer>> miniCharts : activitiesStatusMiniCharts.entrySet()) {
             PieChart miniChart = miniCharts.getKey();
@@ -1324,9 +1327,9 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                                              @Override
                                              public void onClick(View v) {
                                                  Intent startIntent;
-                                                 startIntent = new Intent(context, ChartsActivity.class);
+                                                 startIntent = new Intent(context, ActivityChartsActivity.class);
                                                  startIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
-                                                 startIntent.putExtra(ChartsActivity.EXTRA_FRAGMENT_ID, parameters.second);
+                                                 startIntent.putExtra(ActivityChartsActivity.EXTRA_FRAGMENT_ID, parameters.second);
                                                  context.startActivity(startIntent);
                                              }
                                          }

@@ -16,6 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huami;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 
@@ -23,12 +24,15 @@ import androidx.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
@@ -45,12 +49,16 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuamiExtendedActivitySample
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuami2021FWInstallHandler;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsAlexaService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsContactsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsLogsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsRemindersService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsShortcutCardsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiLanguageType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiVibrationPatternNotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsPhoneService;
+import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public abstract class Huami2021Coordinator extends HuamiCoordinator {
@@ -74,6 +82,11 @@ public abstract class Huami2021Coordinator extends HuamiCoordinator {
 
         final AbstractHuami2021FWInstallHandler handler = createFwInstallHandler(uri, context);
         return handler.isValid() ? handler : null;
+    }
+
+    @Override
+    public boolean supportsScreenshots() {
+        return true;
     }
 
     @Override
@@ -158,6 +171,41 @@ public abstract class Huami2021Coordinator extends HuamiCoordinator {
     }
 
     @Override
+    public boolean supportsAppsManagement(final GBDevice device) {
+        return experimentalFeatures(device);
+    }
+
+    @Override
+    public Class<? extends Activity> getAppsManagementActivity() {
+        return AppManagerActivity.class;
+    }
+
+    @Override
+    public File getAppCacheDir() throws IOException {
+        return new File(FileUtils.getExternalFilesDir(), "zepp-os-app-cache");
+    }
+
+    @Override
+    public String getAppCacheSortFilename() {
+        return "zepp-os-app-cache-order.txt";
+    }
+
+    @Override
+    public String getAppFileExtension() {
+        return ".zip";
+    }
+
+    @Override
+    public boolean supportsAppListFetching() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsAppReordering() {
+        return false;
+    }
+
+    @Override
     public boolean supportsCalendarEvents() {
         return true;
     }
@@ -194,7 +242,7 @@ public abstract class Huami2021Coordinator extends HuamiCoordinator {
 
     @Override
     public int getReminderSlotCount(final GBDevice device) {
-        return getPrefs(device).getInt(Huami2021Service.REMINDERS_PREF_CAPABILITY, 0);
+        return ZeppOsRemindersService.getSlotCount(getPrefs(device));
     }
 
     @Override
@@ -336,6 +384,12 @@ public abstract class Huami2021Coordinator extends HuamiCoordinator {
         // Developer
         //
         settings.add(R.xml.devicesettings_header_developer);
+        if (ZeppOsLogsService.isSupported(getPrefs(device))) {
+            settings.add(R.xml.devicesettings_app_logs_start_stop);
+        }
+        if (supportsAlexa(device)) {
+            settings.add(R.xml.devicesettings_huami2021_alexa);
+        }
         if (supportsWifiHotspot(device)) {
             settings.add(R.xml.devicesettings_wifi_hotspot);
         }
@@ -445,6 +499,10 @@ public abstract class Huami2021Coordinator extends HuamiCoordinator {
         return ZeppOsShortcutCardsService.isSupported(getPrefs(device));
     }
 
+    public boolean supportsAlexa(final GBDevice device) {
+        return experimentalFeatures(device) && ZeppOsAlexaService.isSupported(getPrefs(device));
+    }
+
     private boolean supportsConfig(final GBDevice device, final ZeppOsConfigService.ConfigArg config) {
         return ZeppOsConfigService.deviceHasConfig(getPrefs(device), config);
     }
@@ -465,5 +523,9 @@ public abstract class Huami2021Coordinator extends HuamiCoordinator {
 
     public static boolean deviceHasConfig(final Prefs devicePrefs, final ZeppOsConfigService.ConfigArg config) {
         return devicePrefs.getBoolean(Huami2021Coordinator.getPrefKnownConfig(config.name()), false);
+    }
+
+    public static boolean experimentalFeatures(final GBDevice device) {
+        return getPrefs(device).getBoolean("zepp_os_experimental_features", false);
     }
 }

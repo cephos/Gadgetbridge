@@ -4,15 +4,22 @@
         android:defaultValue="false"
         android:icon="@drawable/ic_gps_location"
         android:key="banglejs_gps_update"
-        android:summary="Use the gps data of the phone to overwrite the gps data of the bangle device"
-        android:title="Use phone gps data" />
+        android:summary="@string/pref_summary_banglejs_phone_gps_enbale"
+        android:title="@string/pref_title_banglejs_phone_gps_enbale" />
     <EditTextPreference
         android:defaultValue="1000"
         android:inputType="number"
         android:icon="@drawable/ic_access_time"
         android:key="banglejs_gps_update_interval"
-        android:summary="This option is only active, if the gps data of the phone is being used. This option sets the interval in ms how often the gps position is being updated"
-        android:title="GPS data update interval in ms" />
+        android:summary="@string/pref_summary_banglejs_phone_gps_update_interval"
+        android:title="@string/pref_title_banglejs_phone_gps_update_interval" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:icon="@drawable/ic_gps_location"
+        android:key="banglejs_gps_use_network_only"
+        android:summary="@string/pref_summary_banglejs_phone_gps_network_only"
+        android:title="@string/pref_title_banglejs_phone_gps_network_only" />
+
     <SwitchPreference
         android:defaultValue="false"
         android:icon="@drawable/ic_translate"

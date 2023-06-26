@@ -28,6 +28,7 @@ import androidx.annotation.RequiresApi;
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.NotifyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.ReadAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.RequestConnectionPriorityAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.RequestMtuAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WaitAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
@@ -66,6 +67,12 @@ public class TransactionBuilder {
         );
     }
 
+    public TransactionBuilder requestConnectionPriority(int priority){
+        return add(
+                new RequestConnectionPriorityAction(priority)
+        );
+    }
+
     public TransactionBuilder notify(BluetoothGattCharacteristic characteristic, boolean enable) {
         if (characteristic == null) {
             LOG.warn("Unable to notify characteristic: null");
@@ -101,8 +108,8 @@ public class TransactionBuilder {
      *
      * @param callback the callback to set, may be null
      */
-    public void setGattCallback(@Nullable GattCallback callback) {
-        mTransaction.setGattCallback(callback);
+    public void setCallback(@Nullable GattCallback callback) {
+        mTransaction.setCallback(callback);
     }
 
     public
