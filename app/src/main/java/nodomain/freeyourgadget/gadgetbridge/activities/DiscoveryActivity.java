@@ -547,13 +547,10 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
             if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_DENIED) {
                 LOG.warn("No BLUETOOTH_SCAN permission");
                 wantedPermissions.add(Manifest.permission.BLUETOOTH_SCAN);
-                this.adapter = null;
-                return false;
             }
             if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_DENIED) {
                 LOG.warn("No BLUETOOTH_CONNECT permission");
                 wantedPermissions.add(Manifest.permission.BLUETOOTH_CONNECT);
-
             }
             if (wantedPermissions.size() > 0) {
                 ActivityResultLauncher<String[]> requestMultiplePermissionsLauncher =
