@@ -556,8 +556,8 @@ public class DiscoveryActivity extends AbstractGBActivity implements AdapterView
                 ActivityResultLauncher<String[]> requestMultiplePermissionsLauncher =
                     registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted -> {
                         if (isGranted.containsValue(true)) {
-                            // Permission is granted. Continue the action or workflow in your
-                            // app.
+                            // Permission is granted. Continue the action or workflow in your app.
+                            startDiscovery();
                         } else {
                             // Explain to the user that the feature is unavailable because the
                             // feature requires a permission that the user has denied. At the
