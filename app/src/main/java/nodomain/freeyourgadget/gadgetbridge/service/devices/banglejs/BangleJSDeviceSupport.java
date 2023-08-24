@@ -751,7 +751,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
 
                             MqttMessage message = new MqttMessage(data.getBytes());
                             message.setQos(qos);
-                            message.setRetained(true);
+                            message.setRetained(false);
                             MqttTopic topic = mqttClient.getTopic(topicName);
 
                             MqttConnectOptions connOpts = new MqttConnectOptions();
